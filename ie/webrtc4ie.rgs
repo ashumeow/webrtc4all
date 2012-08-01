@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'webrtc4ie'
+		'webrtc4ie.DLL'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

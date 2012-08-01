@@ -1,0 +1,26 @@
+HKCR
+{
+	webrtc4ie.PeerConnection.1 = s 'PeerConnection Class'
+	{
+		CLSID = s '{56D10AD3-8F52-4AA4-854B-41F4D6F9CEA3}'
+	}
+	webrtc4ie.PeerConnection = s 'PeerConnection Class'
+	{
+		CLSID = s '{56D10AD3-8F52-4AA4-854B-41F4D6F9CEA3}'
+		CurVer = s 'webrtc4ie.PeerConnection.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {56D10AD3-8F52-4AA4-854B-41F4D6F9CEA3} = s 'PeerConnection Class'
+		{
+			ProgID = s 'webrtc4ie.PeerConnection.1'
+			VersionIndependentProgID = s 'webrtc4ie.PeerConnection'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{F40DFDA2-873B-449A-B8B6-165D57291E1B}'
+		}
+	}
+}

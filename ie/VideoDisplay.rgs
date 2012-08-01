@@ -1,0 +1,34 @@
+HKCR
+{
+	webrtc4ie.VideoDisplay.1 = s '2.0.100.699 Class'
+	{
+		CLSID = s '{5C2C407B-09D9-449B-BB83-C39B7802A684}'
+	}
+	webrtc4ie.VideoDisplay = s '2.0.100.699 Class'
+	{
+		CLSID = s '{5C2C407B-09D9-449B-BB83-C39B7802A684}'
+		CurVer = s 'webrtc4ie.2.0.100.699.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {5C2C407B-09D9-449B-BB83-C39B7802A684} = s 'VideoDisplay Class'
+		{
+			ProgID = s 'webrtc4ie.VideoDisplay.1'
+			VersionIndependentProgID = s 'webrtc4ie.VideoDisplay'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			ForceRemove 'Control'
+			ForceRemove 'ToolboxBitmap32' = s '%MODULE%, 112'
+			'MiscStatus' = s '0'
+			{
+			    '1' = s '%OLEMISC%'
+			}
+			'TypeLib' = s '{F40DFDA2-873B-449A-B8B6-165D57291E1B}'
+			'Version' = s '1.0'
+		}
+	}
+}

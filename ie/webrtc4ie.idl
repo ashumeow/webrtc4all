@@ -1,0 +1,206 @@
+// webrtc4ie.idl : IDL source for webrtc4ie
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (webrtc4ie.tlb) and marshalling code.
+
+#include "olectl.h"
+#include "olectl.h"
+#include "olectl.h"
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(59A83878-17F1-4093-AAFD-FC5EFD15DDD3),
+	dual,
+	nonextensible,
+	helpstring("ISessionDescription Interface"),
+	pointer_default(unique)
+]
+interface ISessionDescription : IDispatch{
+	[id(1), helpstring("method toSdp")] HRESULT toSdp([out,retval] BSTR* sdp);
+	[id(2), helpstring("method Init")] HRESULT Init(BSTR sdp);
+	[id(3), helpstring("method addCandidate")] HRESULT addCandidate([in] BSTR media, [in] BSTR candidate);
+};
+[
+	object,
+	uuid(AEC9C14A-6FB5-4159-9F88-435B92854937),
+	dual,
+	nonextensible,
+	helpstring("IPeerConnection Interface"),
+	pointer_default(unique)
+]
+interface IPeerConnection : IDispatch{
+	[id(1), helpstring("method close")] HRESULT close(void);
+	[id(2), helpstring("method createOffer")] HRESULT createOffer([in] VARIANT_BOOL has_audio, [in] VARIANT_BOOL has_video, [out,retval] BSTR* sdp);
+	[id(3), helpstring("method createAnswer")] HRESULT createAnswer([in] VARIANT_BOOL has_audio, [in] VARIANT_BOOL has_video, [out,retval] BSTR* sdp);
+	[id(4), helpstring("method startIce")] HRESULT startIce([in] SHORT IceOptions, [in] LONGLONG looper);
+	[propget, id(5), helpstring("property localDescription")] HRESULT localDescription([out, retval] BSTR* pVal);
+	[propget, id(6), helpstring("property remoteDescription")] HRESULT remoteDescription([out, retval] BSTR* pVal);
+	[id(7), helpstring("method setLocalDescription")] HRESULT setLocalDescription([in] USHORT action, [in] BSTR desc);
+	[id(8), helpstring("method setRemoteDescription")] HRESULT setRemoteDescription([in] USHORT action, [in] BSTR desc);
+	[propget, id(9), helpstring("property readyState")] HRESULT readyState([out, retval] USHORT* pVal);
+	[propget, id(10), helpstring("property iceState")] HRESULT iceState([out, retval] USHORT* pVal);
+	[propget, id(11), helpstring("property remoteVideo")] HRESULT remoteVideo([out, retval] LONGLONG* pVal);
+	[propput, id(11), helpstring("property remoteVideo")] HRESULT remoteVideo([in] LONGLONG newVal);
+	[propget, id(12), helpstring("property localVideo")] HRESULT localVideo([out, retval] LONGLONG* pVal);
+	[propput, id(12), helpstring("property localVideo")] HRESULT localVideo([in] LONGLONG newVal);
+	[propget, id(13), helpstring("property version")] HRESULT version([out, retval] BSTR* pVal);
+	[propget, id(14), helpstring("property fullScreen")] HRESULT fullScreen([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(14), helpstring("property fullScreen")] HRESULT fullScreen([in] VARIANT_BOOL newVal);
+	
+	[id(15), helpstring("method Init")] HRESULT Init([in] BSTR desc);
+	[id(16), helpstring("method StartDebug")] HRESULT StartDebug(void);
+	[id(17), helpstring("method StopDebug")] HRESULT StopDebug(void);
+};
+
+[
+	object,
+	uuid(A3513050-9B95-4FA0-B3A7-1CAD92CCE3A4),
+	dual,
+	nonextensible,
+	helpstring("IVideoDisplay Interface"),
+	pointer_default(unique)
+]
+interface IVideoDisplay : IDispatch{
+	[propput, bindable, requestedit, id(DISPID_AUTOSIZE)]
+	HRESULT AutoSize([in]VARIANT_BOOL vbool);
+	[propget, bindable, requestedit, id(DISPID_AUTOSIZE)]
+	HRESULT AutoSize([out,retval]VARIANT_BOOL* pbool);
+	[propput, bindable, requestedit, id(DISPID_BORDERWIDTH)]
+	HRESULT BorderWidth([in]long width);
+	[propget, bindable, requestedit, id(DISPID_BORDERWIDTH)]
+	HRESULT BorderWidth([out, retval]long* width);
+	[propget, bindable, requestedit, id(DISPID_HWND)]
+	HRESULT HWND([out, retval]LONG_PTR* pHWND);
+};
+
+[
+	object,
+	uuid(FDD25C9A-C789-400C-B57C-8860DCAAC861),
+	dual,
+	nonextensible,
+	helpstring("INetTransport Interface"),
+	pointer_default(unique)
+]
+interface INetTransport : IDispatch{
+	[id(1), helpstring("method SetDomain")] HRESULT SetDomain([in] BSTR domain);
+	[id(2), helpstring("method Start")] HRESULT Start([in] LONGLONG looper);
+	[id(3), helpstring("method Stop")] HRESULT Stop(void);
+	[id(4), helpstring("method Send")] HRESULT SendTo([in] BSTR msg, [in] BSTR addr, [in] USHORT port);
+	[propget, id(5), helpstring("property localIP")] HRESULT localIP([out, retval] BSTR* pVal);
+	[propget, id(6), helpstring("property localPort")] HRESULT localPort([out, retval] USHORT* pVal);
+	[propget, id(7), helpstring("property defaultDestAddr")] HRESULT defaultDestAddr([out, retval] BSTR* pVal);
+	[propget, id(8), helpstring("property defaultDestPort")] HRESULT defaultDestPort([out, retval] USHORT* pVal);
+	[propget, id(9), helpstring("property version")] HRESULT version([out, retval] BSTR* pVal);
+
+	[id(10), helpstring("method StartDebug")] HRESULT StartDebug(void);
+	[id(11), helpstring("method StopDebug")] HRESULT StopDebug(void);
+};
+[
+	object,
+	uuid(BD91785F-1414-4AD0-BF07-D5EE82CF85E6),
+	dual,
+	nonextensible,
+	helpstring("ILooper Interface"),
+	pointer_default(unique)
+]
+interface ILooper : IDispatch{
+	[propget, bindable, requestedit, id(DISPID_HWND)]
+	HRESULT HWND([out, retval]LONG_PTR* pHWND);
+};
+
+[
+	uuid(F40DFDA2-873B-449A-B8B6-165D57291E1B),
+	version(1.0),
+	helpstring("webrtc4ie 1.0 Type Library")
+]
+library webrtc4ieLib
+{
+	[
+		uuid(DBA9F8E2-F9FB-47CF-8797-986A69A1CA9C),
+		helpstring("SessionDescription Class")
+	]
+	coclass SessionDescription
+	{
+		[default] interface ISessionDescription;
+	};
+	
+	[
+		uuid(B57ABD83-7530-4A0B-ACF5-1F4C2A8C1320),
+		helpstring("_IPeerConnectionEvents Interface")
+	]
+	dispinterface _IPeerConnectionEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method IceCallback")] void IceCallback([in]BSTR media, [in] BSTR candidate, [in] VARIANT_BOOL moreToFollow);
+	};
+	[
+		uuid(56D10AD3-8F52-4AA4-854B-41F4D6F9CEA3),
+		helpstring("PeerConnection Class")
+	]
+	coclass PeerConnection
+	{
+		[default] interface IPeerConnection;
+		[default, source] dispinterface _IPeerConnectionEvents;
+	};
+	[
+		uuid(B5EEFDFB-4DDD-40A2-9A71-A63B5669C79C),
+		helpstring("_IVideoDisplayEvents Interface")
+	]
+	dispinterface _IVideoDisplayEvents
+	{
+		properties:
+		methods:
+	};
+	[
+		uuid(5C2C407B-09D9-449B-BB83-C39B7802A684),
+		control,
+		helpstring("VideoDisplay Class")
+	]
+	coclass VideoDisplay
+	{
+		[default] interface IVideoDisplay;
+		[default, source] dispinterface _IVideoDisplayEvents;
+	};
+	[
+		uuid(DC4A212A-8573-4851-A145-F7DC83C619D4),
+		helpstring("_INetTransportEvents Interface")
+	]
+	dispinterface _INetTransportEvents
+	{
+		properties:
+		methods:
+			[id(1), helpstring("method OnEvent")] void OnEvent([in]USHORT type, [in]BSTR data);
+	};
+	[
+		uuid(5A7D84EC-382C-4844-AB3A-9825DBE30DAE),
+		helpstring("NetTransport Class")
+	]
+	coclass NetTransport
+	{
+		[default] interface INetTransport;
+		[default, source] dispinterface _INetTransportEvents;
+	};
+	[
+		uuid(0238851B-1479-40B6-A1EB-E21B0FDF04EC),
+		helpstring("_ILooperEvents Interface")
+	]
+	dispinterface _ILooperEvents
+	{
+		properties:
+		methods:
+	};
+	[
+		uuid(7082C446-54A8-4280-A18D-54143846211A),
+		control,
+		helpstring("Looper Class")
+	]
+	coclass Looper
+	{
+		[default] interface ILooper;
+		[default, source] dispinterface _ILooperEvents;
+	};
+};
