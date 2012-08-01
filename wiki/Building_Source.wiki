@@ -4,7 +4,7 @@
 <wiki:toc max_depth="3" />
 
 To build the source code you'll need Visual Studio 2008 or later.<br />
-Please note that webrtc4ie requires [http://code.google.com/p/doubango/ Doubango v2.x]
+Please note that webrtc4all requires [http://code.google.com/p/doubango/ Doubango v2.x]
 
 == Supported systems ==
  * Windows XP SP3
