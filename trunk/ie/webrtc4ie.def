@@ -1,0 +1,10 @@
+; webrtc4ie.def : Declares the module parameters.
+
+LIBRARY      "webrtc4ie.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE
+	DllInstall		PRIVATE
