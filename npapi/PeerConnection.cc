@@ -239,7 +239,9 @@ bool PeerConnection::HasProperty(NPObject* obj, NPIdentifier propertyName)
 	char* name = BrowserFuncs->utf8fromidentifier(propertyName);
 	bool ret_val = !strcmp(name, kPropLocalDescription) ||
 		!strcmp(name, kPropRemoteDescription) ||
-		!strcmp(name, kPropOpaque);	
+		!strcmp(name, kPropOpaque) ||
+		!strcmp(name, kPropLocalVideo) ||
+		!strcmp(name, kPropRemoteVideo);
 	BrowserFuncs->memfree(name);
 	return ret_val;
 }
@@ -272,6 +274,14 @@ bool PeerConnection::GetProperty(NPObject* obj, NPIdentifier propertyName, NPVar
 		OBJECT_TO_NPVARIANT(This->m_Opaque, *result);
 		ret_val = true;
 	}
+	else if(!strcmp(name, kPropLocalVideo)){
+		DOUBLE_TO_NPVARIANT((double)This->mLocalVideo, *result);
+		ret_val = true;
+	}
+	else if(!strcmp(name, kPropRemoteVideo)){
+		DOUBLE_TO_NPVARIANT((double)This->mRemoteVideo, *result);
+		ret_val = true;
+	}
 	else{
 		// BrowserFuncs->setexception(obj, "Unknown property");
 	}
@@ -295,6 +305,22 @@ bool PeerConnection::SetProperty(NPObject *npobj, NPIdentifier propertyName, con
 			NP_OBJECT_RELEASE(This->m_Opaque);
 			This->m_Opaque = BrowserFuncs->retainobject(value->value.objectValue);
 			ret_val = true;
+		}
+	}
+	else if(!strcmp(name, kPropLocalVideo)){
+		if((!NPVARIANT_IS_DOUBLE(*value) && !NPVARIANT_IS_INT32(*value))){
+			BrowserFuncs->setexception(npobj, "Invalid argument");
+		}
+		else{
+		  ret_val = This->SetDisplayLocal((LONGLONG)(NPVARIANT_IS_DOUBLE(*value) ? value->value.doubleValue : value->value.intValue));
+		}
+	}
+	else if(!strcmp(name, kPropRemoteVideo)){
+		if((!NPVARIANT_IS_DOUBLE(*value) && !NPVARIANT_IS_INT32(*value))){
+			BrowserFuncs->setexception(npobj, "Invalid argument");
+		}
+		else{
+		  ret_val = This->SetDisplayRemote((LONGLONG)(NPVARIANT_IS_DOUBLE(*value) ? value->value.doubleValue : value->value.intValue));
 		}
 	}
 	BrowserFuncs->memfree(name);

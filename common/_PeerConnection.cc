@@ -209,6 +209,16 @@ bool _PeerConnection::SetDisplays(LONGLONG local, LONGLONG remote)
 	return true;
 }
 
+bool _PeerConnection::SetDisplayLocal(LONGLONG local)
+{
+	return SetDisplays(local, mRemoteVideo);
+}
+
+bool _PeerConnection::SetDisplayRemote(LONGLONG remote)
+{
+	return SetDisplays(mLocalVideo, remote);
+}
+
 void _PeerConnection::StartMedia()
 {
 	if(mSessionMgr){
