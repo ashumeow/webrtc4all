@@ -30,4 +30,4 @@ svn checkout http://doubango.googlecode.com/svn/branches/2.0/doubango doubango
 }}}
 
 <br />
-To open & build all projects, open *webrtc4ie-read-only\webrtc4ie.sln*
+To open & build all projects, open *webrtc4all-read-only\webrtc4all.sln*
