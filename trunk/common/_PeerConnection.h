@@ -105,6 +105,8 @@ public:
 	virtual bool _StopDebug(void);
 
 	virtual bool SetDisplays(LONGLONG local, LONGLONG remote);
+	virtual bool SetDisplayLocal(LONGLONG local);
+	virtual bool SetDisplayRemote(LONGLONG remote);
 
 
 protected:
