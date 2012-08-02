@@ -18,7 +18,7 @@
 * You should have received a copy of the GNU General Public License
 * along with sipML5.
 */
-// "http://tools.ietf.org/html/draft-uberti-rtcweb-jsep-02" implementation for Microsoft Internet Explorer
+// "http://tools.ietf.org/html/draft-uberti-rtcweb-jsep-02" implementation for Safari, Opera, Firefox and IE
 
 w4aPeerConnection.prototype.s_configuration = null;
 w4aPeerConnection.prototype.f_IceCallback = null;
@@ -170,13 +170,14 @@ function w4aPeerConnection(s_configuration, f_IceCallback) {
     this.o_peer.Init(s_configuration);
 
     // attach displays if defined by the user
+    try { this.o_peer.localVideo = (__o_display_local ? __o_display_local.hWnd : 0); } catch (e) { }
+    try { this.o_peer.remoteVideo = (__o_display_remote ? __o_display_remote.hWnd : 0); } catch (e) { }
+
+    // register callback function
     if (b_isInternetExplorer) {
-        try { this.o_peer.localVideo = (__o_display_local ? __o_display_local.hWnd : 0); } catch (e) { }
-        try { this.o_peer.remoteVideo = (__o_display_remote ? __o_display_remote.hWnd : 0); } catch (e) { }
         eval("function This.o_peer::IceCallback(media, label, bMoreToFollow) { return This.onIceCallback (media, label, bMoreToFollow); }");
     }
     else {
-        try { this.o_peer.attachDisplays(h_wndLocal, h_wndRemote); } catch (e) { }
         this.o_peer.opaque = This;
         this.o_peer.setCallbackFuncName("w4aPeerConnection_NPAPI_OnEvent");
     }
