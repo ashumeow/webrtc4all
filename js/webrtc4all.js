@@ -259,7 +259,7 @@ w4aPeerConnection.prototype.addStream = function (o_stream, o_hints) {
 }
 
 // void removeStream (MediaStream stream);
-w4aPeerConnection.prototype.addStream = function (o_stream) {
+w4aPeerConnection.prototype.removeStream = function (o_stream) {
 }
 
 // void close()
