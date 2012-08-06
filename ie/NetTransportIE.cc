@@ -17,7 +17,7 @@
 * along with webrtc4ie.
 */
 #include "NetTransportIE.h"
-#include "Utils.h"
+#include "UtilsIE.h"
 
 #include <comutil.h>
 #include <stdio.h>

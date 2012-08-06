@@ -28,8 +28,16 @@ m_pWinProc(NULL),
 m_BrowserType(BrowserType_None)
 {
 	_Utils::Initialize();
-	if(strstr(BrowserFuncs->uagent(m_npp), "Safari")){
+	const char* uagent = BrowserFuncs->uagent(m_npp);
+	
+	if(strstr(uagent, "Chrome")){
+		m_BrowserType = BrowserType_Chrome;
+	}
+	else if(strstr(uagent, "Safari")){
 		m_BrowserType = BrowserType_Safari;
+	}
+	else if(strstr(uagent, "Firefox")){
+		m_BrowserType = BrowserType_Firefox;
 	}
 }
 
@@ -61,4 +69,14 @@ bool _NPObject::SetWindow(NPWindow* pWindow, bool bSubClass)
 LONGLONG _NPObject::GetWindowHandle()
 {
 	return m_pWindow ? (LONGLONG)m_pWindow->window : 0;
+}
+
+bool _NPObject::StartDebug()
+{
+	return _Utils::StartDebug();
+}
+
+bool _NPObject::StopDebug()
+{
+	return _Utils::StopDebug();
 }

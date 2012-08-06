@@ -25,6 +25,8 @@
 #define kFuncStart  "Start"
 #define kFuncStop  "Stop"
 #define kFuncSendTo  "SendTo"
+#define kFuncStartDebug  "StartDebug"
+#define kFuncStopDebug  "StopDebug"
 #define kFuncSetCallbackFuncName  "setCallbackFuncName"
 #define kPropLocalIP  "localIP"
 #define kPropLocalPort  "localPort"
@@ -125,6 +127,8 @@ bool NetTransport::HasMethod(NPObject* obj, NPIdentifier methodName)
 	bool ret_val = !strcmp(name, kFuncSendTo) ||
 		!strcmp(name, kFuncStart) ||
 		!strcmp(name, kFuncStop) ||
+		!strcmp(name, kFuncStartDebug) ||
+		!strcmp(name, kFuncStopDebug) ||
 		!strcmp(name, kFuncSetDomain) ||
 		!strcmp(name, kFuncSetCallbackFuncName);
 	BrowserFuncs->memfree(name);
@@ -161,6 +165,12 @@ bool NetTransport::Invoke(NPObject* obj, NPIdentifier methodName,
 	}
 	else if(!strcmp(name, kFuncStop)){
 		ret_val = This->Stop();
+	}
+	else if(!strcmp(name, kFuncStartDebug)){
+		ret_val = This->StartDebug();
+	}
+	else if(!strcmp(name, kFuncStopDebug)){
+		ret_val = This->StopDebug();
 	}
 	else if(!strcmp(name, kFuncSetDomain)){
 		if((argCount < 1) || !NPVARIANT_IS_STRING(args[0])){

@@ -19,6 +19,7 @@
 #include "WebRtc4npapi.h"
 #include "PeerConnection.h"
 #include "NetTransport.h"
+#include "Utils.h"
 #include "SessionDescription.h"
 #include "../common/_Utils.h"
 
@@ -194,6 +195,7 @@ bool WebRtc4npapi::HasProperty(NPObject* obj, NPIdentifier propertyName)
 	char* name = BrowserFuncs->utf8fromidentifier(propertyName);
 	bool ret_val = !strcmp(name, kPropSupportsPeerConnection) ||
 			!strcmp(name, kPropSupportsSessionDescription) ||
+			!strcmp(name, kPropVersion) ||
 			!strcmp(name, kPropSupportsNetTransport);
 	BrowserFuncs->memfree(name);
 	return ret_val;
@@ -217,6 +219,11 @@ bool WebRtc4npapi::GetProperty(NPObject* obj, NPIdentifier propertyName, NPVaria
 	}
 	else if(!strcmp(name, kPropSupportsNetTransport)){
 		BOOLEAN_TO_NPVARIANT(true, *result);
+		ret_val = true;
+	}
+	else if(!strcmp(name, kPropVersion)){
+		char* _str = (char*)Utils::MemDup(THIS_VERSION, tsk_strlen(THIS_VERSION));
+		STRINGN_TO_NPVARIANT(_str, tsk_strlen(_str), *result);
 		ret_val = true;
 	}
 
