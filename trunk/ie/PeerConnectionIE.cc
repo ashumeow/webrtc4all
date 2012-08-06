@@ -39,7 +39,7 @@ STDMETHODIMP CPeerConnection::InterfaceSupportsErrorInfo(REFIID riid)
 }
 
 CPeerConnection::CPeerConnection():
-_PeerConnection(),
+_PeerConnection(BrowserType_IE),
 mLooperHandle(NULL),
 mLooperProc(NULL)
 {

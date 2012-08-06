@@ -34,7 +34,7 @@
 #	pragma warning( disable : 4996 ) 
 #endif
 
-#define THIS_VERSION	"1.0.715"
+#define THIS_VERSION	"1.0.731"
 #define USE_IPV6		FALSE
 #define USE_RTCP_MUX	TRUE
 #define USE_ICE_RTCP	(!USE_RTCP_MUX)
@@ -74,7 +74,11 @@ using namespace ATL;
 typedef enum BrowserType_e
 {
 	BrowserType_None,
-	BrowserType_Safari
+	BrowserType_Safari,
+	BrowserType_Firefox,
+	BrowserType_IE,
+	BrowserType_Opera,
+	BrowserType_Chrome
 }
 BrowserType_t;
 

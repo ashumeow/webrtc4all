@@ -24,7 +24,8 @@
 static BOOL g_bAlwaysCreateOnCurrentThread = TRUE; // because "ThreadingModel 'Apartment'"
 static BOOL g_bAVPF = TRUE;
 
-_PeerConnection::_PeerConnection(): 
+_PeerConnection::_PeerConnection(BrowserType_t browserType): 
+	mBrowserType(browserType),
 	mRemoteVideo(0),
 	mLocalVideo(0),
 	mReadyState(ReadyStateNew),
@@ -256,13 +257,16 @@ bool _PeerConnection::CreateSessionMgr(tmedia_type_t eMediaType, bool offerer)
 	}
 	 
 	int32_t fs = (mFullScreen == true) ? 1 : 0;
+	int32_t plugin_firefox  = (mBrowserType == BrowserType_Firefox || mBrowserType == BrowserType_Chrome) ? 1 : 0;
 	tmedia_session_mgr_set(mSessionMgr,
 			TMEDIA_SESSION_SET_INT32(mSessionMgr->type, "avpf-enabled", g_bAVPF), // Otherwise will be negociated using SDPCapNeg (RFC 5939)
 			TMEDIA_SESSION_PRODUCER_SET_INT64(tmedia_video, "local-hwnd", mLocalVideo),
 			TMEDIA_SESSION_PRODUCER_SET_INT32(tmedia_video, "create-on-current-thead", g_bAlwaysCreateOnCurrentThread),
+			TMEDIA_SESSION_PRODUCER_SET_INT32(tmedia_video, "plugin-firefox", plugin_firefox),
 			TMEDIA_SESSION_CONSUMER_SET_INT64(tmedia_video, "remote-hwnd", mRemoteVideo),
 			TMEDIA_SESSION_CONSUMER_SET_INT32(tmedia_video, "create-on-current-thead", g_bAlwaysCreateOnCurrentThread),
 			TMEDIA_SESSION_CONSUMER_SET_INT32(tmedia_video, "fullscreen", fs),
+			TMEDIA_SESSION_CONSUMER_SET_INT32(tmedia_video, "plugin-firefox", plugin_firefox),
 			TMEDIA_SESSION_SET_NULL());
 
 	return true;

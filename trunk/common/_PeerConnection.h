@@ -89,7 +89,7 @@ private:
 
 class _PeerConnection {
 public:
-  _PeerConnection();
+  _PeerConnection(BrowserType_t browserType);
   virtual ~_PeerConnection();
 
  protected:
@@ -142,6 +142,8 @@ protected:
 	LONGLONG mLocalVideo;
 
 	bool mFullScreen;
+
+	BrowserType_t mBrowserType;
 
 	CRITICAL_SECTION mCSIceCallback;
 };

@@ -62,7 +62,7 @@ NPClass PeerConnectionClass = {
 
 PeerConnection::PeerConnection(NPP instance)
     : _NPObject(instance),
-	_PeerConnection(),
+	_PeerConnection(m_BrowserType),
 	m_Opaque(NULL),
 	m_CallbackFuncName(NULL)
 {

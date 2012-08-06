@@ -30,6 +30,8 @@ public:
 	virtual ~_NPObject();
 	bool SetWindow(NPWindow* pWindow, bool bSubClass);
 	LONGLONG GetWindowHandle();
+	bool StartDebug();
+	bool StopDebug();
 
 protected:
 	NPWindow* m_pWindow;
