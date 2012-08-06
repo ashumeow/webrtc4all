@@ -21,14 +21,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_41DCA763473F426B8EB1FBBC1A9772F1"
+        "OwnerKey" = "8:_C6DA078595B4416CB73F8C0C0A18FD24"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_84695298AEE7428692DCBF868AC1414D"
-        "OwnerKey" = "8:_9DCDA766594646EA9ABEE69252A67922"
+        "MsmKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -51,26 +51,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_9DCDA766594646EA9ABEE69252A67922"
-        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9DCDA766594646EA9ABEE69252A67922"
+        "MsmKey" = "8:_C6DA078595B4416CB73F8C0C0A18FD24"
         "OwnerKey" = "8:_F8BF676FBE2B4C5EAB13DBD06B58994E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A671BB049F6F4B5D8C5D5F31FA594D10"
-        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C97E9434AA9D5970035332413C909F6C"
-        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -82,37 +64,13 @@
         "Entry"
         {
         "MsmKey" = "8:_CCE602BEF3C943481A5EF3144F1979EE"
-        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CCE602BEF3C943481A5EF3144F1979EE"
         "OwnerKey" = "8:_F8BF676FBE2B4C5EAB13DBD06B58994E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D7003963F0204A63822BFD41269E2244"
-        "OwnerKey" = "8:_A671BB049F6F4B5D8C5D5F31FA594D10"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DD21BB79EB427256251A57125B690D7A"
-        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_DD21BB79EB427256251A57125B690D7A"
         "OwnerKey" = "8:_F8BF676FBE2B4C5EAB13DBD06B58994E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_EE1BC3FCEAC012124D8FA2EAD7C70657"
-        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -125,12 +83,6 @@
         {
         "MsmKey" = "8:_F8BF676FBE2B4C5EAB13DBD06B58994E"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FECAADC32E15B0E066A0AC859D1BFC28"
-        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -164,6 +116,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
+                    {
+                    "Name" = "8:.NET Framework 3.5 SP1"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
         "Release"
@@ -464,14 +429,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:webrtc4all"
-        "ProductCode" = "8:{A8729E7F-329A-4266-8190-E4C0F2CA709A}"
-        "PackageCode" = "8:{11AB8640-8018-4262-9E74-DBD12C16021B}"
+        "ProductCode" = "8:{5FB41A53-54D2-449A-B540-C1C37828FF70}"
+        "PackageCode" = "8:{2D0197C5-4A4B-4FA0-909B-A0D6F6665418}"
         "UpgradeCode" = "8:{E3B0E40C-0B7A-4F0C-A1B6-831361E82A15}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.731"
+        "ProductVersion" = "8:1.9.731"
         "Manufacturer" = "8:Doubango Telecom"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1098,7 +1063,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_84695298AEE7428692DCBF868AC1414D"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_41DCA763473F426B8EB1FBBC1A9772F1"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1112,39 +1077,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_9DCDA766594646EA9ABEE69252A67922"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_C6DA078595B4416CB73F8C0C0A18FD24"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "SourcePath" = "8:policy_9_0_Microsoft_VC90_CRT_x86.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:0"
-            "Exclude" = "11:FALSE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_A671BB049F6F4B5D8C5D5F31FA594D10"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:policy_9_0_Microsoft_VC90_ATL_x86.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:0"
-            "Exclude" = "11:FALSE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_D7003963F0204A63822BFD41269E2244"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:microsoft_vc90_atl_x86.msm"
                 "Properties"
                 {
                 }
