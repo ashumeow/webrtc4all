@@ -79,6 +79,8 @@ void _Utils::Initialize(void)
 			);
 
 		tmedia_defaults_set_profile(tmedia_profile_rtcweb);
+		tmedia_defaults_set_rtcp_enabled(tsk_true);
+		tmedia_defaults_set_rtcpmux_enabled(tsk_true);
 		tmedia_defaults_set_pref_video_size(tmedia_pref_video_size_vga);
 
 		tmedia_defaults_set_echo_supp_enabled(tsk_true);

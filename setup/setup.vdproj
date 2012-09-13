@@ -21,13 +21,37 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_41DCA763473F426B8EB1FBBC1A9772F1"
-        "OwnerKey" = "8:_C6DA078595B4416CB73F8C0C0A18FD24"
+        "MsmKey" = "8:_24566C00E0704EFDB5042EC86C1C3936"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4EAC3E96D7904B1B945F83F94F349B33"
+        "OwnerKey" = "8:_50C8442780CC47C3839651893CCE1531"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_50C8442780CC47C3839651893CCE1531"
+        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_78F4AEE34D264641A0160716665224FD"
+        "OwnerKey" = "8:_A041237DF62540789FAA0774447E7472"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_83C5B965F601422A91FD8733DE218919"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -51,8 +75,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C6DA078595B4416CB73F8C0C0A18FD24"
+        "MsmKey" = "8:_A041237DF62540789FAA0774447E7472"
+        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A041237DF62540789FAA0774447E7472"
         "OwnerKey" = "8:_F8BF676FBE2B4C5EAB13DBD06B58994E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C97E9434AA9D5970035332413C909F6C"
+        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,8 +99,32 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_CA54061ECCE14CB081FFD3C8F9922A22"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CCE602BEF3C943481A5EF3144F1979EE"
+        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_CCE602BEF3C943481A5EF3144F1979EE"
         "OwnerKey" = "8:_F8BF676FBE2B4C5EAB13DBD06B58994E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DC14761667CD4AB797279415F355A55C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DD21BB79EB427256251A57125B690D7A"
+        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -76,13 +136,31 @@
         "Entry"
         {
         "MsmKey" = "8:_EE1BC3FCEAC012124D8FA2EAD7C70657"
+        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EE1BC3FCEAC012124D8FA2EAD7C70657"
         "OwnerKey" = "8:_F8BF676FBE2B4C5EAB13DBD06B58994E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F0D229FC61374DEEB57709ACEBF03DB8"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_F8BF676FBE2B4C5EAB13DBD06B58994E"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_FECAADC32E15B0E066A0AC859D1BFC28"
+        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -213,6 +291,46 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_24566C00E0704EFDB5042EC86C1C3936"
+            {
+            "SourcePath" = "8:..\\Release\\tinyDAV.dll"
+            "TargetName" = "8:tinyDAV.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_68E7867564AF4A41A21CCBCC8CF2E5A2"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_83C5B965F601422A91FD8733DE218919"
+            {
+            "SourcePath" = "8:..\\Release\\tinyNET.dll"
+            "TargetName" = "8:tinyNET.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_68E7867564AF4A41A21CCBCC8CF2E5A2"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8925C814891241E9B98238BC9B2108EE"
             {
             "SourcePath" = "8:..\\Release\\tinyDSHOW.dll"
@@ -289,8 +407,28 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CA54061ECCE14CB081FFD3C8F9922A22"
+            {
+            "SourcePath" = "8:..\\Release\\tinyMEDIA.dll"
+            "TargetName" = "8:tinyMEDIA.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_68E7867564AF4A41A21CCBCC8CF2E5A2"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CCE602BEF3C943481A5EF3144F1979EE"
@@ -309,8 +447,28 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DC14761667CD4AB797279415F355A55C"
+            {
+            "SourcePath" = "8:..\\Release\\tinySDP.dll"
+            "TargetName" = "8:tinySDP.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_68E7867564AF4A41A21CCBCC8CF2E5A2"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DD21BB79EB427256251A57125B690D7A"
@@ -329,7 +487,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -349,8 +507,28 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F0D229FC61374DEEB57709ACEBF03DB8"
+            {
+            "SourcePath" = "8:..\\Release\\tinySAK.dll"
+            "TargetName" = "8:tinySAK.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_68E7867564AF4A41A21CCBCC8CF2E5A2"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FECAADC32E15B0E066A0AC859D1BFC28"
@@ -369,7 +547,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -429,14 +607,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:webrtc4all"
-        "ProductCode" = "8:{5FB41A53-54D2-449A-B540-C1C37828FF70}"
-        "PackageCode" = "8:{2D0197C5-4A4B-4FA0-909B-A0D6F6665418}"
+        "ProductCode" = "8:{4305D5FD-8729-4DFF-AD69-148B03AFCC91}"
+        "PackageCode" = "8:{DFC19536-12E7-4695-8366-66041CA10C0D}"
         "UpgradeCode" = "8:{E3B0E40C-0B7A-4F0C-A1B6-831361E82A15}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.9.731"
+        "ProductVersion" = "8:1.11.745"
         "Manufacturer" = "8:Doubango Telecom"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1063,7 +1241,35 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_41DCA763473F426B8EB1FBBC1A9772F1"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_4EAC3E96D7904B1B945F83F94F349B33"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:microsoft_vc90_atl_x86.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_50C8442780CC47C3839651893CCE1531"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:policy_9_0_Microsoft_VC90_ATL_x86.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_78F4AEE34D264641A0160716665224FD"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1077,7 +1283,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_C6DA078595B4416CB73F8C0C0A18FD24"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_A041237DF62540789FAA0774447E7472"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
