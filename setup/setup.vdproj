@@ -27,13 +27,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_4EAC3E96D7904B1B945F83F94F349B33"
-        "OwnerKey" = "8:_50C8442780CC47C3839651893CCE1531"
+        "MsmKey" = "8:_343CC9FAB7FD45169BC8D1D099015C01"
+        "OwnerKey" = "8:_41986C4853DD41839F3AC5E9A046DCB2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_50C8442780CC47C3839651893CCE1531"
+        "MsmKey" = "8:_41986C4853DD41839F3AC5E9A046DCB2"
         "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -45,8 +45,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_78F4AEE34D264641A0160716665224FD"
-        "OwnerKey" = "8:_A041237DF62540789FAA0774447E7472"
+        "MsmKey" = "8:_67A7A592667B4FE4934F97F6DA54A776"
+        "OwnerKey" = "8:_D0DB8FD3FCAC4ED3865BB60D18452281"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -71,18 +71,6 @@
         {
         "MsmKey" = "8:_97FCC09552304788A8591DDBB67A9574"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A041237DF62540789FAA0774447E7472"
-        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A041237DF62540789FAA0774447E7472"
-        "OwnerKey" = "8:_F8BF676FBE2B4C5EAB13DBD06B58994E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -112,6 +100,18 @@
         "Entry"
         {
         "MsmKey" = "8:_CCE602BEF3C943481A5EF3144F1979EE"
+        "OwnerKey" = "8:_F8BF676FBE2B4C5EAB13DBD06B58994E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D0DB8FD3FCAC4ED3865BB60D18452281"
+        "OwnerKey" = "8:_5B9BED36A5FA480CA362660DA71B7868"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D0DB8FD3FCAC4ED3865BB60D18452281"
         "OwnerKey" = "8:_F8BF676FBE2B4C5EAB13DBD06B58994E"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -607,14 +607,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:webrtc4all"
-        "ProductCode" = "8:{4305D5FD-8729-4DFF-AD69-148B03AFCC91}"
-        "PackageCode" = "8:{DFC19536-12E7-4695-8366-66041CA10C0D}"
+        "ProductCode" = "8:{06CD8768-8DCE-47C5-B5AD-9D47387EAEEE}"
+        "PackageCode" = "8:{EB0D423E-81EE-4102-9646-45E322A97A21}"
         "UpgradeCode" = "8:{E3B0E40C-0B7A-4F0C-A1B6-831361E82A15}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.11.745"
+        "ProductVersion" = "8:1.12.756"
         "Manufacturer" = "8:Doubango Telecom"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1241,7 +1241,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_4EAC3E96D7904B1B945F83F94F349B33"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_343CC9FAB7FD45169BC8D1D099015C01"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1255,7 +1255,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_50C8442780CC47C3839651893CCE1531"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_41986C4853DD41839F3AC5E9A046DCB2"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1269,7 +1269,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_78F4AEE34D264641A0160716665224FD"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_67A7A592667B4FE4934F97F6DA54A776"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1283,7 +1283,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_A041237DF62540789FAA0774447E7472"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_D0DB8FD3FCAC4ED3865BB60D18452281"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
