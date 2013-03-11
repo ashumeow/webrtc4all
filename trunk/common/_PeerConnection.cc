@@ -128,7 +128,9 @@ bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription
 		goto bail;
 	}
 
-	(action);
+	tmedia_ro_type_t ro_type = (action == SdpActionProvisionalAnswer) 
+		? tmedia_ro_type_provisional
+		: (action == SdpActionAnswer ? tmedia_ro_type_answer : tmedia_ro_type_offer);
 
 	if(!mSessionMgr){
 		if(!CreateSessionMgr(tmedia_type_from_sdp(sdpObj->GetSdp()), false)){
@@ -137,7 +139,7 @@ bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription
 		}
 	}
 	
-	if((iRet = tmedia_session_mgr_set_ro(mSessionMgr, sdpObj->GetSdp())) != 0){
+	if((iRet = tmedia_session_mgr_set_ro(mSessionMgr, sdpObj->GetSdp(), ro_type)) != 0){
 		TSK_DEBUG_ERROR("tmedia_session_mgr_set_ro() failed with error code = %d", iRet);
 		goto bail;
 	}
