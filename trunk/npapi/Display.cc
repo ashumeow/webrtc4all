@@ -19,7 +19,7 @@
 #include "Display.h"
 #include "../common/_Utils.h"
 
-#include "tinydshow/DSDisplay.h"
+#include "internals/DSDisplay.h" /* plugins/pluginDirectShow */
 
 #include <string>
 

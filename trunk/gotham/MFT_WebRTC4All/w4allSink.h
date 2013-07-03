@@ -7,6 +7,7 @@
  *
  * @author Batman@GothamCity
  */
+#pragma once
 
 #include <windows.h>
 #include <mfidl.h>
@@ -17,7 +18,7 @@
 
 #include "w4allUtils.h"
 
-class CW4allStream;
+class CW4allStreamSink;
 class CW4allMarker;
 
 enum FlushState
@@ -51,7 +52,7 @@ class CW4allSink : public IMFFinalizableMediaSink,   // Note: IMFFinalizableMedi
                  public IMFClockStateSink
 {
 
-    friend class CW4allStream;
+    friend class CW4allStreamSink;
 
 public:
     // Static method to create the object.
@@ -115,7 +116,7 @@ private:
 
     BOOL                        m_IsShutdown;               // Flag to indicate if Shutdown() method was called.
 
-    CW4allStream                  *m_pStream;                 // Byte stream
+    CW4allStreamSink                  *m_pStream;                 // Byte stream
     IMFPresentationClock        *m_pClock;                  // Presentation clock.
 };
 
@@ -200,7 +201,7 @@ public:
     InvokeFn m_pInvokeFn;
 };
 
-class CW4allStream : public IMFStreamSink, public IMFMediaTypeHandler
+class CW4allStreamSink : public IMFStreamSink, public IMFMediaTypeHandler
 {
     friend class CW4allSink;
 
@@ -296,8 +297,8 @@ private:
     static BOOL ValidStateMatrix[State_Count][Op_Count];
 
 
-    CW4allStream(bool bVideo);
-    virtual ~CW4allStream();
+    CW4allStreamSink(bool bVideo);
+    virtual ~CW4allStreamSink();
 
     HRESULT Initialize(CW4allSink *pParent);
 
@@ -342,7 +343,7 @@ private:
     BOOL                        m_IsShutdown;               // Flag to indicate if Shutdown() method was called.
 
     DWORD                       m_WorkQueueId;              // ID of the work queue for asynchronous operations.
-    AsyncCallback<CW4allStream>   m_WorkQueueCB;              // Callback for the work queue.
+    AsyncCallback<CW4allStreamSink>   m_WorkQueueCB;              // Callback for the work queue.
 
     MFTIME                      m_StartTime;                // Presentation time when the clock started.
     DWORD                       m_cbDataWritten;            // How many bytes we have written so far. (FIXME: remove)

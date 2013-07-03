@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="test"
-	ProjectGUID="{6B49322E-5121-4A81-86FF-15C4DE6F7AE6}"
+	ProjectGUID="{D55F2AB4-8DC8-424F-AE98-50BD44BDF239}"
 	RootNamespace="test"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
@@ -41,14 +41,13 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\thirdparties\source\doubango\thirdparties\win32\include;..\..\thirdparties\source\doubango\tinyMEDIA\include;..\..\thirdparties\source\doubango\tinySDP\include;..\..\thirdparties\source\doubango\tinyDAV\include;..\..\thirdparties\source\doubango\tinySAK\src;..\..\thirdparties\source\doubango\tinyNET\src;..\..\thirdparties\source\doubango\tinyMSRP\include"
+				AdditionalIncludeDirectories=".."
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
+				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				WarnAsError="true"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -62,6 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="$(OutDir)\MFT_WebRTC4All.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -116,13 +116,12 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\thirdparties\source\doubango\thirdparties\win32\include;..\..\thirdparties\source\doubango\tinyMEDIA\include;..\..\thirdparties\source\doubango\tinySDP\include;..\..\thirdparties\source\doubango\tinyDAV\include;..\..\thirdparties\source\doubango\tinySAK\src;..\..\thirdparties\source\doubango\tinyNET\src;..\..\thirdparties\source\doubango\tinyMSRP\include"
+				AdditionalIncludeDirectories=".."
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				WarnAsError="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -136,6 +135,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="$(OutDir)\MFT_WebRTC4All.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -175,11 +175,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\stdafx.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\test.cc"
+				RelativePath=".\test_encoder.cc"
 				>
 			</File>
 		</Filter>
@@ -188,18 +184,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\targetver.h"
-				>
-			</File>
-			<File
-				RelativePath=".\test_rtp.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

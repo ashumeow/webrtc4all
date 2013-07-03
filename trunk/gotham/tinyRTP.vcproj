@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="tinyRTP"
 	ProjectGUID="{99B7D02F-8C70-4B45-AF3C-92313C3CEE15}"
 	RootNamespace="tinyRTP"
@@ -118,8 +118,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="false"
-				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyNET\src"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;TINYRTP_EXPORTS"
+				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyMEDIA\include"
+				PreprocessorDefinitions="HAVE_SRTP=1;WIN32;NDEBUG;_WINDOWS;_USRDLL;TINYRTP_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="false"
 				UsePrecompiledHeader="0"
@@ -139,7 +139,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ws2_32.lib $(OutDir)\tinySAK.lib $(OutDir)\tinyNET.lib"
+				AdditionalDependencies="ws2_32.lib &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\srtp\libsrtp.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libgcc.a&quot; $(OutDir)\tinySAK.lib $(OutDir)\tinyNET.lib $(OutDir)\tinyMEDIA.lib"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames="MSVCRTD"
 				GenerateDebugInformation="false"
