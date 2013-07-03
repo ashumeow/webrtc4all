@@ -3,7 +3,7 @@
 * Copyright (C) Microsoft Corporation. All rights reserved.
 */
 /**@file w4allSink.cc
- * @brief Audio/Video Media Foundation Sink (source)
+ * @brief Audio/Video Media Foundation Sink (implementation)
  *
  * @author Batman@GothamCity
  */
@@ -39,80 +39,8 @@ HRESULT CreateWavSink(IMFMediaSink **ppSink)
     return CW4allSink::CreateInstance(IID_IMFMediaSink, (void**)ppSink);
 }
 
-
-// The stream ID of the one stream on the sink.
-const DWORD W4A_SINK_STREAM_ID = 1;
-
-
-// Video FOURCC codes.
-const FOURCC FOURCC_YUY2 = MAKEFOURCC('Y', 'U', 'Y', '2');
-const FOURCC FOURCC_UYVY = MAKEFOURCC('U', 'Y', 'V', 'Y');
-const FOURCC FOURCC_NV12 = MAKEFOURCC('N', 'V', '1', '2');
-
-// Static array of media types (preferred and accepted).
-const GUID* g_VideoSubtypes[] =
-{
-    & MEDIASUBTYPE_NV12,
-    & MEDIASUBTYPE_YUY2,
-    & MEDIASUBTYPE_UYVY
-};
-
-// Number of media types in the aray.
-DWORD g_NumVideoSubtypes = ARRAYSIZE(g_VideoSubtypes);
-
-// PCM_Audio_Format_Params
-// Defines parameters for uncompressed PCM audio formats.
-// The remaining fields can be derived from these.
-struct PCM_Audio_Format_Params
-{
-    DWORD   nSamplesPerSec; // Samples per second.
-    WORD    wBitsPerSample; // Bits per sample.
-    WORD    nChannels;      // Number of channels.
-};
-
-
-// g_AudioFormats: Static list of our preferred formats.
-
-// This is an ordered list that we use to hand out formats in the
-// stream's IMFMediaTypeHandler::GetMediaTypeByIndex method. The
-// stream will accept other bit rates not listed here.
-
-PCM_Audio_Format_Params g_AudioFormats[] =
-{
-	{ 8000, 16, 1 },
-
-    { 48000, 16, 2 },
-    { 48000, 8, 2 },
-    { 44100, 16, 2 },
-    { 44100, 8, 2 },
-    { 22050, 16, 2 },
-    { 22050, 8, 2 },
-
-    { 48000, 16, 1 },
-    { 48000, 8, 1 },
-    { 44100, 16, 1 },
-    { 44100, 8, 1 },
-    { 22050, 16, 1 },
-    { 22050, 8, 1 },
-};
-
-DWORD g_NumAudioFormats = ARRAYSIZE(g_AudioFormats);
-
 // Forward declares
-HRESULT ValidateWaveFormat(const WAVEFORMATEX *pWav, DWORD cbSize);
 HRESULT ValidateVideoFormat(IMFMediaType *pmt);
-
-HRESULT CreatePCMAudioType(
-    UINT32 sampleRate,        // Samples per second
-    UINT32 bitsPerSample,     // Bits per sample
-    UINT32 cChannels,         // Number of channels
-    IMFMediaType **ppType     // Receives a pointer to the media type.
-    );
-
-HRESULT CreateVideoType(
-		const GUID* subType, // video subType
-		IMFMediaType **ppType     // Receives a pointer to the media type.
-	);
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -152,7 +80,7 @@ HRESULT CW4allSink_CreateInstance(REFIID iid, void **ppMFT)
 
     if (SUCCEEDED(hr))
     {
-        hr = pSink->Initialize();
+        hr = pSink->Initialize(); // create stream which will increment ref()
     }
 
     if (SUCCEEDED(hr))
@@ -689,7 +617,7 @@ HRESULT CW4allSink::Initialize()
 {
     HRESULT hr = S_OK;
 
-    m_pStream = new CW4allStream(m_bVideo);
+    m_pStream = new CW4allStreamSink(m_bVideo);
     if (m_pStream == NULL)
     {
         hr = E_OUTOFMEMORY;
@@ -707,26 +635,26 @@ HRESULT CW4allSink::Initialize()
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //
-// CAsyncOperation class. - Private class used by CW4allStream class.
+// CAsyncOperation class. - Private class used by CW4allStreamSink class.
 //
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-CW4allStream::CAsyncOperation::CAsyncOperation(StreamOperation op)
+CW4allStreamSink::CAsyncOperation::CAsyncOperation(StreamOperation op)
     : m_nRefCount(1), m_op(op)
 {
 }
 
-CW4allStream::CAsyncOperation::~CAsyncOperation()
+CW4allStreamSink::CAsyncOperation::~CAsyncOperation()
 {
     assert(m_nRefCount == 0);
 }
 
-ULONG CW4allStream::CAsyncOperation::AddRef()
+ULONG CW4allStreamSink::CAsyncOperation::AddRef()
 {
     return InterlockedIncrement(&m_nRefCount);
 }
 
-ULONG CW4allStream::CAsyncOperation::Release()
+ULONG CW4allStreamSink::CAsyncOperation::Release()
 {
     ULONG uCount = InterlockedDecrement(&m_nRefCount);
     if (uCount == 0)
@@ -737,7 +665,7 @@ ULONG CW4allStream::CAsyncOperation::Release()
     return uCount;
 }
 
-HRESULT CW4allStream::CAsyncOperation::QueryInterface(REFIID iid, void** ppv)
+HRESULT CW4allStreamSink::CAsyncOperation::QueryInterface(REFIID iid, void** ppv)
 {
     if (!ppv)
     {
@@ -759,7 +687,7 @@ HRESULT CW4allStream::CAsyncOperation::QueryInterface(REFIID iid, void** ppv)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //
-// CW4allStream class. - Implements the stream sink.
+// CW4allStreamSink class. - Implements the stream sink.
 //
 // Notes:
 // - Most of the real work gets done in this class.
@@ -771,32 +699,32 @@ HRESULT CW4allStream::CAsyncOperation::QueryInterface(REFIID iid, void** ppv)
 //      3. Call QueueAsyncOperation. This puts the operation on the work queue.
 //      4. The workqueue calls OnDispatchWorkItem.
 // - Locking:
-//      To avoid deadlocks, do not hold the CW4allStream lock followed by the CW4allSink lock.
-//      The other order is OK (CW4allSink, then CW4allStream).
+//      To avoid deadlocks, do not hold the CW4allStreamSink lock followed by the CW4allSink lock.
+//      The other order is OK (CW4allSink, then CW4allStreamSink).
 //
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 
 //-------------------------------------------------------------------
-// CW4allStream constructor
+// CW4allStreamSink constructor
 //-------------------------------------------------------------------
 
-CW4allStream::CW4allStream(bool bVideo)
+CW4allStreamSink::CW4allStreamSink(bool bVideo)
     : m_nRefCount(1), m_state(State_TypeNotSet), m_IsShutdown(FALSE), m_bVideo(bVideo),
     m_pSink(NULL), m_pEventQueue(NULL),
     m_pCurrentType(NULL), m_pFinalizeResult(NULL),
     m_StartTime(0), m_cbDataWritten(0), m_WorkQueueId(0),
-    m_WorkQueueCB(this, &CW4allStream::OnDispatchWorkItem)
+    m_WorkQueueCB(this, &CW4allStreamSink::OnDispatchWorkItem)
 {
     InitializeCriticalSection(&m_critSec);
 }
 
 
 //-------------------------------------------------------------------
-// CW4allStream destructor
+// CW4allStreamSink destructor
 //-------------------------------------------------------------------
 
-CW4allStream::~CW4allStream()
+CW4allStreamSink::~CW4allStreamSink()
 {
     assert(m_IsShutdown);
     DeleteCriticalSection(&m_critSec);
@@ -805,12 +733,12 @@ CW4allStream::~CW4allStream()
 
 // IUnknown methods
 
-ULONG CW4allStream::AddRef()
+ULONG CW4allStreamSink::AddRef()
 {
     return InterlockedIncrement(&m_nRefCount);
 }
 
-ULONG  CW4allStream::Release()
+ULONG  CW4allStreamSink::Release()
 {
     ULONG uCount = InterlockedDecrement(&m_nRefCount);
     if (uCount == 0)
@@ -821,7 +749,7 @@ ULONG  CW4allStream::Release()
     return uCount;
 }
 
-HRESULT CW4allStream::QueryInterface(REFIID iid, void** ppv)
+HRESULT CW4allStreamSink::QueryInterface(REFIID iid, void** ppv)
 {
     if (!ppv)
     {
@@ -856,7 +784,7 @@ HRESULT CW4allStream::QueryInterface(REFIID iid, void** ppv)
 // IMFMediaEventGenerator methods.
 // Note: These methods call through to the event queue helper object.
 
-HRESULT CW4allStream::BeginGetEvent(IMFAsyncCallback* pCallback, IUnknown* punkState)
+HRESULT CW4allStreamSink::BeginGetEvent(IMFAsyncCallback* pCallback, IUnknown* punkState)
 {
     HRESULT hr = S_OK;
 
@@ -873,7 +801,7 @@ HRESULT CW4allStream::BeginGetEvent(IMFAsyncCallback* pCallback, IUnknown* punkS
     return hr;
 }
 
-HRESULT CW4allStream::EndGetEvent(IMFAsyncResult* pResult, IMFMediaEvent** ppEvent)
+HRESULT CW4allStreamSink::EndGetEvent(IMFAsyncResult* pResult, IMFMediaEvent** ppEvent)
 {
     HRESULT hr = S_OK;
 
@@ -890,7 +818,7 @@ HRESULT CW4allStream::EndGetEvent(IMFAsyncResult* pResult, IMFMediaEvent** ppEve
     return hr;
 }
 
-HRESULT CW4allStream::GetEvent(DWORD dwFlags, IMFMediaEvent** ppEvent)
+HRESULT CW4allStreamSink::GetEvent(DWORD dwFlags, IMFMediaEvent** ppEvent)
 {
     // NOTE:
     // GetEvent can block indefinitely, so we don't hold the lock.
@@ -925,7 +853,7 @@ HRESULT CW4allStream::GetEvent(DWORD dwFlags, IMFMediaEvent** ppEvent)
     return hr;
 }
 
-HRESULT CW4allStream::QueueEvent(MediaEventType met, REFGUID guidExtendedType, HRESULT hrStatus, const PROPVARIANT* pvValue)
+HRESULT CW4allStreamSink::QueueEvent(MediaEventType met, REFGUID guidExtendedType, HRESULT hrStatus, const PROPVARIANT* pvValue)
 {
     HRESULT hr = S_OK;
 
@@ -953,7 +881,7 @@ HRESULT CW4allStream::QueueEvent(MediaEventType met, REFGUID guidExtendedType, H
 // Description: Returns the parent media sink.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::GetMediaSink(IMFMediaSink **ppMediaSink)
+HRESULT CW4allStreamSink::GetMediaSink(IMFMediaSink **ppMediaSink)
 {
     if (ppMediaSink == NULL)
     {
@@ -980,7 +908,7 @@ HRESULT CW4allStream::GetMediaSink(IMFMediaSink **ppMediaSink)
 // Description: Returns the stream identifier.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::GetIdentifier(DWORD *pdwIdentifier)
+HRESULT CW4allStreamSink::GetIdentifier(DWORD *pdwIdentifier)
 {
     if (pdwIdentifier == NULL)
     {
@@ -1006,7 +934,7 @@ HRESULT CW4allStream::GetIdentifier(DWORD *pdwIdentifier)
 // Description: Returns a media type handler for this stream.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::GetMediaTypeHandler(IMFMediaTypeHandler **ppHandler)
+HRESULT CW4allStreamSink::GetMediaTypeHandler(IMFMediaTypeHandler **ppHandler)
 {
     if (ppHandler == NULL)
     {
@@ -1035,7 +963,7 @@ HRESULT CW4allStream::GetMediaTypeHandler(IMFMediaTypeHandler **ppHandler)
 //       MEStreamSinkRequestSample event.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::ProcessSample(IMFSample *pSample)
+HRESULT CW4allStreamSink::ProcessSample(IMFSample *pSample)
 {
     if (pSample == NULL)
     {
@@ -1088,7 +1016,7 @@ HRESULT CW4allStream::ProcessSample(IMFSample *pSample)
 //       types, although this sink does not.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::PlaceMarker(
+HRESULT CW4allStreamSink::PlaceMarker(
     MFSTREAMSINK_MARKER_TYPE eMarkerType,
     const PROPVARIANT *pvarMarkerValue,
     const PROPVARIANT *pvarContextValue)
@@ -1142,7 +1070,7 @@ HRESULT CW4allStream::PlaceMarker(
 // Description: Discards all samples that were not processed yet.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::Flush()
+HRESULT CW4allStreamSink::Flush()
 {
     EnterCriticalSection(&m_critSec);
 
@@ -1171,7 +1099,7 @@ HRESULT CW4allStream::Flush()
 //-------------------------------------------------------------------
 
 
-HRESULT CW4allStream::IsMediaTypeSupported(
+HRESULT CW4allStreamSink::IsMediaTypeSupported(
     /* [in] */ IMFMediaType *pMediaType,
     /* [out] */ IMFMediaType **ppMediaType)
 {
@@ -1250,7 +1178,7 @@ HRESULT CW4allStream::IsMediaTypeSupported(
 // Description: Return the number of preferred media types.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::GetMediaTypeCount(DWORD *pdwTypeCount)
+HRESULT CW4allStreamSink::GetMediaTypeCount(DWORD *pdwTypeCount)
 {
     if (pdwTypeCount == NULL)
     {
@@ -1276,7 +1204,7 @@ HRESULT CW4allStream::GetMediaTypeCount(DWORD *pdwTypeCount)
 // Description: Return a preferred media type by index.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::GetMediaTypeByIndex(
+HRESULT CW4allStreamSink::GetMediaTypeByIndex(
     /* [in] */ DWORD dwIndex,
     /* [out] */ IMFMediaType **ppType)
 {
@@ -1334,7 +1262,7 @@ HRESULT CW4allStream::GetMediaTypeByIndex(
 // Description: Set the current media type.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::SetCurrentMediaType(IMFMediaType *pMediaType)
+HRESULT CW4allStreamSink::SetCurrentMediaType(IMFMediaType *pMediaType)
 {
     if (pMediaType == NULL)
     {
@@ -1375,7 +1303,7 @@ HRESULT CW4allStream::SetCurrentMediaType(IMFMediaType *pMediaType)
 // Description: Return the current media type, if any.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::GetCurrentMediaType(IMFMediaType **ppMediaType)
+HRESULT CW4allStreamSink::GetCurrentMediaType(IMFMediaType **ppMediaType)
 {
     if (ppMediaType == NULL)
     {
@@ -1410,7 +1338,7 @@ HRESULT CW4allStream::GetCurrentMediaType(IMFMediaType **ppMediaType)
 // Description: Return the major type GUID.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::GetMajorType(GUID *pguidMajorType)
+HRESULT CW4allStreamSink::GetMajorType(GUID *pguidMajorType)
 {
     if (pguidMajorType == NULL)
     {
@@ -1435,7 +1363,7 @@ HRESULT CW4allStream::GetMajorType(GUID *pguidMajorType)
 //       initialized.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::Initialize(CW4allSink *pParent)
+HRESULT CW4allStreamSink::Initialize(CW4allSink *pParent)
 {
     assert(pParent != NULL);
 
@@ -1471,7 +1399,7 @@ HRESULT CW4allStream::Initialize(CW4allSink *pParent)
 //       resume from the last current position.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::Start(MFTIME start)
+HRESULT CW4allStreamSink::Start(MFTIME start)
 {
     EnterCriticalSection(&m_critSec);
 
@@ -1498,7 +1426,7 @@ HRESULT CW4allStream::Start(MFTIME start)
 // Description: Called when the presentation clock stops.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::Stop()
+HRESULT CW4allStreamSink::Stop()
 {
     EnterCriticalSection(&m_critSec);
 
@@ -1521,7 +1449,7 @@ HRESULT CW4allStream::Stop()
 // Description: Called when the presentation clock pauses.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::Pause()
+HRESULT CW4allStreamSink::Pause()
 {
     EnterCriticalSection(&m_critSec);
 
@@ -1545,7 +1473,7 @@ HRESULT CW4allStream::Pause()
 // Description: Called when the presentation clock restarts.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::Restart()
+HRESULT CW4allStreamSink::Restart()
 {
     EnterCriticalSection(&m_critSec);
 
@@ -1569,7 +1497,7 @@ HRESULT CW4allStream::Restart()
 // Description: Starts the async finalize operation.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::Finalize(IMFAsyncCallback *pCallback, IUnknown *punkState)
+HRESULT CW4allStreamSink::Finalize(IMFAsyncCallback *pCallback, IUnknown *punkState)
 {
     EnterCriticalSection(&m_critSec);
 
@@ -1608,7 +1536,7 @@ HRESULT CW4allStream::Finalize(IMFAsyncCallback *pCallback, IUnknown *punkState)
 // If an entry is TRUE, the operation is valid from that state.
 //-------------------------------------------------------------------
 
-BOOL CW4allStream::ValidStateMatrix[CW4allStream::State_Count][CW4allStream::Op_Count] =
+BOOL CW4allStreamSink::ValidStateMatrix[CW4allStreamSink::State_Count][CW4allStreamSink::Op_Count] =
 {
 // States:    Operations:
 //            SetType   Start     Restart   Pause     Stop      Sample    Marker    Finalize
@@ -1636,7 +1564,7 @@ BOOL CW4allStream::ValidStateMatrix[CW4allStream::State_Count][CW4allStream::Op_
 // Description: Checks if an operation is valid in the current state.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::ValidateOperation(StreamOperation op)
+HRESULT CW4allStreamSink::ValidateOperation(StreamOperation op)
 {
     assert(!m_IsShutdown);
 
@@ -1659,7 +1587,7 @@ HRESULT CW4allStream::ValidateOperation(StreamOperation op)
 // Description: Shuts down the stream sink.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::Shutdown()
+HRESULT CW4allStreamSink::Shutdown()
 {
     assert(!m_IsShutdown);
 
@@ -1688,7 +1616,7 @@ HRESULT CW4allStream::Shutdown()
 // Description: Puts an async operation on the work queue.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::QueueAsyncOperation(StreamOperation op)
+HRESULT CW4allStreamSink::QueueAsyncOperation(StreamOperation op)
 {
     HRESULT hr = S_OK;
     CAsyncOperation *pOp = new CAsyncOperation(op); // Created with ref count = 1
@@ -1714,7 +1642,7 @@ HRESULT CW4allStream::QueueAsyncOperation(StreamOperation op)
 // Description: Callback for MFPutWorkItem.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::OnDispatchWorkItem(IMFAsyncResult* pAsyncResult)
+HRESULT CW4allStreamSink::OnDispatchWorkItem(IMFAsyncResult* pAsyncResult)
 {
     // Called by work queue thread. Need to hold the critical section.
     EnterCriticalSection(&m_critSec);
@@ -1790,7 +1718,7 @@ HRESULT CW4allStream::OnDispatchWorkItem(IMFAsyncResult* pAsyncResult)
 // Description: Complete a ProcessSample or PlaceMarker request.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::DispatchProcessSample(CAsyncOperation* pOp)
+HRESULT CW4allStreamSink::DispatchProcessSample(CAsyncOperation* pOp)
 {
     HRESULT hr = S_OK;
     assert(pOp != NULL);
@@ -1835,7 +1763,7 @@ HRESULT CW4allStream::DispatchProcessSample(CAsyncOperation* pOp)
 // sample, or receive a marker.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::ProcessSamplesFromQueue(FlushState bFlushData)
+HRESULT CW4allStreamSink::ProcessSamplesFromQueue(FlushState bFlushData)
 {
     HRESULT hr = S_OK;
 
@@ -1905,7 +1833,7 @@ HRESULT CW4allStream::ProcessSamplesFromQueue(FlushState bFlushData)
 // Description: Encode and send the sample over the network (RTP).
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::SendSampleOverNetwork(IMFSample *pSample)
+HRESULT CW4allStreamSink::SendSampleOverNetwork(IMFSample *pSample)
 {
     HRESULT hr = S_OK;
     LONGLONG time = 0;
@@ -1963,7 +1891,7 @@ HRESULT CW4allStream::SendSampleOverNetwork(IMFSample *pSample)
 //          the marker information.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::SendMarkerEvent(IMarker *pMarker, FlushState FlushState)
+HRESULT CW4allStreamSink::SendMarkerEvent(IMarker *pMarker, FlushState FlushState)
 {
     HRESULT hr = S_OK;
     HRESULT hrStatus = S_OK;  // Status code for marker event.
@@ -1994,7 +1922,7 @@ HRESULT CW4allStream::SendMarkerEvent(IMarker *pMarker, FlushState FlushState)
 // Description: Complete a BeginFinalize request.
 //-------------------------------------------------------------------
 
-HRESULT CW4allStream::DispatchFinalize(CAsyncOperation* pOp)
+HRESULT CW4allStreamSink::DispatchFinalize(CAsyncOperation* pOp)
 {
     HRESULT hr = S_OK;
 
@@ -2156,218 +2084,6 @@ HRESULT CW4allMarker::GetContext(PROPVARIANT *pvar)
         return E_POINTER;
     }
     return PropVariantCopy(pvar, &m_varContextValue);
-}
-
-//-------------------------------------------------------------------
-// CreatePCMAudioType
-//
-// Creates a media type that describes an uncompressed PCM audio
-// format.
-//-------------------------------------------------------------------
-
-HRESULT CreatePCMAudioType(
-    UINT32 sampleRate,        // Samples per second
-    UINT32 bitsPerSample,     // Bits per sample
-    UINT32 cChannels,         // Number of channels
-    IMFMediaType **ppType     // Receives a pointer to the media type.
-    )
-{
-    HRESULT hr = S_OK;
-
-    IMFMediaType *pType = NULL;
-
-    // Calculate derived values.
-    UINT32 blockAlign = cChannels * (bitsPerSample / 8);
-    UINT32 bytesPerSecond = blockAlign * sampleRate;
-
-    // Create the empty media type.
-    hr = MFCreateMediaType(&pType);
-
-    // Set attributes on the type.
-    if (SUCCEEDED(hr))
-    {
-        hr = pType->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Audio);
-    }
-
-    if (SUCCEEDED(hr))
-    {
-        hr = pType->SetGUID(MF_MT_SUBTYPE, MFAudioFormat_PCM);
-    }
-
-    if (SUCCEEDED(hr))
-    {
-        hr = pType->SetUINT32(MF_MT_AUDIO_NUM_CHANNELS, cChannels);
-    }
-
-    if (SUCCEEDED(hr))
-    {
-        hr = pType->SetUINT32(MF_MT_AUDIO_SAMPLES_PER_SECOND, sampleRate);
-    }
-
-    if (SUCCEEDED(hr))
-    {
-        hr = pType->SetUINT32(MF_MT_AUDIO_BLOCK_ALIGNMENT, blockAlign);
-    }
-
-    if (SUCCEEDED(hr))
-    {
-        hr = pType->SetUINT32(MF_MT_AUDIO_AVG_BYTES_PER_SECOND, bytesPerSecond);
-    }
-
-    if (SUCCEEDED(hr))
-    {
-        hr = pType->SetUINT32(MF_MT_AUDIO_BITS_PER_SAMPLE, bitsPerSample);
-    }
-
-    if (SUCCEEDED(hr))
-    {
-        hr = pType->SetUINT32(MF_MT_ALL_SAMPLES_INDEPENDENT, TRUE);
-    }
-
-    if (SUCCEEDED(hr))
-    {
-        // Return the type to the caller.
-        *ppType = pType;
-        (*ppType)->AddRef();
-    }
-
-    SafeRelease(&pType);
-    return hr;
-}
-
-
-//-------------------------------------------------------------------
-// CreateVideoType
-//
-// Creates a media type that describes a video subtype
-// format.
-//-------------------------------------------------------------------
-HRESULT CreateVideoType(
-		const GUID* subType, // video subType
-		IMFMediaType **ppType     // Receives a pointer to the media type.
-	)
-{
-	HRESULT hr = S_OK;
-
-    IMFMediaType *pType = NULL;
-
-    CHECK_HR(hr = MFCreateMediaType(&pType));
-
-    CHECK_HR(hr = pType->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Video));
-
-    CHECK_HR(hr = pType->SetGUID(MF_MT_SUBTYPE, *subType));
-	
-    *ppType = pType;
-    (*ppType)->AddRef();
-
-done:
-    SafeRelease(&pType);
-    return hr;
-}
-
-//-------------------------------------------------------------------
-// Name: ValidateWaveFormat
-// Description: Validates a WAVEFORMATEX structure.
-//
-// Just to keep the sample as simple as possible, we only accept
-// uncompressed PCM formats.
-//-------------------------------------------------------------------
-
-HRESULT ValidateWaveFormat(const WAVEFORMATEX *pWav, DWORD cbSize)
-{
-    if (pWav->wFormatTag != WAVE_FORMAT_PCM)
-    {
-        return MF_E_INVALIDMEDIATYPE;
-    }
-
-    if (pWav->nChannels != 1 && pWav->nChannels != 2)
-    {
-        return MF_E_INVALIDMEDIATYPE;
-    }
-
-    if (pWav->wBitsPerSample != 8 && pWav->wBitsPerSample != 16)
-    {
-        return MF_E_INVALIDMEDIATYPE;
-    }
-
-    if (pWav->cbSize != 0)
-    {
-        return MF_E_INVALIDMEDIATYPE;
-    }
-
-    // Make sure block alignment was calculated correctly.
-    if (pWav->nBlockAlign != pWav->nChannels * (pWav->wBitsPerSample / 8))
-    {
-        return MF_E_INVALIDMEDIATYPE;
-    }
-
-    // Check possible overflow...
-    if (pWav->nSamplesPerSec  > (DWORD)(MAXDWORD / pWav->nBlockAlign))        // Is (nSamplesPerSec * nBlockAlign > MAXDWORD) ?
-    {
-        return MF_E_INVALIDMEDIATYPE;
-    }
-
-    // Make sure average bytes per second was calculated correctly.
-    if (pWav->nAvgBytesPerSec != pWav->nSamplesPerSec * pWav->nBlockAlign)
-    {
-        return MF_E_INVALIDMEDIATYPE;
-    }
-
-    // Everything checked out.
-    return S_OK;
-}
-
-//-------------------------------------------------------------------
-// Name: ValidateVideoFormat
-// Description: Validates a media type for this sink.
-//-------------------------------------------------------------------
-HRESULT ValidateVideoFormat(IMFMediaType *pmt)
-{
-	GUID major_type = GUID_NULL;
-    GUID subtype = GUID_NULL;
-    MFVideoInterlaceMode interlace = MFVideoInterlace_Unknown;
-    UINT32 val = 0;
-    BOOL bFoundMatchingSubtype = FALSE;
-
-    HRESULT hr = S_OK;
-
-    // Major type must be video.
-    CHECK_HR(hr = pmt->GetGUID(MF_MT_MAJOR_TYPE, &major_type));
-
-    if (major_type != MFMediaType_Video)
-    {
-        CHECK_HR(hr = MF_E_INVALIDMEDIATYPE);
-    }
-
-    // Subtype must be one of the subtypes in our global list.
-
-    // Get the subtype GUID.
-    CHECK_HR(hr = pmt->GetGUID(MF_MT_SUBTYPE, &subtype));
-
-    // Look for the subtype in our list of accepted types.
-	for (DWORD i = 0; i < g_NumVideoSubtypes; i++)
-    {
-        if (subtype == *g_VideoSubtypes[i])
-        {
-            bFoundMatchingSubtype = TRUE;
-            break;
-        }
-    }
-
-    if (!bFoundMatchingSubtype)
-    {
-        CHECK_HR(hr = MF_E_INVALIDMEDIATYPE);
-    }
-
-    // Video must be progressive frames.
-    CHECK_HR(hr = pmt->GetUINT32(MF_MT_INTERLACE_MODE, (UINT32*)&interlace));
-    if (interlace != MFVideoInterlace_Progressive)
-    {
-        CHECK_HR(hr = MF_E_INVALIDMEDIATYPE);
-    }
-
-done:
-    return hr;
 }
 
 

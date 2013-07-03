@@ -11,6 +11,7 @@
 
 #include <strsafe.h>
 #include <new>
+#include <uuids.h>      // DirectShow GUIDs
 
 template <class T> void SafeRelease(T **ppT)
 {
@@ -24,6 +25,71 @@ template <class T> void SafeRelease(T **ppT)
 #if !defined(CHECK_HR)
 #	define CHECK_HR(hr) if (FAILED(hr)) { goto done; }
 #endif
+
+// The stream ID of the one stream on the sink.
+static const DWORD W4A_SINK_STREAM_ID = 1;
+
+
+// Video FOURCC codes.
+static const FOURCC FOURCC_YUY2 = MAKEFOURCC('Y', 'U', 'Y', '2');
+static const FOURCC FOURCC_UYVY = MAKEFOURCC('U', 'Y', 'V', 'Y');
+static const FOURCC FOURCC_NV12 = MAKEFOURCC('N', 'V', '1', '2');
+
+// Static array of media types (preferred and accepted).
+static const GUID* g_VideoSubtypes[] =
+{
+#if 0
+	& MEDIASUBTYPE_NV12,
+    & MEDIASUBTYPE_YUY2,
+    & MEDIASUBTYPE_UYVY
+#else
+    & MFVideoFormat_NV12,
+    & MFVideoFormat_YUY2,
+    & MFVideoFormat_UYVY,
+#endif
+};
+
+
+// Number of media types in the aray.
+static const DWORD g_NumVideoSubtypes = ARRAYSIZE(g_VideoSubtypes);
+
+// PCM_Audio_Format_Params
+// Defines parameters for uncompressed PCM audio formats.
+// The remaining fields can be derived from these.
+struct PCM_Audio_Format_Params
+{
+    DWORD   nSamplesPerSec; // Samples per second.
+    WORD    wBitsPerSample; // Bits per sample.
+    WORD    nChannels;      // Number of channels.
+};
+
+
+// g_AudioFormats: Static list of our preferred formats.
+
+// This is an ordered list that we use to hand out formats in the
+// stream's IMFMediaTypeHandler::GetMediaTypeByIndex method. The
+// stream will accept other bit rates not listed here.
+
+static const PCM_Audio_Format_Params g_AudioFormats[] =
+{
+	{ 8000, 16, 1 },
+
+    { 48000, 16, 2 },
+    { 48000, 8, 2 },
+    { 44100, 16, 2 },
+    { 44100, 8, 2 },
+    { 22050, 16, 2 },
+    { 22050, 8, 2 },
+
+    { 48000, 16, 1 },
+    { 48000, 8, 1 },
+    { 44100, 16, 1 },
+    { 44100, 8, 1 },
+    { 22050, 16, 1 },
+    { 22050, 8, 1 },
+};
+
+static const DWORD g_NumAudioFormats = ARRAYSIZE(g_AudioFormats);
 
 
 /*---------------------------------------------------------------------
@@ -396,3 +462,240 @@ public:
         }
     }
 };
+
+
+
+//-------------------------------------------------------------------
+// Name: ValidateWaveFormat
+// Description: Validates a WAVEFORMATEX structure.
+//
+// This method is called when the byte stream handler opens the
+// source. The WAVEFORMATEX structure is copied directly from the
+// .wav file. Therefore the source should not trust any of the
+// values in the format header.
+//
+// Just to keep the sample as simple as possible, we only accept
+// uncompressed PCM formats in this media source.
+//-------------------------------------------------------------------
+
+
+static HRESULT ValidateWaveFormat(const WAVEFORMATEX *pWav, DWORD cbSize)
+{
+    if (cbSize < sizeof(WAVEFORMATEX))
+    {
+        return MF_E_INVALIDMEDIATYPE;
+    }
+
+    if (pWav->wFormatTag != WAVE_FORMAT_PCM)
+    {
+        return MF_E_INVALIDMEDIATYPE;
+    }
+
+    if (pWav->nChannels != 1 && pWav->nChannels != 2)
+    {
+        return MF_E_INVALIDMEDIATYPE;
+    }
+
+    if (pWav->wBitsPerSample != 8 && pWav->wBitsPerSample != 16)
+    {
+        return MF_E_INVALIDMEDIATYPE;
+    }
+
+    if (pWav->cbSize != 0)
+    {
+        return MF_E_INVALIDMEDIATYPE;
+    }
+
+    // Make sure block alignment was calculated correctly.
+    if (pWav->nBlockAlign != pWav->nChannels * (pWav->wBitsPerSample / 8))
+    {
+        return MF_E_INVALIDMEDIATYPE;
+    }
+
+    // Check possible overflow...
+    if (pWav->nSamplesPerSec  > (DWORD)(MAXDWORD / pWav->nBlockAlign))        // Is (nSamplesPerSec * nBlockAlign > MAXDWORD) ?
+    {
+        return MF_E_INVALIDMEDIATYPE;
+    }
+
+    // Make sure average bytes per second was calculated correctly.
+    if (pWav->nAvgBytesPerSec != pWav->nSamplesPerSec * pWav->nBlockAlign)
+    {
+        return MF_E_INVALIDMEDIATYPE;
+    }
+
+    // Everything checked out.
+    return S_OK;
+}
+
+
+//-------------------------------------------------------------------
+// CreatePCMAudioType
+//
+// Creates a media type that describes an uncompressed PCM audio
+// format.
+//-------------------------------------------------------------------
+
+static HRESULT CreatePCMAudioType(
+    UINT32 sampleRate,        // Samples per second
+    UINT32 bitsPerSample,     // Bits per sample
+    UINT32 cChannels,         // Number of channels
+    IMFMediaType **ppType     // Receives a pointer to the media type.
+    )
+{
+    HRESULT hr = S_OK;
+
+    IMFMediaType *pType = NULL;
+
+    // Calculate derived values.
+    UINT32 blockAlign = cChannels * (bitsPerSample / 8);
+    UINT32 bytesPerSecond = blockAlign * sampleRate;
+
+    // Create the empty media type.
+    hr = MFCreateMediaType(&pType);
+
+    // Set attributes on the type.
+    if (SUCCEEDED(hr))
+    {
+        hr = pType->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Audio);
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        hr = pType->SetGUID(MF_MT_SUBTYPE, MFAudioFormat_PCM);
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        hr = pType->SetUINT32(MF_MT_AUDIO_NUM_CHANNELS, cChannels);
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        hr = pType->SetUINT32(MF_MT_AUDIO_SAMPLES_PER_SECOND, sampleRate);
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        hr = pType->SetUINT32(MF_MT_AUDIO_BLOCK_ALIGNMENT, blockAlign);
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        hr = pType->SetUINT32(MF_MT_AUDIO_AVG_BYTES_PER_SECOND, bytesPerSecond);
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        hr = pType->SetUINT32(MF_MT_AUDIO_BITS_PER_SAMPLE, bitsPerSample);
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        hr = pType->SetUINT32(MF_MT_ALL_SAMPLES_INDEPENDENT, TRUE);
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        // Return the type to the caller.
+        *ppType = pType;
+        (*ppType)->AddRef();
+    }
+
+    SafeRelease(&pType);
+    return hr;
+}
+
+
+//-------------------------------------------------------------------
+// CreateVideoType
+//
+// Creates a media type that describes a video subtype
+// format.
+//-------------------------------------------------------------------
+static HRESULT CreateVideoType(
+		const GUID* subType, // video subType
+		IMFMediaType **ppType,     // Receives a pointer to the media type.
+		UINT32 unWidth = 0, // Video width (0 to ignore)
+		UINT32 unHeight = 0 // Video height (0 to ignore)
+	)
+{
+	HRESULT hr = S_OK;
+
+    IMFMediaType *pType = NULL;
+
+    CHECK_HR(hr = MFCreateMediaType(&pType));
+
+    CHECK_HR(hr = pType->SetGUID(MF_MT_MAJOR_TYPE, MFMediaType_Video));
+
+    CHECK_HR(hr = pType->SetGUID(MF_MT_SUBTYPE, *subType));
+
+	CHECK_HR(hr = pType->SetUINT32(MF_MT_ALL_SAMPLES_INDEPENDENT, TRUE)); // UnCompressed
+
+	CHECK_HR(hr = pType->SetUINT32(MF_MT_INTERLACE_MODE, MFVideoInterlace_Progressive));
+
+	if(unWidth > 0 && unHeight > 0)
+	{
+		CHECK_HR(hr = MFSetAttributeSize(pType, MF_MT_FRAME_SIZE, unWidth, unHeight));
+	}
+	
+    *ppType = pType;
+    (*ppType)->AddRef();
+
+done:
+    SafeRelease(&pType);
+    return hr;
+}
+
+//-------------------------------------------------------------------
+// Name: ValidateVideoFormat
+// Description: Validates a media type for this sink.
+//-------------------------------------------------------------------
+static HRESULT ValidateVideoFormat(IMFMediaType *pmt)
+{
+	GUID major_type = GUID_NULL;
+    GUID subtype = GUID_NULL;
+    MFVideoInterlaceMode interlace = MFVideoInterlace_Unknown;
+    UINT32 val = 0;
+    BOOL bFoundMatchingSubtype = FALSE;
+
+    HRESULT hr = S_OK;
+
+    // Major type must be video.
+    CHECK_HR(hr = pmt->GetGUID(MF_MT_MAJOR_TYPE, &major_type));
+
+    if (major_type != MFMediaType_Video)
+    {
+        CHECK_HR(hr = MF_E_INVALIDMEDIATYPE);
+    }
+
+    // Subtype must be one of the subtypes in our global list.
+
+    // Get the subtype GUID.
+    CHECK_HR(hr = pmt->GetGUID(MF_MT_SUBTYPE, &subtype));
+
+    // Look for the subtype in our list of accepted types.
+	for (DWORD i = 0; i < g_NumVideoSubtypes; i++)
+    {
+        if (subtype == *g_VideoSubtypes[i])
+        {
+            bFoundMatchingSubtype = TRUE;
+            break;
+        }
+    }
+
+    if (!bFoundMatchingSubtype)
+    {
+        CHECK_HR(hr = MF_E_INVALIDMEDIATYPE);
+    }
+
+    // Video must be progressive frames.
+    CHECK_HR(hr = pmt->GetUINT32(MF_MT_INTERLACE_MODE, (UINT32*)&interlace));
+    if (interlace != MFVideoInterlace_Progressive)
+    {
+        CHECK_HR(hr = MF_E_INVALIDMEDIATYPE);
+    }
+
+done:
+    return hr;
+}

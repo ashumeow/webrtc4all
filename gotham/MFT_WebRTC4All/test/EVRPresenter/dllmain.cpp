@@ -1,26 +1,32 @@
-/*
-* Copyright (C) 2013 Gotham City. All rights reserved.
-* Copyright (C) Microsoft Corporation. All rights reserved.
-*/
-/**@file dllmain.cc
- * @brief Implementation for DLL exports and COM class factory for registration. 
- * If 'Regsvr32.exe' works it's maily because of this.
- *
- * @author Batman@GothamCity
- */
-#include <assert.h>
+//////////////////////////////////////////////////////////////////////////
+//
+// dllmain.cpp : Implements DLL exports and COM class factory
+//
+// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
+// ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+// THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+// PARTICULAR PURPOSE.
+//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+//
+// Note: This source file implements the class factory for the DMO,
+//       plus the following DLL functions:
+//       - DllMain
+//       - DllCanUnloadNow
+//       - DllRegisterServer
+//       - DllUnregisterServer
+//       - DllGetClassObject
+//
+//////////////////////////////////////////////////////////////////////////
+
+#include "EVRPresenter.h"
+
 #include <new>
 #include <shlwapi.h>
 
-#include "w4all.h"
-
 #include <initguid.h>
-#include "w4allGuids.h" /* Must be here (after 'initguid.h') */
+#include "EVRPresenterUuid.h"
 
-
-// Forward declarations
-extern HRESULT CW4allSink_CreateInstance(REFIID iid, void **ppMFT); /* implementation: w4allSink.cc */
-extern HRESULT CW4allSource_CreateInstance(REFIID iid, void **ppMFT); /* implementation: w4allSource.cc */
 
 HRESULT RegisterObject(
     HMODULE hModule,
@@ -30,6 +36,10 @@ HRESULT RegisterObject(
     );
 
 HRESULT UnregisterObject(const GUID& guid);
+
+
+// Friendly name for COM registration.
+wchar_t const g_sFriendlyName[] = L"EVR Custom Presenter";
 
 
 // Module Ref count
@@ -48,6 +58,7 @@ void DllRelease()
     InterlockedDecrement(&g_cRefModule);
 }
 
+
 //
 // IClassFactory implementation
 //
@@ -62,9 +73,7 @@ struct CLASS_OBJECT_INIT
 // Classes supported by this module:
 const CLASS_OBJECT_INIT c_rgClassObjectInit[] =
 {
-	{ &CLSID_WebRTC4AllSourceMFT, CW4allSource_CreateInstance },
-	{ &CLSID_WebRTC4AllSinkMFT, CW4allSink_CreateInstance },
-	/* add here other modules */
+    { &CLSID_CustomEVRPresenter, EvrPresenter_CreateInstance },
 };
 
 class CClassFactory : public IClassFactory
@@ -166,8 +175,6 @@ private:
     PFNCREATEINSTANCE m_pfnCreate;
 };
 
-
-
 //
 // Standard DLL functions
 //
@@ -192,26 +199,20 @@ STDAPI DllGetClassObject(REFCLSID clsid, REFIID riid, void **ppv)
     return CClassFactory::CreateInstance(clsid, c_rgClassObjectInit, ARRAYSIZE(c_rgClassObjectInit), riid, ppv);
 }
 
-
-
 STDAPI DllRegisterServer()
 {
-    assert(g_hModule != NULL);
+    HRESULT hr;
 
-    // Register the CLSID for CoCreateInstance.
-	HRESULT hr =  RegisterObject(g_hModule, CLSID_WebRTC4AllSourceMFT, TEXT("Doubango Telecom WebRTC4All audio/video Source"), TEXT("Both"));
-	if(SUCCEEDED(hr))
-	{
-		hr = RegisterObject(g_hModule, CLSID_WebRTC4AllSinkMFT, TEXT("Doubango Telecom WebRTC4All audio/video Sink"), TEXT("Both"));
-	}
-	return hr;
+    // Register the MFT's CLSID as a COM object.
+    hr = RegisterObject(g_hModule, CLSID_CustomEVRPresenter, g_sFriendlyName, TEXT("Both"));
+
+    return hr;
 }
 
 STDAPI DllUnregisterServer()
 {
-    // Unregister the CLSID.
-    UnregisterObject(CLSID_WebRTC4AllSinkMFT);
-	UnregisterObject(CLSID_WebRTC4AllSourceMFT);
+    // Unregister the CLSID
+    UnregisterObject(CLSID_CustomEVRPresenter);
 
     return S_OK;
 }
@@ -219,12 +220,9 @@ STDAPI DllUnregisterServer()
 
 
 
-
 // Converts a CLSID into a string with the form "CLSID\{clsid}"
 HRESULT CreateObjectKeyName(const GUID& guid, TCHAR *sName, DWORD cchMax)
 {
-    const DWORD CHARS_IN_GUID = 39;
-
     // convert CLSID uuid to string
     OLECHAR szCLSID[CHARS_IN_GUID];
     HRESULT hr = StringFromGUID2(guid, szCLSID, CHARS_IN_GUID);
@@ -361,16 +359,4 @@ HRESULT UnregisterObject(const GUID& guid)
 }
 
 
-// Memory allocation function for RPC.
-// The runtime uses these two functions for allocating/deallocating
-// enough memory to pass the string to the server.
-void* __RPC_USER midl_user_allocate(size_t size)
-{
-    return malloc(size);
-}
 
-// Memory deallocation function for RPC.
-void __RPC_USER midl_user_free(void* p)
-{
-    free(p);
-}
