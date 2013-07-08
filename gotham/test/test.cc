@@ -32,7 +32,7 @@ There are two modes: LOOPBACK and REMOTE_STREAMING
 
 #define DEFAULT_VIDEO_WIDTH					640
 #define DEFAULT_VIDEO_HEIGHT				480
-#define DEFAULT_VIDEO_FPS					15 // up to 120
+#define DEFAULT_VIDEO_FPS					30 // up to 120
 #define DEFAULT_VIDEO_REMOTE_WINDOW_NAME	"Remote video window (Decoded RTP)" // Remote window is where the decoded video frames are displayed
 #define DEFAULT_VIDEO_LOCAL_WINDOW_NAME		"Local video window" // Local window is where the encoded video frames are displayed before sending (preview, PIP mode).
 

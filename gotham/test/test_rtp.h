@@ -50,35 +50,34 @@ Otherwise: send encoded RTP to ourself for decoding
         "c=IN IP4 " IP "\r\n" \
         "a=rtpmap:8 PCMA/8000\r\n" \
         "a=rtpmap:0 PCMU/8000\r\n" \
-        "m=video " PORT_VIDEO " RTP/AVP 98\r\n" \
+        "m=video " PORT_VIDEO " RTP/AVP 104 105\r\n" \
         "i=Video line\r\n" \
-        "a=rtcp-fb:* nack pli" \
-		"a=rtcp-fb:* ccm fir" \
-		"a=rtcp-fb:* goog-remb" \
-		"a=rtpmap:104 H264/90000" \
-		"a=imageattr:104 recv [x=[128:16:640],y=[96:16:480]] send [x=[128:16:640],y=[96:16:480]]" \
-		"a=fmtp:104 profile-level-id=42001e; packetization-mode=1; impl=FFMPEG" \
-		"a=rtpmap:105 H264/90000" \
-		"a=imageattr:105 recv [x=[128:16:640],y=[96:16:480]] send [x=[128:16:640],y=[96:16:480]]" \
-		"a=fmtp:105 profile-level-id=4d001e; packetization-mode=1; impl=FFMPEG" \
-		"a=rtpmap:103 H263-1998/90000" \
-		"a=fmtp:103 CIF=2;QCIF=2;SQCIF=2" \
-		"a=rtpmap:102 H263-2000/90000" \
-		"a=fmtp:102 CIF=2;QCIF=2;SQCIF=2" \
-		"a=rtpmap:125 theora/90000" \
-		"a=imageattr:125 recv [x=[128:16:640],y=[96:16:480]] send [x=[128:16:640],y=[96:16:480]]" \
-		"a=fmtp:125 sampling=YCbCr-4:2:0; width=640; height=480" \
-		"a=rtpmap:34 H263/90000" \
-		"a=fmtp:34 CIF=2;QCIF=2;SQCIF=2" \
-		"a=rtpmap:31 H261/90000" \
-		"a=imageattr:31 QCIF=2" \
-		"a=fmtp:31 QCIF=2" \
-		"a=pcfg:1 t=1" \
-		"a=sendrecv" \
-		"a=rtcp-mux" \
-		"a=ssrc:2654140548 cname:8c5af292a4eed56688ce3b86e3ce813b" \
-		"a=ssrc:2654140548 mslabel:6994f7d1-6ce9-4fbd-acfd-84e5131ca2e2" \
-		"a=ssrc:2654140548 label:doubango@video"
+        "a=rtcp-fb:* nack pli\r\n" \
+		"a=rtcp-fb:* ccm fir\r\n" \
+		"a=rtcp-fb:* goog-remb\r\n" \
+		"a=rtpmap:104 H264/90000\r\n" \
+		"a=imageattr:104 recv [x=[128:16:640],y=[96:16:480]] send [x=[128:16:640],y=[96:16:480]]\r\n" \
+		"a=fmtp:104 profile-level-id=42001e; packetization-mode=1; impl=FFMPEG\r\n" \
+		"a=rtpmap:105 H264/90000\r\n" \
+		"a=imageattr:105 recv [x=[128:16:640],y=[96:16:480]] send [x=[128:16:640],y=[96:16:480]]\r\n" \
+		"a=fmtp:105 profile-level-id=4d001e; packetization-mode=1; impl=FFMPEG\r\n" \
+		"a=rtpmap:103 H263-1998/90000\r\n" \
+		"a=fmtp:103 CIF=2;QCIF=2;SQCIF=2\r\n" \
+		"a=rtpmap:102 H263-2000/90000\r\n" \
+		"a=fmtp:102 CIF=2;QCIF=2;SQCIF=2\r\n" \
+		"a=rtpmap:125 theora/90000\r\n" \
+		"a=imageattr:125 recv [x=[128:16:640],y=[96:16:480]] send [x=[128:16:640],y=[96:16:480]]\r\n" \
+		"a=fmtp:125 sampling=YCbCr-4:2:0; width=640; height=480\r\n" \
+		"a=rtpmap:34 H263/90000\r\n" \
+		"a=fmtp:34 CIF=2;QCIF=2;SQCIF=2\r\n" \
+		"a=rtpmap:31 H261/90000\r\n" \
+		"a=imageattr:31 QCIF=2\r\n" \
+		"a=fmtp:31 QCIF=2\r\n" \
+		"a=sendrecv\r\n" \
+		"a=rtcp-mux\r\n" \
+		"a=ssrc:2654140548 cname:8c5af292a4eed56688ce3b86e3ce813b\r\n" \
+		"a=ssrc:2654140548 mslabel:6994f7d1-6ce9-4fbd-acfd-84e5131ca2e2\r\n" \
+		"a=ssrc:2654140548 label:doubango@video\r\n"
 
 #define SDP_RO \
 	SDP_BUILD(GOTHAM_IP_REMOTE, GOTHAM_PORT_REMOTE_AUDIO, GOTHAM_PORT_REMOTE_VIDEO)
