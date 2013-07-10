@@ -114,16 +114,17 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
+				Optimization="3"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="..\..\thirdparties\source\doubango\thirdparties\win32\include;..\..\thirdparties\source\doubango\tinyMEDIA\include;..\..\thirdparties\source\doubango\tinySDP\include;..\..\thirdparties\source\doubango\tinyDAV\include;..\..\thirdparties\source\doubango\tinySAK\src;..\..\thirdparties\source\doubango\tinyNET\src;..\..\thirdparties\source\doubango\tinyMSRP\include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_CONSOLE;NDEBUG"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				WarnAsError="true"
 				DebugInformationFormat="3"
+				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

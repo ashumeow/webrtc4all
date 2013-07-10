@@ -27,14 +27,22 @@ There are two modes: LOOPBACK and REMOTE_STREAMING
 
 #include "tinydav.h"
 
+#include <assert.h>
+
 #define RUN_TEST_RTP				1
 #define RUN_TEST_RTP_AS_CLIENT		1
 
-#define DEFAULT_VIDEO_WIDTH					640
-#define DEFAULT_VIDEO_HEIGHT				480
+#define DEFAULT_VIDEO_SIZE					tmedia_pref_video_size_vga
 #define DEFAULT_VIDEO_FPS					30 // up to 120
-#define DEFAULT_VIDEO_REMOTE_WINDOW_NAME	"Remote video window (Decoded RTP)" // Remote window is where the decoded video frames are displayed
-#define DEFAULT_VIDEO_LOCAL_WINDOW_NAME		"Local video window" // Local window is where the encoded video frames are displayed before sending (preview, PIP mode).
+#define DEFAULT_VIDEO_REMOTE_WINDOW_NAME	L"Remote video window (Decoded RTP)" // Remote window is where the decoded video frames are displayed
+#define DEFAULT_VIDEO_LOCAL_WINDOW_NAME		L"Local video window (Preview)" // Local window is where the encoded video frames are displayed before sending (preview, PIP mode).
+
+// #if NDEBUG, assert(expression) won't execute expression
+#if defined(NDEBUG)
+#	define GOTHAM_ASSERT(x) (void)(x)
+#else
+#	define GOTHAM_ASSERT(x)	assert(x)
+#endif
 
 #if TMEDIA_UNDER_WINDOWS
 
@@ -73,33 +81,75 @@ static HWND GetConsoleHwnd(void)
    return(hwndFound);
 }
 
+static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+    switch (uMsg)
+    {
+		case WM_ERASEBKGND:
+			return TRUE;
+    }
+    return DefWindowProc(hwnd, uMsg, wParam, lParam);
+}
+
+static HWND GetHwnd(BOOL bRemote)
+{
+	HWND* pHWND = bRemote ? &__hWndRemote : &__hWndLocal;
+	if(!*pHWND)
+	{
+		WNDCLASS wc = {0};
+
+		wc.lpfnWndProc   = WindowProc;
+		wc.hInstance     = GetModuleHandle(NULL);
+		wc.hCursor       = LoadCursor(NULL, IDC_ARROW);
+		wc.lpszClassName =  L"MFCapture Window Class";
+		/*GOTHAM_ASSERT*/(RegisterClass(&wc));
+		
+		GOTHAM_ASSERT(*pHWND = ::CreateWindow(
+			wc.lpszClassName, 
+			bRemote ? DEFAULT_VIDEO_REMOTE_WINDOW_NAME : DEFAULT_VIDEO_LOCAL_WINDOW_NAME, 
+			WS_OVERLAPPEDWINDOW, 
+			CW_USEDEFAULT, 
+			CW_USEDEFAULT, 
+			bRemote ? CW_USEDEFAULT : 352, 
+			bRemote ? CW_USEDEFAULT : 288, 
+			NULL, 
+			NULL, 
+			GetModuleHandle(NULL),
+			NULL));
+		::SetWindowText(*pHWND, bRemote ? DEFAULT_VIDEO_REMOTE_WINDOW_NAME : DEFAULT_VIDEO_LOCAL_WINDOW_NAME);
+		::ShowWindow(*pHWND, SW_SHOWDEFAULT);
+		::UpdateWindow(*pHWND);
+	}
+	return *pHWND;
+}
+
 static HWND GetLocalHwnd(void)
 {
-	return __hWndLocal;
+	return GetHwnd(FALSE);
 }
 
 static HWND GetRemoteHwnd(void)
 {
-	if(!__hWndRemote)
-	{
-		assert(__hWndRemote = ::CreateWindowA(
-			"STATIC", 
-			DEFAULT_VIDEO_REMOTE_WINDOW_NAME, 
-			WS_VISIBLE, 
-			0, 
-			0, 
-			DEFAULT_VIDEO_WIDTH, 
-			DEFAULT_VIDEO_HEIGHT, 
-			NULL/*GetConsoleHwnd()*//*Parent*/, 
-			NULL, 
-			NULL,
-			NULL));
-		::SetWindowTextA(__hWndRemote, DEFAULT_VIDEO_REMOTE_WINDOW_NAME);
-	}
-	return __hWndRemote;
+	return GetHwnd(TRUE);
 }
 
 #endif /* TMEDIA_UNDER_WINDOWS */
+
+static void WaitUntilDone()
+{
+#if TMEDIA_UNDER_WINDOWS
+	fprintf(stderr, "\n**** CLOSE THE CONSOLE TO STOP THE APP ****\n");
+	MSG msg = {0};
+    while (GetMessage(&msg, NULL, 0, 0))
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+#else
+	fprintf(stderr, "\n**** PRESS ENTER TO STOP THE APP ****\n");
+	getchar();
+#endif
+}
 
 #if RUN_TEST_RTP
 #include "test_rtp.h"
@@ -109,18 +159,18 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	int ret = 0;
 
-    assert((ret = tnet_startup()) == 0);
-    assert((ret = tdav_init()) == 0);
+    GOTHAM_ASSERT((ret = tnet_startup()) == 0);
+    GOTHAM_ASSERT((ret = tdav_init()) == 0);
 
-	assert((ret = tmedia_defaults_set_pref_video_size(tmedia_pref_video_size_vga)) == 0);
-	assert((ret = tmedia_defaults_set_video_fps(DEFAULT_VIDEO_FPS)) == 0);
+	GOTHAM_ASSERT((ret = tmedia_defaults_set_pref_video_size(DEFAULT_VIDEO_SIZE)) == 0);
+	GOTHAM_ASSERT((ret = tmedia_defaults_set_video_fps(DEFAULT_VIDEO_FPS)) == 0);
 
 	// On my PC: 2 video cameras
 	// 0: FaceTime HD Camera (Built-in)
 	// 1: Logitech HD Pro Webcam C920
 	// If none is connected then the default device will be selected
-	assert((ret = tmedia_producer_set_friendly_name(tmedia_video, "Logitech HD Pro Webcam C920")) == 0);
-
+	GOTHAM_ASSERT((ret = tmedia_producer_set_friendly_name(tmedia_video, "Logitech HD Pro Webcam C920")) == 0);
+	
 #if RUN_TEST_RTP
     test_rtp(RUN_TEST_RTP_AS_CLIENT);
 #endif

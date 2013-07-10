@@ -19,8 +19,6 @@
 #ifndef _GOTHAM_TEST_RTP_H
 #define _GOTHAM_TEST_RTP_H
 
-#include <assert.h>
-
 /* whether to perform local testing
 0: send encoded RTP to remove PC with IP address and port defined below (GOTHAM_IP_REMOTE, GOTHAM_PORT_REMOTE_AUDIO and GOTHAM_PORT_REMOTE_VIDEO)
 Otherwise: send encoded RTP to ourself for decoding
@@ -86,7 +84,7 @@ Otherwise: send encoded RTP to ourself for decoding
 
 static int attach_video_displays(tmedia_session_mgr_t* mgr)
 {
-	assert(mgr);
+	GOTHAM_ASSERT(mgr);
 	int ret = 0;
 	static const tmedia_type_t __tmedia_video = tmedia_video;
 	if((GOTHAM_MEDIA_TYPE & tmedia_video) == tmedia_video){
@@ -117,7 +115,7 @@ static void test_rtp_client()
 
     mgr = tmedia_session_mgr_create(type,
             GOTHAM_IP_LOCAL, tsk_false, tsk_true/* offerer */);
-	assert(mgr);
+	GOTHAM_ASSERT(mgr);
 
     /* get lo (add to outgoing INVITE) */
     sdp_lo = tmedia_session_mgr_get_lo(mgr);
@@ -129,21 +127,21 @@ static void test_rtp_client()
     /* set ro (get from incoming 200 OK)*/
 #if GOTHAM_TEST_LOOPBACK
 	(void)(sdp_ro);
-	assert((ret = tmedia_session_mgr_set_ro(mgr, sdp_lo, tmedia_ro_type_answer)) == 0);
+	GOTHAM_ASSERT((ret = tmedia_session_mgr_set_ro(mgr, sdp_lo, tmedia_ro_type_answer)) == 0);
 #else
     if((sdp_ro = tsdp_message_parse(SDP_RO, tsk_strlen(SDP_RO)))){
-        assert((ret = tmedia_session_mgr_set_ro(mgr, sdp_ro, tmedia_ro_type_answer)) == 0);
+        GOTHAM_ASSERT((ret = tmedia_session_mgr_set_ro(mgr, sdp_ro, tmedia_ro_type_answer)) == 0);
         TSK_OBJECT_SAFE_FREE(sdp_ro);
     }
 #endif
 
 	/* attach video dislays */
-	assert((ret = attach_video_displays(mgr)) == 0);
-
+	GOTHAM_ASSERT((ret = attach_video_displays(mgr)) == 0);
+	
     /* start() */
-    assert((ret = tmedia_session_mgr_start(mgr)) == 0);
-
-    getchar();
+    GOTHAM_ASSERT((ret = tmedia_session_mgr_start(mgr)) == 0);
+	
+    WaitUntilDone();
 
     TSK_OBJECT_SAFE_FREE(mgr);
 }
@@ -165,7 +163,7 @@ static void test_rtp_server()
     if((sdp_ro = tsdp_message_parse(__sdp_ro, tsk_strlen(__sdp_ro)))){
         mgr = tmedia_session_mgr_create(GOTHAM_MEDIA_TYPE,
                 GOTHAM_IP_LOCAL, tsk_false, tsk_false/* answerer */);
-        assert((ret = tmedia_session_mgr_set_ro(mgr, sdp_ro, tmedia_ro_type_offer)) == 0);
+        GOTHAM_ASSERT((ret = tmedia_session_mgr_set_ro(mgr, sdp_ro, tmedia_ro_type_offer)) == 0);
         TSK_OBJECT_SAFE_FREE(sdp_ro);
     }
     else{
@@ -182,12 +180,12 @@ static void test_rtp_server()
     }
 
     /* attach video dislays */
-	assert((ret = attach_video_displays(mgr)) == 0);
+	GOTHAM_ASSERT((ret = attach_video_displays(mgr)) == 0);
 
     /* start() */
-    assert((ret = tmedia_session_mgr_start(mgr)) == 0);
+    GOTHAM_ASSERT((ret = tmedia_session_mgr_start(mgr)) == 0);
 
-    getchar();
+    WaitUntilDone();
 
     TSK_OBJECT_SAFE_FREE(mgr);
 }
