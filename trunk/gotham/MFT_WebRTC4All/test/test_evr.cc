@@ -10,7 +10,7 @@
 #include <d3d9.h>
 #include <dxva2api.h>
 
-#include "EVRPresenter/EVRPresenter.h"
+//#include "EVRPresenter/EVRPresenter.h"
 
 
 #include <stdio.h>
@@ -31,12 +31,13 @@
 #undef CHECK_HR
 #define CHECK_HR(x) if (FAILED(x)) { fprintf(stdout, "Operation Failed"); goto bail; }
 
+const DWORD NUM_BACK_BUFFERS = 2;
 const UINT32 VIDEO_WIDTH = 640;
 const UINT32 VIDEO_HEIGHT = 480;
 const UINT32 VIDEO_FPS = 25;
 //const UINT32 VIDEO_BUFFER_SIZE = (VIDEO_WIDTH * VIDEO_HEIGHT * 3) >> 1;
 const UINT32 VIDEO_BUFFER_SIZE = (VIDEO_WIDTH * VIDEO_HEIGHT << 2);
-/*
+
 template <class T> void SafeRelease(T **ppT)
 {
     if (*ppT)
@@ -44,7 +45,7 @@ template <class T> void SafeRelease(T **ppT)
         (*ppT)->Release();
         *ppT = NULL;
     }
-}*/
+}
 
 class C2DBufferLock
 {
@@ -59,6 +60,9 @@ public:
 		CHECK_HR(hr = MFCreateDXSurfaceBuffer(__uuidof(IDirect3DSurface9), pSurface, TRUE, /* FLIP? */ &pBuffer));		
 		CHECK_HR(hr = pBuffer->QueryInterface(__uuidof(IMF2DBuffer), (void**)&m_p2DBuffer));
 		CHECK_HR(hr = pD3Sample->AddBuffer(pBuffer));
+
+		// FIXME:
+		CHECK_HR(hr = pBuffer->SetCurrentLength(307200));
 
 		m_pD3Sample = pD3Sample;
 		m_pBuffer = pBuffer;
@@ -113,8 +117,6 @@ bail:
         if (m_p2DBuffer)
         {
             hr = m_p2DBuffer->Lock2D(ppbScanLine0, plStride);
-			bool b = (hr == D3DERR_INVALIDCALL);
-			b = false;
         }
         else
         {
@@ -274,7 +276,7 @@ static HRESULT GetSwapChainPresentParameters(
   CHECK_HR(hr = MFGetAttributeSize(pType, MF_MT_FRAME_SIZE, &width, &height)); 
 
   ZeroMemory(pPP, sizeof(D3DPRESENT_PARAMETERS));
-	
+/*
   // http://msdn.microsoft.com/en-us/library/bb172588(VS.85).aspx
   ZeroMemory(pPP, sizeof(D3DPRESENT_PARAMETERS));
   pPP->BackBufferWidth = width;
@@ -294,6 +296,19 @@ static HRESULT GetSwapChainPresentParameters(
   {
     pPP->Flags |= D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
   }
+*/
+
+  pPP->BackBufferWidth  = width;
+  pPP->BackBufferHeight = height;
+  pPP->Windowed = TRUE;
+  pPP->SwapEffect = D3DSWAPEFFECT_FLIP;
+  pPP->hDeviceWindow = hWindow;
+  pPP->BackBufferFormat = (D3DFORMAT)d3dFormat;
+  pPP->Flags =
+        D3DPRESENTFLAG_VIDEO | D3DPRESENTFLAG_DEVICECLIP |
+        D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
+  pPP->PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+  pPP->BackBufferCount = NUM_BACK_BUFFERS;
 
 bail:
   return hr;
@@ -360,13 +375,13 @@ void main()
 	D3DPRESENT_PARAMETERS PP = {0};
 	HWND hWnd = GetConsoleHwnd();
 	C2DBufferLock* p2DBufferLock = NULL;
-	D3DPresentEngine* pPresenterEngine = NULL;
-	VideoSampleList videoSampleQueue;
+	//D3DPresentEngine* pPresenterEngine = NULL;
+//	VideoSampleList videoSampleQueue;
 
 	CHECK_HR(hr = MFStartup(MF_VERSION, 0));
 
-	pPresenterEngine = new D3DPresentEngine(hr);
-	CHECK_HR(hr);
+//	pPresenterEngine = new D3DPresentEngine(hr);
+	//CHECK_HR(hr);
 
 	
 
@@ -381,8 +396,8 @@ void main()
     CHECK_HR(hr = MFSetAttributeRatio(pMediaType, MF_MT_FRAME_RATE, VIDEO_FPS, 1));
     CHECK_HR(hr = MFSetAttributeRatio(pMediaType, MF_MT_PIXEL_ASPECT_RATIO, 1, 1));
 
-	CHECK_HR(hr = pPresenterEngine->SetVideoWindow(hWnd));
-	CHECK_HR(hr = pPresenterEngine->CreateVideoSamples(pMediaType, videoSampleQueue));
+	//CHECK_HR(hr = pPresenterEngine->SetVideoWindow(hWnd));
+	//CHECK_HR(hr = pPresenterEngine->CreateVideoSamples(pMediaType, videoSampleQueue));
 
 	CHECK_HR(hr = MFCreateVideoRenderer(__uuidof(IMFMediaSink), (void**)&pMediaSink));
 	CHECK_HR(hr = pMediaSink->GetCharacteristics(&dwCharacteristics));
@@ -410,74 +425,22 @@ void main()
 	CHECK_HR(hr = GetSwapChainPresentParameters(pD3DDevice, pMediaType, hWnd, &PP));
 	CHECK_HR(hr = pD3DDevice->CreateAdditionalSwapChain(&PP, &pSwapChain));
 	CHECK_HR(hr = CreateD3DSample(pSwapChain, pD3DDevice, &p2DBufferLock));
+
 	
 	//CHECK_HR(hr = CreateMediaSample(VIDEO_BUFFER_SIZE, pSampleAllocator, &pSample));
 	CHECK_HR(hr = p2DBufferLock->SetSampleDuration(rtDuration));
 	CHECK_HR(hr = pD3DDeviceManager9->UnlockDevice(hD3DDeviceHandle, TRUE));
-
-
-
 
 	if(pClock)
 	{
 		CHECK_HR(hr = pClock->Start(rtStart));
 	}
 
+	pStreamSink->Flush();
 
+	for(INT i = 0; i < 500 ; ++i)
 	{
-		// MF_SINK_WRITER_DISABLE_THROTTLING
-		IMFSinkWriter *pSinkWriter = NULL;
-		hr = MFCreateSinkWriterFromMediaSink(pMediaSink, NULL, &pSinkWriter);
-		hr = pSinkWriter->SetInputMediaType(0, pMediaType, NULL);
-		hr = pSinkWriter->BeginWriting();
 
-		IMFSample *pSample = NULL;
-		hr = CreateMediaSample(VIDEO_BUFFER_SIZE, pSampleAllocator, &pSample);
-		hr = pSample->SetSampleTime(rtStart);
-		hr = pSample->SetSampleDuration(rtDuration);
-		IMFMediaBuffer* pBuffer = NULL;
-		hr = p2DBufferLock->GetD3Sample()->GetBufferByIndex(0, &pBuffer);
-		hr = pBuffer->SetCurrentLength(VIDEO_BUFFER_SIZE);
-		BYTE* b = NULL;
-		hr = pBuffer->Lock(&b, NULL, NULL);
-		
-		hr = p2DBufferLock->GetD3Sample()->SetSampleTime(rtStart);
-		hr = p2DBufferLock->GetD3Sample()->SetSampleDuration(rtDuration);
-		hr = pSinkWriter->WriteSample(0, p2DBufferLock->GetD3Sample());
-
-		
-		hr = videoSampleQueue.GetItemByPosition(videoSampleQueue.FrontPosition(), &pSample);
-		hr = pSample->GetBufferByIndex(0, &pBuffer);
-		hr = pBuffer->Lock(&b, NULL, NULL);
-		hr = pBuffer->SetCurrentLength(VIDEO_BUFFER_SIZE);
-
-
-		IMF2DBuffer* p2DBuffer = NULL;
-		IDirect3DSurface9* pSurface = NULL;
-		(hr = MFGetService(pBuffer, MR_BUFFER_SERVICE, __uuidof(IDirect3DSurface9),  (void**)&pSurface));	
-		(hr = MFCreateDXSurfaceBuffer(__uuidof(IDirect3DSurface9), pSurface, TRUE, /* FLIP? */ &pBuffer));		
-		(hr = pBuffer->QueryInterface(__uuidof(IMF2DBuffer), (void**)&p2DBuffer));
-		//(hr = pD3Sample->AddBuffer(pBuffer));
-
-		LONG lPitch = VIDEO_WIDTH;
-		hr = p2DBuffer->Lock2D(&b, &lPitch);
-
-
-		hr = pSample->SetSampleTime(rtStart);
-		hr = pSample->SetSampleDuration(rtDuration);
-		hr = pSinkWriter->WriteSample(0, pSample);
-	}
-
-
-
-return;
-
-
-	
-	
-
-	for(INT i = 0; ; ++i)
-	{
 		BYTE* pbScanLine0 = NULL;
         LONG  lStride = 0;
 		//CHECK_HR(hr = pSample->GetBufferByIndex(0, &pMediaBuffer));
@@ -491,10 +454,9 @@ return;
 		CHECK_HR(hr = pStreamSink->ProcessSample(p2DBufferLock->GetD3Sample()));
 		rtStart += rtDuration;
 
-		Sleep(66);
+		Sleep(1);
 	}
-	
-	getchar();
+
 	
 bail:
 
@@ -532,9 +494,9 @@ bail:
 	SafeRelease(&pD3DDeviceManager9);
 	SafeRelease(&pSwapChain);
 
-	if(pPresenterEngine)
+/*	if(pPresenterEngine)
 	{
 		delete pPresenterEngine;
 		pPresenterEngine = NULL;
-	}
+	}*/
 }
