@@ -213,6 +213,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_display_watcher.cxx"
+					>
+				</File>
+				<File
 					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_sample_grabber.cxx"
 					>
 				</File>
@@ -247,6 +251,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_display_watcher.h"
+					>
+				</File>
+				<File
 					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_sample_grabber.h"
 					>
 				</File>
@@ -266,15 +274,7 @@
 			Name="tdav"
 			>
 			<File
-				RelativePath="..\thirdparties\source\doubango\tinyDAV\src\codecs\h264\tdav_codec_h264_rtp.c"
-				>
-			</File>
-			<File
-				RelativePath="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_consumer_audio.c"
-				>
-			</File>
-			<File
-				RelativePath="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_producer_audio.c"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_tdav.cxx"
 				>
 			</File>
 		</Filter>

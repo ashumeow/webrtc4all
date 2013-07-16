@@ -120,9 +120,10 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				EnableIntrinsicFunctions="false"
+				Optimization="3"
+				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyDAV\include;..\thirdparties\source\doubango\tinyMSRP\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinySDP\include;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyDSHOW\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bvcommon;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bv16"
-				PreprocessorDefinitions="TELEPRESENCE=0;HAVE_SRTP=1;HAVE_G729=0;HAVE_BV16=0;HAVE_OPENCORE_AMR=0;HAVE_ILBC=0;HAVE_LIBGSM=0;HAVE_TINYDSHOW=0;HAVE_DSOUND_H=0;HAVE_MF=1;HAVE_WAVE_API=1;HAVE_FFMPEG=1;HAVE_SWSSCALE=0;HAVE_H264=1;HAVE_LIBVPX=0;HAVE_LIBYUV=1;HAVE_SPEEX_DSP=1;HAVE_SPEEX_JB=1;HAVE_LIB_SPEEX=0;FLIP_ENCODED_PICT=0;FLIP_DECODED_PICT=0;G192BITSTREAM=0;DEBUG_LEVEL=DEBUG_LEVEL_INFO;WIN32;_DEBUG;_WINDOWS;_USRDLL;_WIN32_WINNT=0x0501;TINYDAV_EXPORTS"
+				PreprocessorDefinitions="DEBUG_LEVEL=DEBUG_LEVEL_INFO;TELEPRESENCE=0;HAVE_SRTP=1;HAVE_G729=0;HAVE_BV16=0;HAVE_OPENCORE_AMR=0;HAVE_ILBC=0;HAVE_LIBGSM=0;HAVE_TINYDSHOW=0;HAVE_DSOUND_H=0;HAVE_MF=1;HAVE_WAVE_API=1;HAVE_FFMPEG=1;HAVE_SWSSCALE=0;HAVE_H264=1;HAVE_LIBVPX=0;HAVE_LIBYUV=1;HAVE_SPEEX_DSP=1;HAVE_SPEEX_JB=1;HAVE_LIB_SPEEX=0;FLIP_ENCODED_PICT=0;FLIP_DECODED_PICT=0;G192BITSTREAM=0;WIN32;NDEBUG;_WINDOWS;_USRDLL;_WIN32_WINNT=0x0501;TINYDAV_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="false"
 				UsePrecompiledHeader="0"
