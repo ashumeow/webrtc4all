@@ -4,7 +4,6 @@
 #include <Mfreadwrite.h>
 #include <mferror.h>
 #include <Wmcodecdsp.h>
-#include <KS.H>
 #include <Codecapi.h>
 
 #include <stdio.h>
@@ -53,36 +52,6 @@ struct LeakyBucket
     DWORD msInitialBufferFullness;
 };
 
-HRESULT UnlockAsyncMFT(
-	IMFTransform *pMFT // The MFT to unlock
-	)
-{
-	IMFAttributes *pAttributes = NULL;
-	UINT32 nValue = 0;
-	HRESULT hr = S_OK;
-
-    hr = pMFT->GetAttributes(&pAttributes);
-	if(FAILED(hr))
-	{
-		CHECK_HR(hr = S_OK);
-	}
-
-	hr = pAttributes->GetUINT32(MF_TRANSFORM_ASYNC, &nValue);
-	if(FAILED(hr))
-	{
-		CHECK_HR(hr = S_OK);
-	}
-
-	if(nValue == TRUE)
-	{
-		CHECK_HR(hr = pAttributes->SetUINT32(MF_TRANSFORM_ASYNC_UNLOCK, TRUE));
-	}
-    
-bail:
-   SafeRelease(&pAttributes);
-   return hr;
-}
-
 class CWmaEncoder 
 {
 public:
@@ -122,14 +91,13 @@ HRESULT CWmaEncoder::Initialize()
     CLSID *pCLSIDs = NULL;   // Pointer to an array of CLISDs. 
     UINT32 count = 0;      // Size of the array.
 
-    IMFActivate **ppActivate = NULL;
+    IMFMediaType* pOutMediaType = NULL;
+	ICodecAPI* pCodecAPI = NULL;
     
     // Look for a encoder.
-    MFT_REGISTER_TYPE_INFO toutinfo, tininfo;
+    MFT_REGISTER_TYPE_INFO toutinfo;
     toutinfo.guidMajorType = MFMediaType_Video;
     toutinfo.guidSubtype = MFVideoFormat_H264;
-	tininfo.guidMajorType = MFMediaType_Video;
-	tininfo.guidSubtype = MFVideoFormat_NV12;
 
     HRESULT hr = S_OK;
 
@@ -138,15 +106,15 @@ HRESULT CWmaEncoder::Initialize()
                  MFT_ENUM_FLAG_LOCALMFT | 
                  MFT_ENUM_FLAG_SORTANDFILTER;
 
-	
-	hr = MFTEnumEx(
-		 MFT_CATEGORY_VIDEO_ENCODER,
-		unFlags,
-		 &tininfo,      // Input type
-		&toutinfo,       // Output type
-		&ppActivate,
-		&count
-		);
+    hr = MFTEnum(
+        MFT_CATEGORY_VIDEO_ENCODER,
+        unFlags,                  // Reserved
+        NULL,               // Input type to match. 
+        &toutinfo,          // Output type to match.
+        NULL,               // Attributes to match. (None.)
+        &pCLSIDs,           // Receives a pointer to an array of CLSIDs.
+        &count              // Receives the size of the array.
+        );
     
     if (SUCCEEDED(hr))
     {
@@ -156,8 +124,6 @@ HRESULT CWmaEncoder::Initialize()
         }
     }
 
-	
-
 	//hr = CoCreateInstance(CLSID_MF_H264EncFilter, NULL, 
     //        CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&m_pMFT));
 	
@@ -165,18 +131,47 @@ HRESULT CWmaEncoder::Initialize()
     //Create the MFT decoder
     if (SUCCEEDED(hr))
     {
-        //hr = CoCreateInstance(pCLSIDs[0], NULL, 
-         //   CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&m_pMFT));
-
-		hr = ppActivate[0]->ActivateObject(IID_PPV_ARGS(&m_pMFT));
+        hr = CoCreateInstance(pCLSIDs[0], NULL, 
+            CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&m_pMFT));
     }
 
-	if(m_pMFT)
-	{
-		UnlockAsyncMFT(m_pMFT);
-	}
+	hr = m_pMFT->QueryInterface(IID_PPV_ARGS(&pCodecAPI));
+    if (SUCCEEDED(hr))
+    {
+		VARIANT var = {0};
 
-	SafeRelease(ppActivate);
+		// FIXME: encoder only
+		var.vt = VT_UI4;
+		var.ulVal = 0;
+        hr = pCodecAPI->SetValue(&CODECAPI_AVEncMPVDefaultBPictureCount, &var);
+
+		var.vt = VT_BOOL;
+        var.boolVal = VARIANT_TRUE;
+		hr = pCodecAPI->SetValue(&CODECAPI_AVEncCommonLowLatency, &var);
+		hr = pCodecAPI->SetValue(&CODECAPI_AVEncCommonRealTime, &var);
+
+		var.vt = VT_UI4;
+        var.ulVal = eAVEncCommonRateControlMode_CBR;
+		hr = pCodecAPI->SetValue(&CODECAPI_AVEncCommonRateControlMode, &var);
+		
+
+#if defined(CODECAPI_AVLowLatencyMode) // Win8 only
+		var.vt = VT_BOOL;
+        var.boolVal = VARIANT_TRUE;
+        hr = pCodecAPI->SetValue(&CODECAPI_AVLowLatencyMode, &var);		 
+#endif
+#if defined(CODECAPI_AVEncCommonMeanBitRate) // Win8 only
+		var.vt = VT_UI4;
+		var.ullVal = 1000000;
+		hr = pCodecAPI->SetValue(&CODECAPI_AVEncCommonMeanBitRate, &var);
+
+#endif
+
+		hr = S_OK;
+    }
+
+
+	SafeRelease(&pCodecAPI);
 
     return hr;
 }
