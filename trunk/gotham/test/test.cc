@@ -32,6 +32,7 @@ There are two modes: LOOPBACK and REMOTE_STREAMING
 #define RUN_TEST_RTP				1
 #define RUN_TEST_RTP_AS_CLIENT		1
 
+#define DEFAULT_CODECS						(tmedia_codec_id_h264_mp | tmedia_codec_id_h264_bp | tmedia_codec_id_vp8 | tmedia_codec_id_pcma | tmedia_codec_id_pcmu) // use "tmedia_codec_id_all" to enable all codecs
 #define DEFAULT_VIDEO_SIZE					tmedia_pref_video_size_vga
 #define DEFAULT_VIDEO_FPS					30 // up to 120
 #define DEFAULT_VIDEO_REMOTE_WINDOW_NAME	L"Remote video window (Decoded RTP)" // Remote window is where the decoded video frames are displayed
@@ -165,9 +166,17 @@ int _tmain(int argc, _TCHAR* argv[])
 	GOTHAM_ASSERT((ret = tmedia_defaults_set_pref_video_size(DEFAULT_VIDEO_SIZE)) == 0);
 	GOTHAM_ASSERT((ret = tmedia_defaults_set_video_fps(DEFAULT_VIDEO_FPS)) == 0);
 
-	// On my PC: 2 video cameras
-	// 0: FaceTime HD Camera (Built-in)
+	GOTHAM_ASSERT((ret = tdav_set_codecs((tdav_codec_id_t)DEFAULT_CODECS)) == 0);
+	GOTHAM_ASSERT((ret = tdav_codec_set_priority((tdav_codec_id_t)tmedia_codec_id_h264_mp, 0)) == 0);
+	GOTHAM_ASSERT((ret = tdav_codec_set_priority((tdav_codec_id_t)tmedia_codec_id_h264_bp, 1)) == 0);
+
+	
+
+	// 4 video cameras for testing
+	// 0: FaceTime HD Camera (Built-in) - iMAC 2003
 	// 1: Logitech HD Pro Webcam C920
+	// 2: Rocketfish HD Webcam Pro
+	// 3: Integrated Camera - Lenovo ThinkPad
 	// If none is connected then the default device will be selected
 	GOTHAM_ASSERT((ret = tmedia_producer_set_friendly_name(tmedia_video, "Logitech HD Pro Webcam C920")) == 0);
 	
