@@ -36,23 +36,24 @@ interface IPeerConnection : IDispatch{
 	[id(2), helpstring("method createOffer")] HRESULT createOffer([in] VARIANT_BOOL has_audio, [in] VARIANT_BOOL has_video, [out,retval] BSTR* sdp);
 	[id(3), helpstring("method createAnswer")] HRESULT createAnswer([in] VARIANT_BOOL has_audio, [in] VARIANT_BOOL has_video, [out,retval] BSTR* sdp);
 	[id(4), helpstring("method startIce")] HRESULT startIce([in] SHORT IceOptions, [in] LONGLONG looper);
-	[propget, id(5), helpstring("property localDescription")] HRESULT localDescription([out, retval] BSTR* pVal);
-	[propget, id(6), helpstring("property remoteDescription")] HRESULT remoteDescription([out, retval] BSTR* pVal);
-	[id(7), helpstring("method setLocalDescription")] HRESULT setLocalDescription([in] USHORT action, [in] BSTR desc);
-	[id(8), helpstring("method setRemoteDescription")] HRESULT setRemoteDescription([in] USHORT action, [in] BSTR desc);
-	[propget, id(9), helpstring("property readyState")] HRESULT readyState([out, retval] USHORT* pVal);
-	[propget, id(10), helpstring("property iceState")] HRESULT iceState([out, retval] USHORT* pVal);
-	[propget, id(11), helpstring("property remoteVideo")] HRESULT remoteVideo([out, retval] LONGLONG* pVal);
-	[propput, id(11), helpstring("property remoteVideo")] HRESULT remoteVideo([in] LONGLONG newVal);
-	[propget, id(12), helpstring("property localVideo")] HRESULT localVideo([out, retval] LONGLONG* pVal);
-	[propput, id(12), helpstring("property localVideo")] HRESULT localVideo([in] LONGLONG newVal);
-	[propget, id(13), helpstring("property version")] HRESULT version([out, retval] BSTR* pVal);
-	[propget, id(14), helpstring("property fullScreen")] HRESULT fullScreen([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(14), helpstring("property fullScreen")] HRESULT fullScreen([in] VARIANT_BOOL newVal);
+	[id(5), helpstring("method startMedia")] HRESULT startMedia(void);
+	[propget, id(6), helpstring("property localDescription")] HRESULT localDescription([out, retval] BSTR* pVal);
+	[propget, id(7), helpstring("property remoteDescription")] HRESULT remoteDescription([out, retval] BSTR* pVal);
+	[id(8), helpstring("method setLocalDescription")] HRESULT setLocalDescription([in] USHORT action, [in] BSTR desc);
+	[id(9), helpstring("method setRemoteDescription")] HRESULT setRemoteDescription([in] USHORT action, [in] BSTR desc);
+	[propget, id(10), helpstring("property readyState")] HRESULT readyState([out, retval] USHORT* pVal);
+	[propget, id(11), helpstring("property iceState")] HRESULT iceState([out, retval] USHORT* pVal);
+	[propget, id(12), helpstring("property remoteVideo")] HRESULT remoteVideo([out, retval] LONGLONG* pVal);
+	[propput, id(12), helpstring("property remoteVideo")] HRESULT remoteVideo([in] LONGLONG newVal);
+	[propget, id(13), helpstring("property localVideo")] HRESULT localVideo([out, retval] LONGLONG* pVal);
+	[propput, id(13), helpstring("property localVideo")] HRESULT localVideo([in] LONGLONG newVal);
+	[propget, id(14), helpstring("property version")] HRESULT version([out, retval] BSTR* pVal);
+	[propget, id(15), helpstring("property fullScreen")] HRESULT fullScreen([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(15), helpstring("property fullScreen")] HRESULT fullScreen([in] VARIANT_BOOL newVal);
 	
-	[id(15), helpstring("method Init")] HRESULT Init([in] BSTR desc);
-	[id(16), helpstring("method StartDebug")] HRESULT StartDebug(void);
-	[id(17), helpstring("method StopDebug")] HRESULT StopDebug(void);
+	[id(16), helpstring("method Init")] HRESULT Init([in] BSTR desc);
+	[id(17), helpstring("method StartDebug")] HRESULT StartDebug(void);
+	[id(18), helpstring("method StopDebug")] HRESULT StopDebug(void);
 };
 
 [

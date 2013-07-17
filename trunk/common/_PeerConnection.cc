@@ -87,6 +87,12 @@ bool _PeerConnection::StartIce(int IceOptions)
 		return false;
 	}
 
+	if(!mIceCtxAudio && !mIceCtxVideo) {
+		TSK_DEBUG_INFO("ICE is not enabled...");
+		mIceState = IceStateCompleted;
+		return SignalNoMoreIceCandidateToFollow(); // say to the browser that it should not wait for any ICE candidate callback
+	}
+
 	int iRet;
 
 	if((mMediaType & tmedia_audio)){
@@ -103,6 +109,15 @@ bool _PeerConnection::StartIce(int IceOptions)
 	}
 
 	return true;
+}
+
+bool _PeerConnection::StartMedia()
+{
+	if(mSessionMgr && mSdpLocal && mSdpRemote){
+		return (tmedia_session_mgr_start(mSessionMgr) == 0);
+	}
+	TSK_DEBUG_ERROR("Not ready");
+	return false;
 }
 
 bool _PeerConnection::SetLocalDescription(int action, const _SessionDescription* sdpObj)
@@ -132,8 +147,10 @@ bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription
 		? tmedia_ro_type_provisional
 		: (action == SdpActionAnswer ? tmedia_ro_type_answer : tmedia_ro_type_offer);
 
+	bool isIceEnabled = IceIsEnabled(sdpObj->GetSdp());
+
 	if(!mSessionMgr){
-		if(!CreateSessionMgr(tmedia_type_from_sdp(sdpObj->GetSdp()), false)){
+		if(!CreateSessionMgr(tmedia_type_from_sdp(sdpObj->GetSdp()), isIceEnabled, false)){
 			iRet = -1;
 			goto bail;
 		}
@@ -147,7 +164,7 @@ bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription
 	switch(action){
 		case SdpActionOffer:
 			{
-				if(!(IceProcessRo(sdpObj->GetSdp(), true))){
+				if(isIceEnabled && !(IceProcessRo(sdpObj->GetSdp(), true))){
 					TSK_DEBUG_ERROR("Failed to process remote offer");
 					goto bail;
 				}
@@ -156,7 +173,7 @@ bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription
 		case SdpActionAnswer:
 		case SdpActionProvisionalAnswer:
 			{
-				if(!(IceProcessRo(sdpObj->GetSdp(), false))){
+				if(isIceEnabled && !(IceProcessRo(sdpObj->GetSdp(), false))){
 					TSK_DEBUG_ERROR("Failed to process remote offer");
 					goto bail;
 				}
@@ -174,7 +191,7 @@ bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription
 	mSdpRemote = (tsdp_message_t*)tsk_object_ref((tsdp_message_t*)sdpObj->GetSdp());
 	mReadyState = (mSdpLocal && mSdpRemote) ? ReadyStateActive : ReadyStateOpening;
 
-	if(mReadyState == ReadyStateActive){
+	if(isIceEnabled && mReadyState == ReadyStateActive){
 		IceSetTimeout((tmedia_defaults_get_profile() == tmedia_profile_rtcweb) ? ICE_TIMEOUT_ENDLESS : ICE_TIMEOUT_VAL);
 	 }
 	
@@ -222,14 +239,7 @@ bool _PeerConnection::SetDisplayRemote(LONGLONG remote)
 	return SetDisplays(mLocalVideo, remote);
 }
 
-void _PeerConnection::StartMedia()
-{
-	if(mSessionMgr){
-		tmedia_session_mgr_start(mSessionMgr);
-	}
-}
-
-bool _PeerConnection::CreateSessionMgr(tmedia_type_t eMediaType, bool offerer)
+bool _PeerConnection::CreateSessionMgr(tmedia_type_t eMediaType, bool iceEnabled, bool offerer)
 {
 	if(mSessionMgr){
 		TSK_DEBUG_WARN("Session manager already defined");
@@ -248,12 +258,12 @@ bool _PeerConnection::CreateSessionMgr(tmedia_type_t eMediaType, bool offerer)
 	}
 
 	mMediaType = eMediaType;
-	if(!IceCreateCtx(eMediaType)){
+	if(iceEnabled && !IceCreateCtx(eMediaType)){
 		TSK_DEBUG_ERROR("Failed to create ICE context");
 		return false;
 	}
 
-	if((tmedia_session_mgr_set_ice_ctx(mSessionMgr, mIceCtxAudio, mIceCtxVideo) != 0)){
+	if(iceEnabled && (tmedia_session_mgr_set_ice_ctx(mSessionMgr, mIceCtxAudio, mIceCtxVideo) != 0)){
 		TSK_DEBUG_ERROR("Failed to set ICE contexts");
 		return false;
 	}
@@ -283,7 +293,7 @@ bool _PeerConnection::CreateLo(bool has_audio, bool has_video, char** sdpStr, in
 	*sdpStr = NULL;
 	*sdp_len = 0;
 
-	if(!mSessionMgr && !CreateSessionMgr(eMediaType, offerer)){
+	if(!mSessionMgr && !CreateSessionMgr(eMediaType, (mSdpRemote ? IceIsEnabled(mSdpRemote) : true), offerer)){
 		return false;
 	}
 	
@@ -321,6 +331,20 @@ bool _PeerConnection::SerializeSdp(const tsdp_message_t* sdp, char** sdpStr, int
 		*sdp_len = tsk_strlen(*sdpStr);
 	}
 	 
+	return true;
+}
+
+// The JavaScript code subscribe to this callback to know that the SDP is ready to be sent
+bool _PeerConnection::SignalNoMoreIceCandidateToFollow()
+{
+	HWND hWnd = reinterpret_cast<HWND>(GetWindowHandle());
+	static const bool kMoreToFollowIsFalse = false;
+	PeerConnectionEvent* oEvent = new PeerConnectionEvent(tsk_null, tsk_null, kMoreToFollowIsFalse);
+	if(!PostMessageA(hWnd, WM_ICE_EVENT_CANDIDATE, reinterpret_cast<WPARAM>(this), reinterpret_cast<LPARAM>(oEvent))){
+		TSK_DEBUG_ERROR("PostMessageA() failed");
+		IceCallbackFire(oEvent);
+		if(oEvent) delete oEvent, oEvent = NULL; // even will be destroyed by the listener if succeed
+	}
 	return true;
 }
 
@@ -456,10 +480,27 @@ bool _PeerConnection::IceProcessRo(const tsdp_message_t* sdp_ro, bool isOffer)
 	return (ret == 0);
 }
 
-bool _PeerConnection::IceIsConnected()
+bool _PeerConnection::IceIsDone()
 {
 	return (!tnet_ice_ctx_is_active(mIceCtxAudio) || tnet_ice_ctx_is_connected(mIceCtxAudio))
 		&& (!tnet_ice_ctx_is_active(mIceCtxVideo) || tnet_ice_ctx_is_connected(mIceCtxVideo));
+}
+
+bool _PeerConnection::IceIsEnabled(const struct tsdp_message_s* sdp)
+{
+	bool isEnabled = false;
+	if(sdp) {
+		int i = 0;
+		const tsdp_header_M_t* M;
+		while((M = (tsdp_header_M_t*)tsdp_message_get_headerAt(sdp, tsdp_htype_M, i++))) {
+			isEnabled = true; // at least one "candidate"
+			if(!tsdp_header_M_findA(M, "candidate")) {
+				return false;
+			}
+		}
+	}
+	
+	return isEnabled;
 }
 
 int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
@@ -517,13 +558,25 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 					}
 				}
 				else if(e->type == tnet_ice_event_type_conncheck_succeed){
-					if(This->IceIsConnected()){
+					if(This->IceIsDone()){
 						This->mIceState = IceStateConnected;
 						if(This->GetWindowHandle()){
 							if(!PostMessageA((HWND)This->GetWindowHandle(), WM_ICE_EVENT_CONNECTED, reinterpret_cast<WPARAM>(This), NULL)){
-								This->StartMedia();
+								// This->StartMedia();
 							}
 						}
+					}
+				}
+				else if(e->type == tnet_ice_event_type_conncheck_failed || e->type == tnet_ice_event_type_cancelled){
+					// "tnet_ice_event_type_cancelled" means remote party doesn't support ICE -> Not an error
+					This->mIceState = (e->type == tnet_ice_event_type_conncheck_failed) ? IceStateFailed : IceStateClosed;
+					if(This->GetWindowHandle()){
+						if(!PostMessageA((HWND)This->GetWindowHandle(), (e->type == tnet_ice_event_type_conncheck_failed) ? WM_ICE_EVENT_FAILED : WM_ICE_EVENT_CANCELLED, reinterpret_cast<WPARAM>(This), NULL)){
+							// This->StartMedia();
+						}
+					}
+					if(e->type == tnet_ice_event_type_cancelled) {
+						This->SignalNoMoreIceCandidateToFollow();
 					}
 				}
 				break;

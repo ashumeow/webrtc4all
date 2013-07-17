@@ -97,6 +97,7 @@ public:
 	virtual bool CreateOffer(bool has_audio, bool has_video, char** sdp, int* sdp_len);
 	virtual bool CreateAnswer(bool has_audio, bool has_video, char** sdp, int* sdp_len);
 	virtual bool StartIce(int IceOptions);
+	virtual bool StartMedia();
 	virtual bool SetLocalDescription(int action, const _SessionDescription* sdpObj);
 	virtual bool SetRemoteDescription(int action, const _SessionDescription* sdpObj);
 
@@ -110,18 +111,19 @@ public:
 
 
 protected:
-	virtual bool CreateSessionMgr(enum tmedia_type_e eMediaType, bool offerer);
+	virtual bool CreateSessionMgr(enum tmedia_type_e eMediaType, bool iceEnabled, bool offerer);
 	virtual bool CreateLo(bool has_audio, bool has_video, char** sdpStr, int* sdp_len, bool offerer);
 	virtual bool SerializeSdp(const struct tsdp_message_s* sdp, char** sdpStr, int* sdp_len);
+	virtual bool SignalNoMoreIceCandidateToFollow();
 	virtual bool IceCreateCtx(enum tmedia_type_e eMediaType);
 	virtual bool IceSetTimeout(int32_t timeout);
 	virtual bool IceGotLocalCandidates();
 	virtual bool IceProcessRo(const struct tsdp_message_s* sdp_ro, bool isOffer);
-	virtual bool IceIsConnected();
+	virtual bool IceIsDone();
+	virtual bool IceIsEnabled(const struct tsdp_message_s* sdp);
 	static int IceCallback(const struct tnet_ice_event_s *e);
 
 public:
-	virtual void StartMedia();
 	virtual void IceCallbackFire(const PeerConnectionEvent* e) = 0;
 	virtual LONGLONG GetWindowHandle() = 0;
 
