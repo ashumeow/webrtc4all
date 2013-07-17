@@ -86,6 +86,7 @@ public:
 	STDMETHOD(createOffer)(VARIANT_BOOL has_audio, VARIANT_BOOL has_video, BSTR* sdp);
 	STDMETHOD(createAnswer)(VARIANT_BOOL has_audio, VARIANT_BOOL has_video, BSTR* sdp);
 	STDMETHOD(startIce)(SHORT IceOptions, LONGLONG looper);
+	STDMETHOD(startMedia)();
 	STDMETHOD(setLocalDescription)(USHORT action, BSTR desc);
 	STDMETHOD(setRemoteDescription)(USHORT action, BSTR desc);
 	STDMETHOD(get_localDescription)(BSTR* pVal);

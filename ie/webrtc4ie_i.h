@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0595 */
-/* at Wed Jul 03 13:13:07 2013
+/* at Wed Jul 17 04:33:38 2013
  */
 /* Compiler settings for .\webrtc4ie.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0595 
@@ -360,6 +360,8 @@ EXTERN_C const IID IID_IPeerConnection;
             /* [in] */ SHORT IceOptions,
             /* [in] */ LONGLONG looper) = 0;
         
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE startMedia( void) = 0;
+        
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_localDescription( 
             /* [retval][out] */ BSTR *pVal) = 0;
         
@@ -486,6 +488,9 @@ EXTERN_C const IID IID_IPeerConnection;
             /* [in] */ SHORT IceOptions,
             /* [in] */ LONGLONG looper);
         
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *startMedia )( 
+            IPeerConnection * This);
+        
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_localDescription )( 
             IPeerConnection * This,
             /* [retval][out] */ BSTR *pVal);
@@ -597,6 +602,9 @@ EXTERN_C const IID IID_IPeerConnection;
 
 #define IPeerConnection_startIce(This,IceOptions,looper)	\
     ( (This)->lpVtbl -> startIce(This,IceOptions,looper) ) 
+
+#define IPeerConnection_startMedia(This)	\
+    ( (This)->lpVtbl -> startMedia(This) ) 
 
 #define IPeerConnection_get_localDescription(This,pVal)	\
     ( (This)->lpVtbl -> get_localDescription(This,pVal) ) 

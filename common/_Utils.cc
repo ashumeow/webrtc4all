@@ -41,6 +41,10 @@ void _Utils::Initialize(void)
 {
 	if(!g_bInitialized){
 
+#if 0
+		StartDebug();
+#endif
+
 		int iRet;
 		if((iRet = tnet_startup()) != 0){
 			TSK_DEBUG_ERROR("tnet_startup failed with error code=%d", iRet);
@@ -61,6 +65,7 @@ void _Utils::Initialize(void)
 				tdav_codec_id_gsm |
 				tdav_codec_id_pcma |
 				tdav_codec_id_pcmu |
+				tdav_codec_id_opus |
 				tdav_codec_id_ilbc |
 				tdav_codec_id_speex_nb |
 				tdav_codec_id_speex_wb |
@@ -78,10 +83,24 @@ void _Utils::Initialize(void)
 				tdav_codec_id_vp8)
 			);
 
+		// Priority: VP8, H.264 (BP then MP), PCMA/PCMU, OPUS...
+		int prio = 0;
+		tdav_codec_set_priority(tdav_codec_id_vp8, prio++);
+		tdav_codec_set_priority(tdav_codec_id_h264_bp, prio++);
+		tdav_codec_set_priority(tdav_codec_id_h264_mp, prio++);
+		tdav_codec_set_priority(tdav_codec_id_pcma, prio++);
+		tdav_codec_set_priority(tdav_codec_id_pcmu, prio++);
+		tdav_codec_set_priority(tdav_codec_id_opus, prio++);
+
+#if 0 /* RTCWeb optional to allow interop with other SIP implementations */
 		tmedia_defaults_set_profile(tmedia_profile_rtcweb);
+#else
+		tmedia_defaults_set_ice_enabled(tsk_true); // Use ICE only if supported by remote party
+		tmedia_defaults_set_srtp_mode(tmedia_srtp_mode_optional); // Use SRTP only if supported by remote party
+		tmedia_defaults_set_srtp_type((tmedia_srtp_type_t)(tmedia_srtp_type_sdes | tmedia_srtp_type_dtls)); // Negotiate the type of SRTP to use (SDES or DTLS)
+#endif
 		tmedia_defaults_set_rtcp_enabled(tsk_true);
 		tmedia_defaults_set_rtcpmux_enabled(tsk_true);
-		tmedia_defaults_set_pref_video_size(tmedia_pref_video_size_vga);
 
 		tmedia_defaults_set_echo_supp_enabled(tsk_true);
 		tmedia_defaults_set_echo_tail(g_nEchoTail);
@@ -91,6 +110,13 @@ void _Utils::Initialize(void)
 		tmedia_defaults_set_noise_supp_enabled(tsk_true);
 		tmedia_defaults_set_jb_margin(0);
 		tmedia_defaults_set_jb_max_late_rate(1);
+
+		tmedia_defaults_set_video_fps(15);
+		tmedia_defaults_set_video_zeroartifacts_enabled(tsk_true);
+		tmedia_defaults_set_pref_video_size(tmedia_pref_video_size_vga);
+		
+		tmedia_defaults_set_opus_maxcapturerate(16000); /* Because of WebRTC AEC only 8000 and 16000 are supported */
+        tmedia_defaults_set_opus_maxcapturerate(48000);
 	}
 }
 
@@ -125,11 +151,18 @@ LRESULT CALLBACK _Utils::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 				}
 				break;
 			}
-		case WM_ICE_EVENT_CONNECTED:
+		case WM_ICE_EVENT_CONNECTED: /* Both parties support ICE and ConnCheck succeed */
+		case WM_ICE_EVENT_FAILED: /* Both parties support ICE but ConnCheck failed: Use Address in SDP "c=" line */
+		case WM_ICE_EVENT_CANCELLED: /* Remote paty doesn't support: Use Address in SDP "c=" line */
 			{
-				TSK_DEBUG_INFO("_Utils::WndProc::WM_ICE_EVENT_CONNECTED");
+				const char* pcMsg = uMsg == WM_ICE_EVENT_CONNECTED ? "WM_ICE_EVENT_CONNECTED"
+						: uMsg == WM_ICE_EVENT_FAILED ? "WM_ICE_EVENT_FAILED"
+						: uMsg == WM_ICE_EVENT_CANCELLED ? "WM_ICE_EVENT_CANCELLED"
+						: "WM_ICE_EVENT_UNKNOWN";
+				TSK_DEBUG_INFO("_Utils::WndProc::%s", pcMsg);
 				_PeerConnection* This = reinterpret_cast<_PeerConnection*>(wParam);
-				This->StartMedia();
+				// Media is now explicitly started
+				// This->StartMedia();
 				break;
 			}
 		case WM_NET_EVENT:

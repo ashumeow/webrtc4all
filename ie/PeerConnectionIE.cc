@@ -107,6 +107,11 @@ STDMETHODIMP CPeerConnection::startIce(SHORT IceOptions, LONGLONG looper)
 	return _PeerConnection::StartIce(IceOptions) ? S_OK : E_FAIL;
 }
 
+STDMETHODIMP CPeerConnection::startMedia()
+{
+	return _PeerConnection::StartMedia() ? S_OK : E_FAIL;
+}
+
 STDMETHODIMP CPeerConnection::setLocalDescription(USHORT action, BSTR desc)
 {
 	char* sdpStr = _com_util::ConvertBSTRToString(desc);
