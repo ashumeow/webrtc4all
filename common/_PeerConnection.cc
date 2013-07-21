@@ -270,6 +270,7 @@ bool _PeerConnection::CreateSessionMgr(tmedia_type_t eMediaType, bool iceEnabled
 	 
 	int32_t fs = (mFullScreen == true) ? 1 : 0;
 	int32_t plugin_firefox  = (mBrowserType == BrowserType_Firefox || mBrowserType == BrowserType_Chrome) ? 1 : 0;
+	static const int32_t plugin_webrtc4all = 1;
 	tmedia_session_mgr_set(mSessionMgr,
 			TMEDIA_SESSION_SET_INT32(mSessionMgr->type, "avpf-enabled", g_bAVPF), // Otherwise will be negociated using SDPCapNeg (RFC 5939)
 			TMEDIA_SESSION_PRODUCER_SET_INT64(tmedia_video, "local-hwnd", mLocalVideo),
@@ -279,6 +280,7 @@ bool _PeerConnection::CreateSessionMgr(tmedia_type_t eMediaType, bool iceEnabled
 			TMEDIA_SESSION_CONSUMER_SET_INT32(tmedia_video, "create-on-current-thead", g_bAlwaysCreateOnCurrentThread),
 			TMEDIA_SESSION_CONSUMER_SET_INT32(tmedia_video, "fullscreen", fs),
 			TMEDIA_SESSION_CONSUMER_SET_INT32(tmedia_video, "plugin-firefox", plugin_firefox),
+			TMEDIA_SESSION_CONSUMER_SET_INT32(tmedia_video, "plugin-webrtc4all", plugin_webrtc4all),
 			TMEDIA_SESSION_SET_NULL());
 
 	return true;
