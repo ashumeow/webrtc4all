@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="pluginWinMF"
-	ProjectGUID="{419DA54C-3E93-4560-9963-9B9E944F8394}"
-	RootNamespace="pluginWinMF"
+	Name="pluginWASAPI"
+	ProjectGUID="{8D72C459-8B9D-4280-8331-8BAB02D735E5}"
+	RootNamespace="pluginWASAPI"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -42,14 +42,13 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyDAV\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PLUGIN_WIN_MFP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;TINYDAV_EXPORTS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PLUGIN_WASAPI_EXPORTS;TINYDAV_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				WarnAsError="true"
-				DebugInformationFormat="1"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -62,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(OutDir)\tinySAK.lib $(OutDir)\tinyMEDIA.lib"
+				AdditionalDependencies="$(OutDir)\tinySAK.lib $(OutDir)\tinyMEDIA.lib &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\speex\libspeexdsp.a&quot;"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -118,13 +117,12 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyDAV\include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PLUGIN_WIN_MFP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_WARN;TINYDAV_EXPORTS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PLUGIN_WASAPI_EXPORTS;TINYDAV_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				WarnAsError="true"
-				DebugInformationFormat="1"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -137,7 +135,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(OutDir)\tinySAK.lib $(OutDir)\tinyMEDIA.lib"
+				AdditionalDependencies="$(OutDir)\tinySAK.lib $(OutDir)\tinyMEDIA.lib &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\speex\libspeexdsp.a&quot;"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -177,61 +175,25 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\dllmain_mf.cxx"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\dllmain_wasapi.cxx"
 				>
 			</File>
 			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_codec_h264.cxx"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\plugin_wasapi_consumer_audio.cxx"
 				>
 			</File>
 			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_consumer_audio.cxx"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\plugin_wasapi_producer_audio.cxx"
 				>
 			</File>
 			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_consumer_video.cxx"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\plugin_wasapi_tdav.cxx"
 				>
 			</File>
 			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_converter_video.cxx"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\plugin_wasapi_utils.cxx"
 				>
 			</File>
-			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_producer_audio.cxx"
-				>
-			</File>
-			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_producer_video.cxx"
-				>
-			</File>
-			<Filter
-				Name="internals"
-				>
-				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_codec.cxx"
-					>
-				</File>
-				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_custom_src.cxx"
-					>
-				</File>
-				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_devices.cxx"
-					>
-				</File>
-				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_display_watcher.cxx"
-					>
-				</File>
-				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_sample_grabber.cxx"
-					>
-				</File>
-				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_utils.cxx"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -239,51 +201,19 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_config.h"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\plugin_wasapi_config.h"
 				>
 			</File>
-			<Filter
-				Name="internals"
+			<File
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\plugin_wasapi_utils.h"
 				>
-				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_codec.h"
-					>
-				</File>
-				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_custom_src.h"
-					>
-				</File>
-				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_devices.h"
-					>
-				</File>
-				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_display_watcher.h"
-					>
-				</File>
-				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_sample_grabber.h"
-					>
-				</File>
-				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_utils.h"
-					>
-				</File>
-			</Filter>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-		</Filter>
-		<Filter
-			Name="tdav"
-			>
-			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_tdav.cxx"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>
