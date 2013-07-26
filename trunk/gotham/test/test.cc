@@ -166,6 +166,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	GOTHAM_ASSERT((ret = tmedia_defaults_set_pref_video_size(DEFAULT_VIDEO_SIZE)) == 0);
 	GOTHAM_ASSERT((ret = tmedia_defaults_set_video_fps(DEFAULT_VIDEO_FPS)) == 0);
 
+	GOTHAM_ASSERT((ret = tmedia_defaults_set_agc_enabled(tsk_true)) == 0);
+	GOTHAM_ASSERT((ret = tmedia_defaults_set_echo_supp_enabled(tsk_true)) == 0);
+	GOTHAM_ASSERT((ret = tmedia_defaults_set_noise_supp_enabled(tsk_true)) == 0);
+
 	GOTHAM_ASSERT((ret = tdav_set_codecs((tdav_codec_id_t)DEFAULT_CODECS)) == 0);
 	GOTHAM_ASSERT((ret = tdav_codec_set_priority((tdav_codec_id_t)tmedia_codec_id_h264_mp, 0)) == 0);
 	GOTHAM_ASSERT((ret = tdav_codec_set_priority((tdav_codec_id_t)tmedia_codec_id_h264_bp, 1)) == 0);
