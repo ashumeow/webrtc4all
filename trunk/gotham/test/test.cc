@@ -33,7 +33,7 @@ There are two modes: LOOPBACK and REMOTE_STREAMING
 #define RUN_TEST_RTP_AS_CLIENT		1
 
 #define DEFAULT_CODECS						(tmedia_codec_id_h264_mp | tmedia_codec_id_h264_bp | tmedia_codec_id_vp8 | tmedia_codec_id_pcma | tmedia_codec_id_pcmu) // use "tmedia_codec_id_all" to enable all codecs
-#define DEFAULT_VIDEO_SIZE					tmedia_pref_video_size_vga
+#define DEFAULT_VIDEO_SIZE					tmedia_pref_video_size_720p
 #define DEFAULT_VIDEO_FPS					30 // up to 120
 #define DEFAULT_VIDEO_REMOTE_WINDOW_NAME	L"Remote video window (Decoded RTP)" // Remote window is where the decoded video frames are displayed
 #define DEFAULT_VIDEO_LOCAL_WINDOW_NAME		L"Local video window (Preview)" // Local window is where the encoded video frames are displayed before sending (preview, PIP mode).
@@ -168,14 +168,15 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	GOTHAM_ASSERT((ret = tmedia_defaults_set_agc_enabled(tsk_true)) == 0);
 	GOTHAM_ASSERT((ret = tmedia_defaults_set_echo_supp_enabled(tsk_true)) == 0);
+	GOTHAM_ASSERT((ret = tmedia_defaults_set_echo_tail(100/*milliseconds*/)) == 0);
 	GOTHAM_ASSERT((ret = tmedia_defaults_set_noise_supp_enabled(tsk_true)) == 0);
 
 	GOTHAM_ASSERT((ret = tdav_set_codecs((tdav_codec_id_t)DEFAULT_CODECS)) == 0);
 	GOTHAM_ASSERT((ret = tdav_codec_set_priority((tdav_codec_id_t)tmedia_codec_id_h264_mp, 0)) == 0);
 	GOTHAM_ASSERT((ret = tdav_codec_set_priority((tdav_codec_id_t)tmedia_codec_id_h264_bp, 1)) == 0);
-
 	
-
+	
+	
 	// 4 video cameras for testing
 	// 0: FaceTime HD Camera (Built-in) - iMAC 2003
 	// 1: Logitech HD Pro Webcam C920
@@ -187,9 +188,9 @@ int _tmain(int argc, _TCHAR* argv[])
 #if RUN_TEST_RTP
     test_rtp(RUN_TEST_RTP_AS_CLIENT);
 #endif
-
+	
     tdav_deinit();
     tnet_cleanup();
-
+	
     return ret;
 }

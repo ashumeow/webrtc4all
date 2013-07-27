@@ -569,10 +569,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_webrtc_denoise.c"
-				>
-			</File>
-			<File
 				RelativePath="..\thirdparties\source\doubango\tinyDAV\src\tdav_win32.c"
 				>
 			</File>
@@ -797,6 +793,10 @@
 				</File>
 				<File
 					RelativePath="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_speex_resampler.c"
+					>
+				</File>
+				<File
+					RelativePath="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_webrtc_denoise.c"
 					>
 				</File>
 				<Filter
