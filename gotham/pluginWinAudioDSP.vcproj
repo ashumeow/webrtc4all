@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="pluginWASAPI"
-	ProjectGUID="{8D72C459-8B9D-4280-8331-8BAB02D735E5}"
-	RootNamespace="pluginWASAPI"
+	Name="pluginWinAudioDSP"
+	ProjectGUID="{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}"
+	RootNamespace="pluginWinAudioDSP"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -41,13 +41,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyDAV\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PLUGIN_WASAPI_EXPORTS;TINYDAV_EXPORTS"
+				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyMEDIA\include"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PLUGIN_AUDIO_DSP_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
+				WarnAsError="true"
 				DebugInformationFormat="1"
 			/>
 			<Tool
@@ -61,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(OutDir)\tinySAK.lib $(OutDir)\tinyMEDIA.lib &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\speex\libspeexdsp.a&quot;"
+				AdditionalDependencies="$(OutDir)\tinySAK.lib $(OutDir)\tinyMEDIA.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -116,12 +117,13 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyDAV\include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PLUGIN_WASAPI_EXPORTS;TINYDAV_EXPORTS"
+				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyMEDIA\include"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PLUGIN_AUDIO_DSP_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
+				WarnAsError="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -135,7 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(OutDir)\tinySAK.lib $(OutDir)\tinyMEDIA.lib &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\speex\libspeexdsp.a&quot;"
+				AdditionalDependencies="$(OutDir)\tinySAK.lib $(OutDir)\tinyMEDIA.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -175,23 +177,23 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\dllmain_wasapi.cxx"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinAudioDSP\dllmain_audio_dsp.cxx"
 				>
 			</File>
 			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\plugin_wasapi_consumer_audio.cxx"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinAudioDSP\plugin_audio_dsp_denoiser.cxx"
 				>
 			</File>
 			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\plugin_wasapi_producer_audio.cxx"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinAudioDSP\plugin_audio_dsp_mediabuffer.cxx"
 				>
 			</File>
 			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\plugin_wasapi_tdav.cxx"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinAudioDSP\plugin_audio_dsp_resampler.cxx"
 				>
 			</File>
 			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\plugin_wasapi_utils.cxx"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinAudioDSP\plugin_audio_dsp_utils.cxx"
 				>
 			</File>
 		</Filter>
@@ -201,11 +203,15 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\plugin_wasapi_config.h"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinAudioDSP\plugin_audio_dsp_config.h"
 				>
 			</File>
 			<File
-				RelativePath="..\thirdparties\source\doubango\plugins\pluginWASAPI\plugin_wasapi_utils.h"
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinAudioDSP\plugin_audio_dsp_mediabuffer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginWinAudioDSP\plugin_audio_dsp_utils.h"
 				>
 			</File>
 		</Filter>
