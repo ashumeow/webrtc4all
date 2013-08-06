@@ -97,7 +97,7 @@ public:
 	virtual bool CreateOffer(bool has_audio, bool has_video, char** sdp, int* sdp_len);
 	virtual bool CreateAnswer(bool has_audio, bool has_video, char** sdp, int* sdp_len);
 	virtual bool StartIce(int IceOptions);
-	virtual bool StartMedia();
+	
 	virtual bool SetLocalDescription(int action, const _SessionDescription* sdpObj);
 	virtual bool SetRemoteDescription(int action, const _SessionDescription* sdpObj);
 
@@ -124,6 +124,7 @@ protected:
 	static int IceCallback(const struct tnet_ice_event_s *e);
 
 public:
+	virtual bool StartMedia();
 	virtual void IceCallbackFire(const PeerConnectionEvent* e) = 0;
 	virtual LONGLONG GetWindowHandle() = 0;
 

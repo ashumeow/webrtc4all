@@ -585,9 +585,9 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 						This->mIceState = IceStateConnected;
 						if(This->GetWindowHandle()){
 							PostMessageA((HWND)This->GetWindowHandle(), WM_ICE_EVENT_CONNECTED, reinterpret_cast<WPARAM>(This), NULL);
-							if(This->mStartDelayedUntilIceDone) {
-								This->StartMedia();
-							}
+							//if(This->mStartDelayedUntilIceDone) {
+							//	This->StartMedia();// Start() must not be called on worker thread
+							//}
 						}
 					}
 				}
@@ -596,9 +596,9 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 					This->mIceState = (e->type == tnet_ice_event_type_conncheck_failed) ? IceStateFailed : IceStateClosed;
 					if(This->GetWindowHandle()){
 						PostMessageA((HWND)This->GetWindowHandle(), (e->type == tnet_ice_event_type_conncheck_failed) ? WM_ICE_EVENT_FAILED : WM_ICE_EVENT_CANCELLED, reinterpret_cast<WPARAM>(This), NULL);
-						if(This->mStartDelayedUntilIceDone) {
-							This->StartMedia();
-						}
+						//if(This->mStartDelayedUntilIceDone) {
+						//	This->StartMedia();// Start() must not be called on worker thread
+						//}
 					}
 					if(e->type == tnet_ice_event_type_cancelled) {
 						This->SignalNoMoreIceCandidateToFollow();
