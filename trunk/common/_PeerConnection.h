@@ -144,6 +144,8 @@ protected:
 	LONGLONG mLocalVideo;
 
 	bool mFullScreen;
+	bool mRemoteHaveIce;
+	bool mStartDelayedUntilIceDone;
 
 	BrowserType_t mBrowserType;
 
