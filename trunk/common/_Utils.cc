@@ -190,8 +190,7 @@ LRESULT CALLBACK _Utils::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 						: "WM_ICE_EVENT_UNKNOWN";
 				TSK_DEBUG_INFO("_Utils::WndProc::%s", pcMsg);
 				_PeerConnection* This = reinterpret_cast<_PeerConnection*>(wParam);
-				// Media is now explicitly started
-				// This->StartMedia();
+				This->StartMedia(); // Start() must not be called on worker thread
 				break;
 			}
 		case WM_NET_EVENT:
