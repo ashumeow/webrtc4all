@@ -20,11 +20,13 @@
 #include "_PeerConnection.h"
 #include "_NetTransport.h"
 
+#include <Shlwapi.h>
+
 BOOL g_bInitialized = FALSE;
 BOOL g_bHasDebugConsole = FALSE;
 char* g_sNullTerminated = NULL;
 UINT g_iNullTerminated = 0;
-INT g_nEchoTail = 500;
+INT g_nEchoTail = 100;
 CRITICAL_SECTION g_CS;
 
 _Utils::_Utils()
@@ -65,7 +67,7 @@ void _Utils::Initialize(void)
 				tdav_codec_id_gsm |
 				tdav_codec_id_pcma |
 				tdav_codec_id_pcmu |
-				tdav_codec_id_opus |
+				/*tdav_codec_id_opus |*/ // FIXME: direct call to chrome sometimes produce noise. Why?
 				tdav_codec_id_ilbc |
 				tdav_codec_id_speex_nb |
 				tdav_codec_id_speex_wb |
@@ -116,7 +118,7 @@ void _Utils::Initialize(void)
 		tmedia_defaults_set_pref_video_size(tmedia_pref_video_size_vga);
 		
 		tmedia_defaults_set_opus_maxcapturerate(16000); /* Because of WebRTC AEC only 8000 and 16000 are supported */
-        tmedia_defaults_set_opus_maxcapturerate(48000);
+		tmedia_defaults_set_opus_maxplaybackrate(48000);
 	}
 }
 
@@ -136,6 +138,33 @@ bool _Utils::StopDebug(void)
 {
 	return (FreeConsole() == TRUE);
 }
+
+static const HMODULE GetCurrentModule()
+{
+	HMODULE hm = {0};
+    GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, (LPCTSTR)GetCurrentModule, &hm);   
+    return hm;
+}
+
+const char* _Utils::GetCurrentDirectoryPath()
+{
+	static char CURRENT_DIR_PATH[MAX_PATH] = { 0 };
+	static DWORD CURRENT_DIR_PATH_LEN = 0;
+	if(CURRENT_DIR_PATH_LEN == 0) {
+		// NULL HMODULE will get the path to the executable not the DLL. When runing the code in Internet Explorer this is a BIG issue as the path is where IE.exe is installed.
+		if((CURRENT_DIR_PATH_LEN = GetModuleFileNameA(GetCurrentModule(), CURRENT_DIR_PATH, MAX_PATH))) {
+			if(!PathRemoveFileSpecA(CURRENT_DIR_PATH)) {
+				TSK_DEBUG_ERROR("PathRemoveFileSpecA(%s) failed: %x", CURRENT_DIR_PATH, GetLastError());
+				memset(CURRENT_DIR_PATH, 0, MAX_PATH);
+			}
+		}
+		else {
+			TSK_DEBUG_ERROR("GetModuleFileNameA() failed: %x", GetLastError());
+		}
+	}
+	return CURRENT_DIR_PATH;
+}
+
 
 LRESULT CALLBACK _Utils::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {

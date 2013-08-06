@@ -20,6 +20,7 @@
 #include "_Utils.h"
 #include "../common/_SessionDescription.h"
 
+#include <sys/stat.h> /* stat() */
 
 static BOOL g_bAlwaysCreateOnCurrentThread = TRUE; // because "ThreadingModel 'Apartment'"
 static BOOL g_bAVPF = TRUE;
@@ -36,6 +37,8 @@ _PeerConnection::_PeerConnection(BrowserType_t browserType):
 	mSdpRemote(NULL),
 	mIceCtxAudio(NULL),
 	mIceCtxVideo(NULL),
+	mRemoteHaveIce(false),
+	mStartDelayedUntilIceDone(false),
 	mFullScreen(false)
 {
 	_Utils::Initialize();
@@ -114,6 +117,12 @@ bool _PeerConnection::StartIce(int IceOptions)
 bool _PeerConnection::StartMedia()
 {
 	if(mSessionMgr && mSdpLocal && mSdpRemote){
+		if(mRemoteHaveIce && !IceIsDone()) {
+			TSK_DEBUG_INFO("Delaying media start until ICE process is done");
+			mStartDelayedUntilIceDone = true;
+			return true;
+		}
+		mStartDelayedUntilIceDone = false;
 		return (tmedia_session_mgr_start(mSessionMgr) == 0);
 	}
 	TSK_DEBUG_ERROR("Not ready");
@@ -147,10 +156,10 @@ bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription
 		? tmedia_ro_type_provisional
 		: (action == SdpActionAnswer ? tmedia_ro_type_answer : tmedia_ro_type_offer);
 
-	bool isIceEnabled = IceIsEnabled(sdpObj->GetSdp());
+	mRemoteHaveIce = IceIsEnabled(sdpObj->GetSdp());
 
 	if(!mSessionMgr){
-		if(!CreateSessionMgr(tmedia_type_from_sdp(sdpObj->GetSdp()), isIceEnabled, false)){
+		if(!CreateSessionMgr(tmedia_type_from_sdp(sdpObj->GetSdp()), mRemoteHaveIce, false)){
 			iRet = -1;
 			goto bail;
 		}
@@ -164,7 +173,7 @@ bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription
 	switch(action){
 		case SdpActionOffer:
 			{
-				if(isIceEnabled && !(IceProcessRo(sdpObj->GetSdp(), true))){
+				if(mRemoteHaveIce && !(IceProcessRo(sdpObj->GetSdp(), true))){
 					TSK_DEBUG_ERROR("Failed to process remote offer");
 					goto bail;
 				}
@@ -173,7 +182,7 @@ bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription
 		case SdpActionAnswer:
 		case SdpActionProvisionalAnswer:
 			{
-				if(isIceEnabled && !(IceProcessRo(sdpObj->GetSdp(), false))){
+				if(mRemoteHaveIce && !(IceProcessRo(sdpObj->GetSdp(), false))){
 					TSK_DEBUG_ERROR("Failed to process remote offer");
 					goto bail;
 				}
@@ -191,7 +200,7 @@ bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription
 	mSdpRemote = (tsdp_message_t*)tsk_object_ref((tsdp_message_t*)sdpObj->GetSdp());
 	mReadyState = (mSdpLocal && mSdpRemote) ? ReadyStateActive : ReadyStateOpening;
 
-	if(isIceEnabled && mReadyState == ReadyStateActive){
+	if(mRemoteHaveIce && mReadyState == ReadyStateActive){
 		IceSetTimeout((tmedia_defaults_get_profile() == tmedia_profile_rtcweb) ? ICE_TIMEOUT_ENDLESS : ICE_TIMEOUT_VAL);
 	 }
 	
@@ -267,12 +276,24 @@ bool _PeerConnection::CreateSessionMgr(tmedia_type_t eMediaType, bool iceEnabled
 		TSK_DEBUG_ERROR("Failed to set ICE contexts");
 		return false;
 	}
-	 
+	
+	// DTLS certificates
+	static char* __dtlsCertificate = tsk_null;
+	static bool __dtlsCertificateExist = false;
+	if(!__dtlsCertificate){
+		tsk_sprintf(&__dtlsCertificate, "%s/pub.pem", _Utils::GetCurrentDirectoryPath());
+		TSK_DEBUG_INFO("Path to DTLS-SRTP cert=%s", __dtlsCertificate);
+	}
+	// update for each call to be sure not added later
+	struct stat _stat;
+	__dtlsCertificateExist =((stat(__dtlsCertificate, &_stat) == 0 && _stat.st_size > 0));
+
 	int32_t fs = (mFullScreen == true) ? 1 : 0;
 	int32_t plugin_firefox  = (mBrowserType == BrowserType_Firefox || mBrowserType == BrowserType_Chrome) ? 1 : 0;
 	static const int32_t plugin_webrtc4all = 1;
 	tmedia_session_mgr_set(mSessionMgr,
 			TMEDIA_SESSION_SET_INT32(mSessionMgr->type, "avpf-enabled", g_bAVPF), // Otherwise will be negociated using SDPCapNeg (RFC 5939)
+			TMEDIA_SESSION_SET_STR(tmedia_audiovideo, "dtls-file-pbk",__dtlsCertificateExist ? __dtlsCertificate : tsk_null),
 			TMEDIA_SESSION_PRODUCER_SET_INT64(tmedia_video, "local-hwnd", mLocalVideo),
 			TMEDIA_SESSION_PRODUCER_SET_INT32(tmedia_video, "create-on-current-thead", g_bAlwaysCreateOnCurrentThread),
 			TMEDIA_SESSION_PRODUCER_SET_INT32(tmedia_video, "plugin-firefox", plugin_firefox),
@@ -563,8 +584,9 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 					if(This->IceIsDone()){
 						This->mIceState = IceStateConnected;
 						if(This->GetWindowHandle()){
-							if(!PostMessageA((HWND)This->GetWindowHandle(), WM_ICE_EVENT_CONNECTED, reinterpret_cast<WPARAM>(This), NULL)){
-								// This->StartMedia();
+							PostMessageA((HWND)This->GetWindowHandle(), WM_ICE_EVENT_CONNECTED, reinterpret_cast<WPARAM>(This), NULL);
+							if(This->mStartDelayedUntilIceDone) {
+								This->StartMedia();
 							}
 						}
 					}
@@ -573,8 +595,9 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 					// "tnet_ice_event_type_cancelled" means remote party doesn't support ICE -> Not an error
 					This->mIceState = (e->type == tnet_ice_event_type_conncheck_failed) ? IceStateFailed : IceStateClosed;
 					if(This->GetWindowHandle()){
-						if(!PostMessageA((HWND)This->GetWindowHandle(), (e->type == tnet_ice_event_type_conncheck_failed) ? WM_ICE_EVENT_FAILED : WM_ICE_EVENT_CANCELLED, reinterpret_cast<WPARAM>(This), NULL)){
-							// This->StartMedia();
+						PostMessageA((HWND)This->GetWindowHandle(), (e->type == tnet_ice_event_type_conncheck_failed) ? WM_ICE_EVENT_FAILED : WM_ICE_EVENT_CANCELLED, reinterpret_cast<WPARAM>(This), NULL);
+						if(This->mStartDelayedUntilIceDone) {
+							This->StartMedia();
 						}
 					}
 					if(e->type == tnet_ice_event_type_cancelled) {

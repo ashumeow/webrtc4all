@@ -34,6 +34,7 @@ public:
 	static void Initialize(void);
 	static bool StartDebug(void);
 	static bool StopDebug(void);
+	static const char* GetCurrentDirectoryPath();
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 };
 
