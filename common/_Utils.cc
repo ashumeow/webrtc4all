@@ -61,6 +61,18 @@ void _Utils::Initialize(void)
 		}
 
 		InitializeCriticalSection(&g_CS);
+		
+#if METROPOLIS /* G2J.COM TelePresence client */
+		static tmedia_srtp_mode_t g_eSrtpMode = tmedia_srtp_mode_optional; // "TANDBERG/4120 (X7.2.2.2) returns SAVPF without crypto lines"
+		static tmedia_srtp_type_t g_eSrtpType = tmedia_srtp_type_sdes;
+		static tsk_bool_t g_bIceEnabled = tsk_false;
+		static tsk_bool_t g_bZeroartifactsEnabled = tsk_false; // Change once SIP INFO is supported
+#else
+		static tmedia_srtp_mode_t g_SrtpMode = tmedia_srtp_mode_optional;
+		static tmedia_srtp_type_t gSrtpType = (tmedia_srtp_type_t)(tmedia_srtp_type_sdes | tmedia_srtp_type_dtls);
+		static tsk_bool_t g_bIceEnabled = tsk_true;
+		static tsk_bool_t g_bZeroartifactsEnabled = tsk_true;
+#endif
 
 		// Disable AMR, G.729, H.261 codecs
 		tdav_set_codecs((tdav_codec_id_t)(
@@ -97,9 +109,9 @@ void _Utils::Initialize(void)
 #if 0 /* RTCWeb optional to allow interop with other SIP implementations */
 		tmedia_defaults_set_profile(tmedia_profile_rtcweb);
 #else
-		tmedia_defaults_set_ice_enabled(tsk_true); // Use ICE only if supported by remote party
-		tmedia_defaults_set_srtp_mode(tmedia_srtp_mode_optional); // Use SRTP only if supported by remote party
-		tmedia_defaults_set_srtp_type((tmedia_srtp_type_t)(tmedia_srtp_type_sdes | tmedia_srtp_type_dtls)); // Negotiate the type of SRTP to use (SDES or DTLS)
+		tmedia_defaults_set_ice_enabled(g_bIceEnabled); // Use ICE only if supported by remote party
+		tmedia_defaults_set_srtp_mode(g_eSrtpMode); // Use SRTP only if supported by remote party
+		tmedia_defaults_set_srtp_type(g_eSrtpType); // Negotiate the type of SRTP to use (SDES or DTLS)
 #endif
 		tmedia_defaults_set_rtcp_enabled(tsk_true);
 		tmedia_defaults_set_rtcpmux_enabled(tsk_true);
@@ -114,7 +126,7 @@ void _Utils::Initialize(void)
 		tmedia_defaults_set_jb_max_late_rate(1);
 
 		tmedia_defaults_set_video_fps(15);
-		tmedia_defaults_set_video_zeroartifacts_enabled(tsk_true);
+		tmedia_defaults_set_video_zeroartifacts_enabled(g_bZeroartifactsEnabled);
 		tmedia_defaults_set_pref_video_size(tmedia_pref_video_size_vga);
 		
 		tmedia_defaults_set_opus_maxcapturerate(16000); /* Because of WebRTC AEC only 8000 and 16000 are supported */
