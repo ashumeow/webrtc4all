@@ -126,6 +126,7 @@ int _NetTransport::DgramCb(const struct tnet_transport_event_s* e)
 
 	switch(e->type){
 		case event_data: {
+			TSK_DEBUG_INFO("W4A:NetTransport::RECV:%.*s\n\n", e->size, (const char*)e->data);
 			break;
 						 }
 		case event_closed:
