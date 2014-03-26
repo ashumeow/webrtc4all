@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0595 */
-/* at Mon Mar 10 05:15:36 2014
+/* at Wed Mar 26 03:11:37 2014
  */
 /* Compiler settings for ..\ie\webrtc4ie.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0595 
@@ -376,6 +376,12 @@ EXTERN_C const IID IID_IPeerConnection;
             /* [in] */ USHORT action,
             /* [in] */ BSTR desc) = 0;
         
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE processContent( 
+            /* [in] */ BSTR req_name,
+            /* [in] */ BSTR content_type,
+            /* [in] */ BSTR content_ptr,
+            /* [in] */ INT content_size) = 0;
+        
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_readyState( 
             /* [retval][out] */ USHORT *pVal) = 0;
         
@@ -509,6 +515,13 @@ EXTERN_C const IID IID_IPeerConnection;
             /* [in] */ USHORT action,
             /* [in] */ BSTR desc);
         
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *processContent )( 
+            IPeerConnection * This,
+            /* [in] */ BSTR req_name,
+            /* [in] */ BSTR content_type,
+            /* [in] */ BSTR content_ptr,
+            /* [in] */ INT content_size);
+        
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_readyState )( 
             IPeerConnection * This,
             /* [retval][out] */ USHORT *pVal);
@@ -617,6 +630,9 @@ EXTERN_C const IID IID_IPeerConnection;
 
 #define IPeerConnection_setRemoteDescription(This,action,desc)	\
     ( (This)->lpVtbl -> setRemoteDescription(This,action,desc) ) 
+
+#define IPeerConnection_processContent(This,req_name,content_type,content_ptr,content_size)	\
+    ( (This)->lpVtbl -> processContent(This,req_name,content_type,content_ptr,content_size) ) 
 
 #define IPeerConnection_get_readyState(This,pVal)	\
     ( (This)->lpVtbl -> get_readyState(This,pVal) ) 
