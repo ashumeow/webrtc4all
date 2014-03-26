@@ -22,6 +22,13 @@
 
 #include <sys/stat.h> /* stat() */
 
+#if HAVE_LIBXML2
+#include <libxml/tree.h>
+#include <libxml/parser.h>
+#include <libxml/xpath.h>
+#include <libxml/xpathInternals.h>
+#endif
+
 static BOOL g_bAlwaysCreateOnCurrentThread = TRUE; // because "ThreadingModel 'Apartment'"
 static BOOL g_bAVPF = TRUE;
 
@@ -123,6 +130,11 @@ bool _PeerConnection::StartMedia()
 			return true;
 		}
 		mStartDelayedUntilIceDone = false;
+		
+		// set callback functions now that all sessions are up
+		// tmedia_session_mgr_set_onerror_cbfn(self->msession_mgr, self, tsip_dialog_invite_msession_onerror_cb);
+		tmedia_session_mgr_set_rfc5168_cbfn(mSessionMgr, this, _PeerConnection::Rfc5168Callback);
+
 		return (tmedia_session_mgr_start(mSessionMgr) == 0);
 	}
 	TSK_DEBUG_ERROR("Not ready");
@@ -246,6 +258,65 @@ bool _PeerConnection::SetDisplayLocal(LONGLONG local)
 bool _PeerConnection::SetDisplayRemote(LONGLONG remote)
 {
 	return SetDisplays(mLocalVideo, remote);
+}
+
+bool _PeerConnection::ProcessContent(const char* req_name, const char* content_type, const void* content_ptr, int content_size)
+{
+	TSK_DEBUG_INFO("W4A::_PeerConnection::ProcessContent([%s], [%s], [%s])", req_name, content_type, content_ptr);
+	if (tsk_strnullORempty(req_name) || tsk_strnullORempty(content_type) || !content_ptr || !content_size) {
+		TSK_DEBUG_ERROR("W4A::_PeerConnection::ProcessContent: Invalid parameter")
+		return false;
+	}
+	if (mSessionMgr && tsk_striequals("application/media_control+xml", content_type)){ /* rfc5168: XML Schema for Media Control */
+		static uint32_t __ssrc_media_fake = 0;
+		static tmedia_type_t __tmedia_type_video = tmedia_video;
+		tsk_bool_t picture_fast_update = tsk_false;
+#if HAVE_LIBXML2
+
+		{
+			xmlDoc *pDoc;
+			xmlNode *pRootElement;
+			xmlXPathContext *pPathCtx;
+			xmlXPathObject *pPathObj;
+			static const xmlChar* __xpath_expr = (const xmlChar*)"/media_control/vc_primitive/to_encoder/picture_fast_update";
+			
+			if (!(pDoc = xmlParseDoc((const xmlChar*)content_ptr))) {
+				TSK_DEBUG_ERROR("Failed to parse XML content [%s]", content_ptr);
+				return 0;
+			}
+			if (!(pRootElement = xmlDocGetRootElement(pDoc))) {
+				TSK_DEBUG_ERROR("Failed to get root element from XML content [%s]", content_ptr);
+				xmlFreeDoc(pDoc);
+				return 0;
+			}
+			;
+			if (!(pPathCtx = xmlXPathNewContext(pDoc))) {
+				TSK_DEBUG_ERROR("Failed to create path context from XML content [%s]", content_ptr);
+				xmlFreeDoc(pDoc);
+				return 0;
+			}
+			if (!(pPathObj = xmlXPathEvalExpression(__xpath_expr, pPathCtx))) {
+				TSK_DEBUG_ERROR("Error: unable to evaluate xpath expression: %s", __xpath_expr);
+				xmlXPathFreeContext(pPathCtx); 
+				xmlFreeDoc(pDoc);
+				return 0;
+			}
+			
+			picture_fast_update = (pPathObj->type == XPATH_NODESET && pPathObj->nodesetval->nodeNr > 0);
+
+			xmlXPathFreeObject(pPathObj);
+			xmlXPathFreeContext(pPathCtx); 
+			xmlFreeDoc(pDoc);
+		}
+#else
+		picture_fast_update = (tsk_strcontains((const char*)content_ptr, content_size, "to_encoder") && tsk_strcontains((const char*)content_ptr, content_size, "picture_fast_update"));
+#endif
+		TSK_DEBUG_INFO("Incoming Content(application/media_control+xml, picture_fast_update=%s)", picture_fast_update ? "yes" : "no");
+		if (picture_fast_update) {
+			return (tmedia_session_mgr_recv_rtcp_event(mSessionMgr, __tmedia_type_video, tmedia_rtcp_event_type_fir, __ssrc_media_fake) == 0);
+		}
+	} //end-of-if("application/media_control+xml")
+	return true;
 }
 
 bool _PeerConnection::CreateSessionMgr(tmedia_type_t eMediaType, bool iceEnabled, bool offerer)
@@ -535,7 +606,7 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 
 	EnterCriticalSection(&This->mCSIceCallback);
 
-	TSK_DEBUG_INFO("ICE callback: %s", e->phrase);
+	TSK_DEBUG_INFO("W4A::_PeerConnection::ICE callback: %s", e->phrase);
 
 	switch(e->type){
 		case tnet_ice_event_type_started:
@@ -619,4 +690,28 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 	LeaveCriticalSection(&This->mCSIceCallback);
 
 	return ret;
+}
+
+// callback function called when media session events (related to rfc5168) occures asynchronously
+int _PeerConnection::Rfc5168Callback(const void* usrdata, const struct tmedia_session_s* session, const char* reason, enum tmedia_session_rfc5168_cmd_e command)
+{
+	int ret = 0;
+	_PeerConnection *This;
+
+	This = (_PeerConnection *)usrdata;
+	
+	TSK_DEBUG_INFO("W4A::_PeerConnection::Rfc5168Callback: %d-%s", command, reason);
+	
+	if (This) {
+		if (command == tmedia_session_rfc5168_cmd_picture_fast_update) {
+			if (This->GetWindowHandle()) {
+				static const char* __command_picture_fast_update = "picture_fast_update";
+				PostMessageA((HWND)This->GetWindowHandle(), WM_RFC5168_EVENT, reinterpret_cast<WPARAM>(This), reinterpret_cast<LPARAM>(__command_picture_fast_update));
+			}
+			else {
+				TSK_DEBUG_ERROR("No handle");
+			}
+		}
+	}
+	return 0;
 }

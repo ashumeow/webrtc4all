@@ -132,6 +132,18 @@ STDMETHODIMP CPeerConnection::setRemoteDescription(USHORT action, BSTR desc)
 	return (ret ? S_OK : E_FAIL);
 }
 
+STDMETHODIMP CPeerConnection::processContent(BSTR req_name, BSTR content_type, BSTR content_ptr, INT content_size)
+{
+	char* _req_name = _com_util::ConvertBSTRToString(req_name);
+	char* _content_type = _com_util::ConvertBSTRToString(content_type);
+	char* _content_ptr = _com_util::ConvertBSTRToString(content_ptr);
+	bool ret = _PeerConnection::ProcessContent(_req_name, _content_type, _content_ptr, (int)content_size);
+	TSK_FREE(_req_name);
+	TSK_FREE(_content_type);
+	TSK_FREE(_content_ptr);
+	return (ret ? S_OK : E_FAIL);
+}
+
 STDMETHODIMP CPeerConnection::get_localDescription(BSTR* pVal)
 {
 	char* sdpStr = NULL;
@@ -245,6 +257,12 @@ void CPeerConnection::IceCallbackFire(const PeerConnectionEvent* e)
 	bstr_t media(e->GetMedia());
 	bstr_t candidate(e->GetCandidate());
 	Fire_IceCallback(media, candidate, e->GetMoreToFollow());
+}
+
+void CPeerConnection::Rfc5168CallbackFire(const char* commandStr)
+{
+	bstr_t command(commandStr);
+	Fire_Rfc5168Callback(command);
 }
 
 LONGLONG CPeerConnection::GetWindowHandle()

@@ -89,6 +89,7 @@ public:
 	STDMETHOD(startMedia)();
 	STDMETHOD(setLocalDescription)(USHORT action, BSTR desc);
 	STDMETHOD(setRemoteDescription)(USHORT action, BSTR desc);
+	STDMETHOD(processContent)(BSTR req_name, BSTR content_type, BSTR content_ptr, INT content_size);
 	STDMETHOD(get_localDescription)(BSTR* pVal);
 	STDMETHOD(get_remoteDescription)(BSTR* pVal);
 	STDMETHOD(get_readyState)(USHORT* pVal);
@@ -107,6 +108,7 @@ public:
 
 public:
 	virtual void IceCallbackFire(const PeerConnectionEvent* e);
+	virtual void Rfc5168CallbackFire(const char* commandStr);
 	virtual LONGLONG GetWindowHandle();
 
 private:

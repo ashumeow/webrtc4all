@@ -122,11 +122,11 @@ int _NetTransport::DgramCb(const struct tnet_transport_event_s* e)
 {
 	_NetTransport* This =  (_NetTransport*)e->callback_data;
 
-	TSK_DEBUG_INFO("NetTransport::DgramCb");
+	TSK_DEBUG_INFO("W4A::NetTransport::DgramCb");
 
 	switch(e->type){
 		case event_data: {
-			TSK_DEBUG_INFO("W4A:NetTransport::RECV:%.*s\n\n", e->size, (const char*)e->data);
+			TSK_DEBUG_INFO("W4A::NetTransport::RECV:%.*s\n\n", e->size, (const char*)e->data);
 			break;
 						 }
 		case event_closed:
