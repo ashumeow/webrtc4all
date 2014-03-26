@@ -29,7 +29,10 @@
 #define kFuncSetLocalDescription  "setLocalDescription"
 #define kFuncSetRemoteDescription  "setRemoteDescription"
 #define kFuncSetCallbackFuncName  "setCallbackFuncName"
+#define kFuncSetRfc5168CallbackFuncName  "setRfc5168CallbackFuncName"
 #define kFuncAttachDisplays  "attachDisplays"
+#define kFuncStartMedia  "startMedia"
+#define kFuncProcessContent  "processContent"
 #define kPropLocalDescription  "localDescription"
 #define kPropRemoteDescription  "remoteDescription"
 #define kPropReadyState  "readyState"
@@ -64,13 +67,15 @@ PeerConnection::PeerConnection(NPP instance)
     : _NPObject(instance),
 	_PeerConnection(m_BrowserType),
 	m_Opaque(NULL),
-	m_CallbackFuncName(NULL)
+	m_CallbackFuncName(NULL),
+	m_Rfc5168CallbackFuncName(NULL)
 {
 }
 
 PeerConnection::~PeerConnection()
 {	
 	TSK_FREE(m_CallbackFuncName);
+	TSK_FREE(m_Rfc5168CallbackFuncName);
 	// FIXME: issue on Safari when the browser is refreshed as the opaque object is freed without 'refCount' decrement
 	if(m_BrowserType != BrowserType_Safari){
 		NP_OBJECT_RELEASE(m_Opaque);
@@ -85,7 +90,7 @@ LONGLONG PeerConnection::GetWindowHandle()
 void PeerConnection::IceCallbackFire(const PeerConnectionEvent* e)
 {
 	if(!m_CallbackFuncName){
-		TSK_DEBUG_ERROR("No callback function defined");
+		TSK_DEBUG_ERROR("No callback function defined. Did you forget to call '%s'", kFuncSetCallbackFuncName);
 		return;
 	}
 
@@ -102,6 +107,35 @@ void PeerConnection::IceCallbackFire(const PeerConnectionEvent* e)
 	STRINGN_TO_NPVARIANT(e->GetMedia(), tsk_strlen(e->GetMedia()), args[1]);
 	STRINGN_TO_NPVARIANT(e->GetCandidate(), tsk_strlen(e->GetCandidate()), args[2]);
 	BOOLEAN_TO_NPVARIANT(e->GetMoreToFollow(), args[3]);
+
+	BrowserFuncs->invoke(m_npp,
+		window,
+		js_callback,
+		args,
+		arg_count,
+		&retval);
+	BrowserFuncs->releasevariantvalue(&retval);
+	BrowserFuncs->releaseobject(window);
+}
+
+void PeerConnection::Rfc5168CallbackFire(const char* commandStr)
+{
+	if(!m_Rfc5168CallbackFuncName){
+		TSK_DEBUG_ERROR("No callback function defined. Did you forget to call '%s'", kFuncSetRfc5168CallbackFuncName);
+		return;
+	}
+
+	NPVariant retval, args[4];
+	
+	NPIdentifier js_callback = BrowserFuncs->getstringidentifier(m_Rfc5168CallbackFuncName);
+
+	NPObject* window = NULL;
+	BrowserFuncs->getvalue(m_npp, NPNVWindowNPObject, &window);
+
+	uint32_t arg_count = 2;
+	VOID_TO_NPVARIANT(retval);
+	OBJECT_TO_NPVARIANT(m_Opaque, args[0]);
+	STRINGN_TO_NPVARIANT(commandStr, tsk_strlen(commandStr), args[1]);
 
 	BrowserFuncs->invoke(m_npp,
 		window,
@@ -134,7 +168,11 @@ bool PeerConnection::HasMethod(NPObject* obj, NPIdentifier methodName)
 		!strcmp(name, kFuncSetLocalDescription) ||
 		!strcmp(name, kFuncSetRemoteDescription) ||
 		!strcmp(name, kFuncSetCallbackFuncName) ||
-		!strcmp(name, kFuncAttachDisplays);
+		!strcmp(name, kFuncSetRfc5168CallbackFuncName) ||
+		!strcmp(name, kFuncAttachDisplays) ||
+		!strcmp(name, kFuncStartMedia) ||
+		!strcmp(name, kFuncProcessContent);
+		
   BrowserFuncs->memfree(name);
   return ret_val;
 }
@@ -215,7 +253,17 @@ bool PeerConnection::Invoke(NPObject* obj, NPIdentifier methodName,
 			This->m_CallbackFuncName = tsk_strndup(args[0].value.stringValue.UTF8Characters, args[0].value.stringValue.UTF8Length);
 			ret_val = (This->m_CallbackFuncName != NULL);
 		}
-	}
+  }
+  else if(!strcmp(name, kFuncSetRfc5168CallbackFuncName)){
+		if((argCount < 1) || !NPVARIANT_IS_STRING(args[0])){
+			BrowserFuncs->setexception(obj, "Invalid arguments");
+		}
+		else{
+			TSK_FREE(This->m_Rfc5168CallbackFuncName);
+			This->m_Rfc5168CallbackFuncName = tsk_strndup(args[0].value.stringValue.UTF8Characters, args[0].value.stringValue.UTF8Length);
+			ret_val = (This->m_Rfc5168CallbackFuncName != NULL);
+		}
+  }
   else if(!strcmp(name, kFuncAttachDisplays)){
 	  if(argCount < 2 || (!NPVARIANT_IS_DOUBLE(args[0]) && !NPVARIANT_IS_INT32(args[0])) || (!NPVARIANT_IS_DOUBLE(args[1]) && !NPVARIANT_IS_INT32(args[1]))){
 		BrowserFuncs->setexception(obj, "Invalid argument");
@@ -226,6 +274,26 @@ bool PeerConnection::Invoke(NPObject* obj, NPIdentifier methodName,
 		  ret_val = This->SetDisplays(local, remote);
 	  }
   }
+  else if(!strcmp(name, kFuncStartMedia)){
+	  ret_val = This->StartMedia();
+  }
+  else if(!strcmp(name, kFuncProcessContent)){
+		// ProcessContent(const char* req_name, const char* content_type, const void* content_ptr, int content_size)
+	  if(argCount < 4 || (!NPVARIANT_IS_STRING(args[0]) || !NPVARIANT_IS_STRING(args[1]) || !NPVARIANT_IS_STRING(args[2]) || (!NPVARIANT_IS_INT32(args[3]) && !NPVARIANT_IS_DOUBLE(args[3])))){
+		BrowserFuncs->setexception(obj, "Invalid argument");
+	  }
+	  else{
+		char* req_name = tsk_strndup((const char*)args[0].value.stringValue.UTF8Characters, args[0].value.stringValue.UTF8Length);
+		char* content_type = tsk_strndup((const char*)args[1].value.stringValue.UTF8Characters, args[1].value.stringValue.UTF8Length);
+		char* content_ptr = tsk_strndup((const char*)args[2].value.stringValue.UTF8Characters, args[2].value.stringValue.UTF8Length);
+		int content_size = (int)(NPVARIANT_IS_DOUBLE(args[3]) ? args[3].value.doubleValue : args[3].value.intValue);
+		ret_val = This->ProcessContent(req_name, content_type, content_ptr, content_size);
+		TSK_FREE(req_name);
+		TSK_FREE(content_type);
+		TSK_FREE(content_ptr);
+	  }
+  }
+
   else{
 	  // BrowserFuncs->setexception(obj, "Unknown method");
   }

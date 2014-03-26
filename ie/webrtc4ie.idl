@@ -41,19 +41,21 @@ interface IPeerConnection : IDispatch{
 	[propget, id(7), helpstring("property remoteDescription")] HRESULT remoteDescription([out, retval] BSTR* pVal);
 	[id(8), helpstring("method setLocalDescription")] HRESULT setLocalDescription([in] USHORT action, [in] BSTR desc);
 	[id(9), helpstring("method setRemoteDescription")] HRESULT setRemoteDescription([in] USHORT action, [in] BSTR desc);
-	[propget, id(10), helpstring("property readyState")] HRESULT readyState([out, retval] USHORT* pVal);
-	[propget, id(11), helpstring("property iceState")] HRESULT iceState([out, retval] USHORT* pVal);
-	[propget, id(12), helpstring("property remoteVideo")] HRESULT remoteVideo([out, retval] LONGLONG* pVal);
-	[propput, id(12), helpstring("property remoteVideo")] HRESULT remoteVideo([in] LONGLONG newVal);
-	[propget, id(13), helpstring("property localVideo")] HRESULT localVideo([out, retval] LONGLONG* pVal);
-	[propput, id(13), helpstring("property localVideo")] HRESULT localVideo([in] LONGLONG newVal);
-	[propget, id(14), helpstring("property version")] HRESULT version([out, retval] BSTR* pVal);
-	[propget, id(15), helpstring("property fullScreen")] HRESULT fullScreen([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(15), helpstring("property fullScreen")] HRESULT fullScreen([in] VARIANT_BOOL newVal);
+	[id(10), helpstring("method processContent")] HRESULT processContent([in] BSTR req_name, [in] BSTR content_type, [in] BSTR content_ptr, [in] INT content_size);
 	
-	[id(16), helpstring("method Init")] HRESULT Init([in] BSTR desc);
-	[id(17), helpstring("method StartDebug")] HRESULT StartDebug(void);
-	[id(18), helpstring("method StopDebug")] HRESULT StopDebug(void);
+	[propget, id(11), helpstring("property readyState")] HRESULT readyState([out, retval] USHORT* pVal);
+	[propget, id(12), helpstring("property iceState")] HRESULT iceState([out, retval] USHORT* pVal);
+	[propget, id(13), helpstring("property remoteVideo")] HRESULT remoteVideo([out, retval] LONGLONG* pVal);
+	[propput, id(13), helpstring("property remoteVideo")] HRESULT remoteVideo([in] LONGLONG newVal);
+	[propget, id(14), helpstring("property localVideo")] HRESULT localVideo([out, retval] LONGLONG* pVal);
+	[propput, id(14), helpstring("property localVideo")] HRESULT localVideo([in] LONGLONG newVal);
+	[propget, id(15), helpstring("property version")] HRESULT version([out, retval] BSTR* pVal);
+	[propget, id(16), helpstring("property fullScreen")] HRESULT fullScreen([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(16), helpstring("property fullScreen")] HRESULT fullScreen([in] VARIANT_BOOL newVal);
+	
+	[id(17), helpstring("method Init")] HRESULT Init([in] BSTR desc);
+	[id(18), helpstring("method StartDebug")] HRESULT StartDebug(void);
+	[id(19), helpstring("method StopDebug")] HRESULT StopDebug(void);
 };
 
 [
@@ -137,6 +139,7 @@ library webrtc4ieLib
 		properties:
 		methods:
 		[id(1), helpstring("method IceCallback")] void IceCallback([in]BSTR media, [in] BSTR candidate, [in] VARIANT_BOOL moreToFollow);
+		[id(2), helpstring("method Rfc5168Callback")] void Rfc5168Callback([in]BSTR command);
 	};
 	[
 		uuid(56D10AD3-8F52-4AA4-854B-41F4D6F9CEA3),

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="webrtc4npapi"
 	ProjectGUID="{EB8CCC23-AC05-468D-B6F4-601B04C53671}"
 	RootNamespace="webrtc4npapi"
@@ -41,8 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../thirdparties/source/doubango/thirdparties/win32/include/directshow;../thirdparties/source/doubango\thirdparties/win32/include;../thirdparties/source/doubango/tinySAK/src;../thirdparties/source/doubango/tinyNET/src;../thirdparties/source/doubango/tinyHTTP/include;../thirdparties/source/doubango/tinyDAV/include;../thirdparties/source/doubango/tinySDP/include;../thirdparties/source/doubango/tinyMEDIA/include;../thirdparties/source/doubango/tinyMSRP/include;../thirdparties/source/doubango/plugins/pluginDirectShow"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;WEBRTC4NPAPI_EXPORTS;W4A_NPAPI=1"
+				AdditionalIncludeDirectories="../thirdparties/source/doubango\thirdparties/common/include/libxml2;../thirdparties/source/doubango\thirdparties/common/include;../thirdparties/source/doubango/thirdparties/win32/include/directshow;../thirdparties/source/doubango\thirdparties/win32/include;../thirdparties/source/doubango/tinySAK/src;../thirdparties/source/doubango/tinyNET/src;../thirdparties/source/doubango/tinyHTTP/include;../thirdparties/source/doubango/tinyDAV/include;../thirdparties/source/doubango/tinySDP/include;../thirdparties/source/doubango/tinyMEDIA/include;../thirdparties/source/doubango/tinyMSRP/include;../thirdparties/source/doubango/plugins/pluginDirectShow"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;WEBRTC4NPAPI_EXPORTS;W4A_NPAPI=1;HAVE_LIBXML2=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(OutDir)\tinySAK.lib $(OutDir)\tinyNET.lib $(OutDir)\tinyDAV.lib $(OutDir)\tinyMEDIA.lib $(OutDir)\tinyHTTP.lib $(OutDir)\tinyMSRP.lib $(OutDir)\tinySDP.lib"
+				AdditionalDependencies="&quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libxml2\libxml2_a.lib&quot; $(OutDir)\tinySAK.lib $(OutDir)\tinyNET.lib $(OutDir)\tinyDAV.lib $(OutDir)\tinyMEDIA.lib $(OutDir)\tinyHTTP.lib $(OutDir)\tinyMSRP.lib $(OutDir)\tinySDP.lib"
 				OutputFile="$(OutDir)\np$(ProjectName).dll"
 				LinkIncremental="2"
 				ModuleDefinitionFile="webrtc4npapi.def"
@@ -118,8 +118,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="../thirdparties/source/doubango/thirdparties/win32/include/directshow;../thirdparties/source/doubango\thirdparties/win32/include;../thirdparties/source/doubango/tinySAK/src;../thirdparties/source/doubango/tinyNET/src;../thirdparties/source/doubango/tinyHTTP/include;../thirdparties/source/doubango/tinyDAV/include;../thirdparties/source/doubango/tinySDP/include;../thirdparties/source/doubango/tinyMEDIA/include;../thirdparties/source/doubango/tinyMSRP/include;../thirdparties/source/doubango/plugins/pluginDirectShow"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;WEBRTC4NPAPI_EXPORTS;W4A_NPAPI=1"
+				AdditionalIncludeDirectories="../thirdparties/source/doubango\thirdparties/common/include/libxml2;../thirdparties/source/doubango\thirdparties/common/include;../thirdparties/source/doubango/thirdparties/win32/include/directshow;../thirdparties/source/doubango\thirdparties/win32/include;../thirdparties/source/doubango/tinySAK/src;../thirdparties/source/doubango/tinyNET/src;../thirdparties/source/doubango/tinyHTTP/include;../thirdparties/source/doubango/tinyDAV/include;../thirdparties/source/doubango/tinySDP/include;../thirdparties/source/doubango/tinyMEDIA/include;../thirdparties/source/doubango/tinyMSRP/include;../thirdparties/source/doubango/plugins/pluginDirectShow"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;WEBRTC4NPAPI_EXPORTS;W4A_NPAPI=1;HAVE_LIBXML2=1"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -137,7 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(OutDir)\tinySAK.lib $(OutDir)\tinyNET.lib $(OutDir)\tinyDAV.lib $(OutDir)\tinyMEDIA.lib $(OutDir)\tinyHTTP.lib $(OutDir)\tinyMSRP.lib $(OutDir)\tinySDP.lib"
+				AdditionalDependencies="&quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libxml2\libxml2_a.lib&quot; $(OutDir)\tinySAK.lib $(OutDir)\tinyNET.lib $(OutDir)\tinyDAV.lib $(OutDir)\tinyMEDIA.lib $(OutDir)\tinyHTTP.lib $(OutDir)\tinyMSRP.lib $(OutDir)\tinySDP.lib"
 				OutputFile="$(OutDir)\np$(ProjectName).dll"
 				LinkIncremental="1"
 				ModuleDefinitionFile="webrtc4npapi.def"

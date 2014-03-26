@@ -23,7 +23,7 @@ class CProxy_IPeerConnectionEvents :
 	public IConnectionPointImpl<T, &__uuidof(_IPeerConnectionEvents)>
 {
 public:
-	HRESULT Fire_IceCallback( BSTR media, BSTR candidate, BOOL moreToFollow)
+	HRESULT Fire_IceCallback( BSTR media,  BSTR candidate,  VARIANT_BOOL moreToFollow)
 	{
 		HRESULT hr = S_OK;
 		T * pThis = static_cast<T *>(this);
@@ -50,7 +50,31 @@ public:
 				hr = pConnection->Invoke(1, IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, NULL, NULL, NULL);
 			}
 		}
+		return hr;
+	}
+	HRESULT Fire_Rfc5168Callback( BSTR command)
+	{
+		HRESULT hr = S_OK;
+		T * pThis = static_cast<T *>(this);
+		int cConnections = m_vec.GetSize();
 
+		for (int iConnection = 0; iConnection < cConnections; iConnection++)
+		{
+			pThis->Lock();
+			CComPtr<IUnknown> punkConnection = m_vec.GetAt(iConnection);
+			pThis->Unlock();
+
+			IDispatch * pConnection = static_cast<IDispatch *>(punkConnection.p);
+
+			if (pConnection)
+			{
+				CComVariant avarParams[1];
+				avarParams[0] = command;
+				avarParams[0].vt = VT_BSTR;
+				DISPPARAMS params = { avarParams, NULL, 1, 0 };
+				hr = pConnection->Invoke(2, IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, NULL, NULL, NULL);
+			}
+		}
 		return hr;
 	}
 };

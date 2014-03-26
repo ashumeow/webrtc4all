@@ -66,12 +66,14 @@ void _Utils::Initialize(void)
 		static tmedia_srtp_mode_t g_eSrtpMode = tmedia_srtp_mode_optional; // "TANDBERG/4120 (X7.2.2.2) returns SAVPF without crypto lines"
 		static tmedia_srtp_type_t g_eSrtpType = tmedia_srtp_type_sdes;
 		static tsk_bool_t g_bIceEnabled = tsk_false;
-		static tsk_bool_t g_bZeroartifactsEnabled = tsk_false; // Change once SIP INFO is supported
+		static tsk_bool_t g_bZeroartifactsEnabled = tsk_true;
+		static tmedia_mode_t g_eAvpfMode = tmedia_mode_optional;
 #else
-		static tmedia_srtp_mode_t g_SrtpMode = tmedia_srtp_mode_optional;
-		static tmedia_srtp_type_t gSrtpType = (tmedia_srtp_type_t)(tmedia_srtp_type_sdes | tmedia_srtp_type_dtls);
+		static tmedia_srtp_mode_t g_eSrtpMode = tmedia_srtp_mode_optional;
+		static tmedia_srtp_type_t g_eSrtpType = (tmedia_srtp_type_t)(tmedia_srtp_type_sdes | tmedia_srtp_type_dtls);
 		static tsk_bool_t g_bIceEnabled = tsk_true;
 		static tsk_bool_t g_bZeroartifactsEnabled = tsk_true;
+		static tmedia_mode_t g_eAvpfMode = tmedia_mode_optional;
 #endif
 
 		// Disable AMR, G.729, H.261 codecs
@@ -115,6 +117,8 @@ void _Utils::Initialize(void)
 #endif
 		tmedia_defaults_set_rtcp_enabled(tsk_true);
 		tmedia_defaults_set_rtcpmux_enabled(tsk_true);
+
+		tmedia_defaults_set_avpf_mode(g_eAvpfMode);
 
 		tmedia_defaults_set_echo_supp_enabled(tsk_true);
 		tmedia_defaults_set_echo_tail(g_nEchoTail);
@@ -213,6 +217,18 @@ LRESULT CALLBACK _Utils::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 				if(oEvent){
 					This->DgramCbFire(oEvent);
 					delete oEvent;
+				}
+				break;
+			}
+
+		case WM_RFC5168_EVENT:
+			{
+				TSK_DEBUG_INFO("_Utils::WndProc::WM_RFC5168_EVENT");
+				_PeerConnection* This = reinterpret_cast<_PeerConnection*>(wParam);
+				const char* sCommand = reinterpret_cast<const char*>(lParam);
+				if (sCommand) {
+					This->Rfc5168CallbackFire(sCommand);
+					// must not free (it's a static string)
 				}
 				break;
 			}

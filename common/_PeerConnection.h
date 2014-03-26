@@ -109,6 +109,8 @@ public:
 	virtual bool SetDisplayLocal(LONGLONG local);
 	virtual bool SetDisplayRemote(LONGLONG remote);
 
+	virtual bool ProcessContent(const char* req_name, const char* content_type, const void* content_ptr, int content_size);
+
 
 protected:
 	virtual bool CreateSessionMgr(enum tmedia_type_e eMediaType, bool iceEnabled, bool offerer);
@@ -122,10 +124,12 @@ protected:
 	virtual bool IceIsDone();
 	virtual bool IceIsEnabled(const struct tsdp_message_s* sdp);
 	static int IceCallback(const struct tnet_ice_event_s *e);
+	static int Rfc5168Callback(const void* usrdata, const struct tmedia_session_s* session, const char* reason, enum tmedia_session_rfc5168_cmd_e command);
 
 public:
 	virtual bool StartMedia();
 	virtual void IceCallbackFire(const PeerConnectionEvent* e) = 0;
+	virtual void Rfc5168CallbackFire(const char* commandStr) = 0;
 	virtual LONGLONG GetWindowHandle() = 0;
 
 protected:

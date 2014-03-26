@@ -50,10 +50,12 @@ public:
 public:
 	virtual LONGLONG GetWindowHandle();
 	virtual void IceCallbackFire(const PeerConnectionEvent* e);
+	virtual void Rfc5168CallbackFire(const char* commandStr);
 
 private:
 	NPObject* m_Opaque;
 	char* m_CallbackFuncName;
+	char* m_Rfc5168CallbackFuncName;
 };
 
 #endif /* _WEBRTC4NPAPI_PEERCONNECTION_H_ */
