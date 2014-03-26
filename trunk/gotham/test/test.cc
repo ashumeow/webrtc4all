@@ -88,6 +88,9 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
     {
 		case WM_ERASEBKGND:
 			return TRUE;
+		case WM_CLOSE:
+			exit(0);
+			return TRUE;
     }
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
@@ -179,11 +182,12 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 	// 4 video cameras for testing
 	// 0: FaceTime HD Camera (Built-in) - iMAC 2003
-	// 1: Logitech HD Pro Webcam C920
+	// 1: Logitech HD Pro Webcam C920 (mine)
 	// 2: Rocketfish HD Webcam Pro
 	// 3: Integrated Camera - Lenovo ThinkPad
+	// 4: Logitech QuickCam Pro 9000 (g2j)
 	// If none is connected then the default device will be selected
-	GOTHAM_ASSERT((ret = tmedia_producer_set_friendly_name(tmedia_video, "Logitech HD Pro Webcam C920")) == 0);
+	GOTHAM_ASSERT((ret = tmedia_producer_set_friendly_name(tmedia_video, "Logitech QuickCam Pro 9000")) == 0);
 	
 #if RUN_TEST_RTP
     test_rtp(RUN_TEST_RTP_AS_CLIENT);

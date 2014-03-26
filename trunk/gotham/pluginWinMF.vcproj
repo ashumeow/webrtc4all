@@ -212,10 +212,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_codec_topology.cxx"
-					>
-				</File>
-				<File
 					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_custom_src.cxx"
 					>
 				</File>
@@ -229,6 +225,10 @@
 				</File>
 				<File
 					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_sample_grabber.cxx"
+					>
+				</File>
+				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_sample_queue.cxx"
 					>
 				</File>
 				<File
@@ -254,10 +254,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_codec_topology.h"
-					>
-				</File>
-				<File
 					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_custom_src.h"
 					>
 				</File>
@@ -271,6 +267,10 @@
 				</File>
 				<File
 					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_sample_grabber.h"
+					>
+				</File>
+				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_sample_queue.h"
 					>
 				</File>
 				<File
