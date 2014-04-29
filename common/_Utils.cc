@@ -87,17 +87,20 @@ void _Utils::Initialize(void)
 				tdav_codec_id_speex_wb |
 				tdav_codec_id_speex_uwb |
 				tdav_codec_id_g722 |
-
+#if !METROPOLIS
 				tdav_codec_id_h263 |
 				tdav_codec_id_h263p |
 				tdav_codec_id_h263pp |
+#endif
 				tdav_codec_id_h264_bp |
 				tdav_codec_id_h264_mp |
 				tdav_codec_id_h264_hp |
+#if !METROPOLIS
 				tdav_codec_id_theora |
 				tdav_codec_id_mp4ves_es |
-				tdav_codec_id_vp8)
-			);
+#endif
+				tdav_codec_id_vp8
+		));
 
 		// Priority: VP8, H.264 (BP then MP), PCMA/PCMU, OPUS...
 		int prio = 0;

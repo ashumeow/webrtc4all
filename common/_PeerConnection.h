@@ -120,6 +120,7 @@ protected:
 	virtual bool IceCreateCtx(enum tmedia_type_e eMediaType);
 	virtual bool IceSetTimeout(int32_t timeout);
 	virtual bool IceGotLocalCandidates();
+	virtual bool IceGotLocalCandidates(struct tnet_ice_ctx_s *iceCtx);
 	virtual bool IceProcessRo(const struct tsdp_message_s* sdp_ro, bool isOffer);
 	virtual bool IceIsDone();
 	virtual bool IceIsEnabled(const struct tsdp_message_s* sdp);
