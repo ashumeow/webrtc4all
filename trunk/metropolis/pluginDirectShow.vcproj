@@ -179,6 +179,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\plugin_screencast_dshow_producer.cxx"
+				>
+			</File>
+			<File
 				RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\plugin_video_dshow_consumer.cxx"
 				>
 			</File>
@@ -199,6 +203,10 @@
 				</File>
 				<File
 					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSCaptureUtils.cxx"
+					>
+				</File>
+				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSDibHelper.cxx"
 					>
 				</File>
 				<File
@@ -238,6 +246,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSPushSourceDesktop.cxx"
+					>
+				</File>
+				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSScreenCastGraph.cxx"
+					>
+				</File>
+				<File
 					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSUtils.cxx"
 					>
 				</File>
@@ -268,6 +284,10 @@
 				Name="internals"
 				>
 				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSBaseCaptureGraph.h"
+					>
+				</File>
+				<File
 					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSBufferWriter.h"
 					>
 				</File>
@@ -281,6 +301,10 @@
 				</File>
 				<File
 					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSCaptureUtils.h"
+					>
+				</File>
+				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSDibHelper.h"
 					>
 				</File>
 				<File
@@ -309,6 +333,14 @@
 				</File>
 				<File
 					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSOutputStream.h"
+					>
+				</File>
+				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSPushSource.h"
+					>
+				</File>
+				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSScreenCastGraph.h"
 					>
 				</File>
 				<File

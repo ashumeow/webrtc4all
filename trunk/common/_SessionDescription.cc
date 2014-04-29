@@ -68,7 +68,6 @@ bool _SessionDescription::AddCandidate(const char* media, const char* candidate)
 		goto bail;
 	}
 	
-	
 	oCandidate = tnet_ice_candidate_parse(candidate);
 	if(oCandidate){
 		if(!((tsdp_header_M_t*)M)->port){

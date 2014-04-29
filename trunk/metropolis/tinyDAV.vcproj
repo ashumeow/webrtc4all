@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyDAV\include;..\thirdparties\source\doubango\tinyMSRP\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinyIPSec\src;..\thirdparties\source\doubango\tinySDP\include;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyDSHOW\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bvcommon;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bv16"
+				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyDAV\include;..\thirdparties\source\doubango\tinyMSRP\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinyIPSec\src;..\thirdparties\source\doubango\tinyBFCP\include;..\thirdparties\source\doubango\tinySDP\include;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyDSHOW\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bvcommon;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bv16"
 				PreprocessorDefinitions="HAVE_SRTP=1;HAVE_G729=0;HAVE_BV16=0;HAVE_OPENCORE_AMR=0;HAVE_H264=1;HAVE_ILBC=0;HAVE_LIBGSM=1;HAVE_LIBOPUS=1;HAVE_DSOUND_H=1;HAVE_WAVE_API=1;HAVE_FFMPEG=1;HAVE_SPEEX_DSP=1;HAVE_WEBRTC=1;HAVE_SPEEX_JB=1;HAVE_LIB_SPEEX=1;HAVE_LIBVPX=1;HAVE_LIBYUV=1;G192BITSTREAM=0;DEBUG_LEVEL=DEBUG_LEVEL_INFO;METROPOLIS=1;H264_PACKETIZATION_MODE=0;WIN32;_DEBUG;_WINDOWS;_USRDLL;_WIN32_WINNT=0x0501;TINYDAV_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Winmm.lib Shlwapi.lib $(OutDir)\tinySAK.lib $(OutDir)\tinyNET.lib $(OutDir)\tinyIPSec.lib $(OutDir)\tinyRTP.lib $(OutDir)\tinyMSRP.lib $(OutDir)\tinySDP.lib $(OutDir)\tinyMEDIA.lib &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libyuv\libyuv.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\vpx\vpxmt.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\speex\libspeex.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\speex\libspeexdsp.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libgcc.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libmingwex.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libavcodec.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libavutil.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libswscale.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libx264.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libtheora.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libogg.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\opus\libopus.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\aec.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\aec_sse2.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\apm_util.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\system_wrappers.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\spl.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\ns.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\gsm\libgsm.a&quot;"
+				AdditionalDependencies="Winmm.lib Shlwapi.lib $(OutDir)\tinySAK.lib $(OutDir)\tinyNET.lib $(OutDir)\tinyIPSec.lib $(OutDir)\tinyRTP.lib $(OutDir)\tinyMSRP.lib $(OutDir)\tinySDP.lib $(OutDir)\tinyBFCP.lib $(OutDir)\tinyMEDIA.lib &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libyuv\libyuv.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\vpx\vpxmt.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\speex\libspeex.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\speex\libspeexdsp.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libgcc.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libmingwex.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libavcodec.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libavutil.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libswscale.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libx264.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libtheora.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libogg.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\opus\libopus.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\aec.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\aec_sse2.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\apm_util.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\system_wrappers.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\spl.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\ns.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\gsm\libgsm.a&quot;"
 				LinkIncremental="2"
 				IgnoreDefaultLibraryNames="MSVCRT;LIBCMTD;LIBCMT"
 				GenerateDebugInformation="true"
@@ -122,7 +122,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyDAV\include;..\thirdparties\source\doubango\tinyMSRP\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinyIPSec\src;..\thirdparties\source\doubango\tinySDP\include;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyDSHOW\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bvcommon;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bv16"
+				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyDAV\include;..\thirdparties\source\doubango\tinyMSRP\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinyIPSec\src;..\thirdparties\source\doubango\tinyBFCP\include;..\thirdparties\source\doubango\tinySDP\include;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyDSHOW\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bvcommon;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bv16"
 				PreprocessorDefinitions="DEBUG_LEVEL=DEBUG_LEVEL_WARN;WIN32;NDEBUG;_WINDOWS;_USRDLL;TINYDAV_EXPORTS;HAVE_SRTP=1;HAVE_G729=0;HAVE_BV16=0;HAVE_H264=1;HAVE_OPENCORE_AMR=0;HAVE_ILBC=0;HAVE_LIBGSM=1;HAVE_LIBOPUS=1;HAVE_DSOUND_H=1;HAVE_WAVE_API=1;HAVE_FFMPEG=1;HAVE_WEBRTC=1;HAVE_SPEEX_DSP=1;HAVE_SPEEX_JB=1;HAVE_LIB_SPEEX=1;HAVE_LIBVPX=1;HAVE_LIBYUV=1;G192BITSTREAM=0;METROPOLIS=1;H264_PACKETIZATION_MODE=0;_WIN32_WINNT=0x0501"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="false"
@@ -144,7 +144,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Winmm.lib Shlwapi.lib $(OutDir)\tinySAK.lib $(OutDir)\tinyNET.lib $(OutDir)\tinyIPSec.lib $(OutDir)\tinyRTP.lib $(OutDir)\tinyMSRP.lib $(OutDir)\tinySDP.lib $(OutDir)\tinyMEDIA.lib &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libyuv\libyuv.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\vpx\vpxmt.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\speex\libspeex.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\speex\libspeexdsp.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libgcc.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libmingwex.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libavcodec.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libavutil.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libswscale.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libx264.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libtheora.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libogg.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\opus\libopus.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\gsm\libgsm.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\aec.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\aec_sse2.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\apm_util.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\system_wrappers.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\spl.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\ns.lib&quot;"
+				AdditionalDependencies="Winmm.lib Shlwapi.lib $(OutDir)\tinySAK.lib $(OutDir)\tinyNET.lib $(OutDir)\tinyIPSec.lib $(OutDir)\tinyRTP.lib $(OutDir)\tinyMSRP.lib $(OutDir)\tinySDP.lib $(OutDir)\tinyBFCP.lib $(OutDir)\tinyMEDIA.lib &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libyuv\libyuv.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\vpx\vpxmt.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\speex\libspeex.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\speex\libspeexdsp.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libgcc.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libmingwex.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libavcodec.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libavutil.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libswscale.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libx264.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libtheora.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg\libogg.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\opus\libopus.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\gsm\libgsm.a&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\aec.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\aec_sse2.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\apm_util.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\system_wrappers.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\spl.lib&quot; &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc\ns.lib&quot;"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames="MSVCRTD;LIBCMT"
 				GenerateDebugInformation="false"
@@ -759,6 +759,14 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="bfcp"
+					>
+					<File
+						RelativePath="..\thirdparties\source\doubango\tinyDAV\src\codecs\bfcp\tdav_codec_bfcp.c"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="audio"
@@ -880,8 +888,12 @@
 					>
 				</Filter>
 				<Filter
-					Name="directshow"
+					Name="gdi"
 					>
+					<File
+						RelativePath="..\thirdparties\source\doubango\tinyDAV\src\video\gdi\tdav_producer_screencast_gdi.c"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="v4linux"
@@ -953,6 +965,14 @@
 				</File>
 				<File
 					RelativePath="..\thirdparties\source\doubango\tinyDAV\src\t140\tdav_session_t140.c"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="bfcp"
+				>
+				<File
+					RelativePath="..\thirdparties\source\doubango\tinyDAV\src\bfcp\tdav_session_bfcp.c"
 					>
 				</File>
 			</Filter>
