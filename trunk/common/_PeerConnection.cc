@@ -503,8 +503,12 @@ bool _PeerConnection::IceSetTimeout(int32_t timeout)
 
 bool _PeerConnection::IceGotLocalCandidates()
 {
-	return (!tnet_ice_ctx_is_active(mIceCtxAudio) || tnet_ice_ctx_got_local_candidates(mIceCtxAudio))
-			&& (!tnet_ice_ctx_is_active(mIceCtxVideo) || tnet_ice_ctx_got_local_candidates(mIceCtxVideo));
+	return IceGotLocalCandidates(mIceCtxAudio) && IceGotLocalCandidates(mIceCtxVideo);
+}
+
+bool _PeerConnection::IceGotLocalCandidates(struct tnet_ice_ctx_s *iceCtx)
+{
+	return (!tnet_ice_ctx_is_active(iceCtx) || tnet_ice_ctx_got_local_candidates(iceCtx));
 }
 
 bool _PeerConnection::IceProcessRo(const tsdp_message_t* sdp_ro, bool isOffer)
@@ -627,11 +631,15 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 					bool bGotAllCandidates = This->IceGotLocalCandidates();
 					const char* mediaStr = (e->ctx == This->mIceCtxAudio) ? "audio" : "video";
 					const tsdp_header_M_t* M = tsdp_message_find_media(This->mSdpLocal, mediaStr);
+					tnet_ice_candidate_t* pc_candidate;
 					tsk_size_t nIceCandidatesCount = tnet_ice_ctx_count_local_candidates(e->ctx);
 					for(USHORT index = 0; index < nIceCandidatesCount; ++index){
-						candidateStr = tsk_strdup(tnet_ice_candidate_tostring(((tnet_ice_candidate_t*)tnet_ice_ctx_get_local_candidate_at(e->ctx, index))));
+						candidateStr = tsk_strdup(tnet_ice_candidate_tostring((pc_candidate = ((tnet_ice_candidate_t*)tnet_ice_ctx_get_local_candidate_at(e->ctx, index)))));
 						if(M){
 							tsdp_header_M_add_headers((tsdp_header_M_t*)M, TSDP_HEADER_A_VA_ARGS("candidate", candidateStr), tsk_null);
+							if (M->port == 0) {
+								TSDP_HEADER_M(M)->port = pc_candidate->port;
+							}
 						}
 						tsk_strcat_2(&candidateStr, " webrtc4ie-ufrag %s webrtc4ie-pwd %s", ufragStr, pwdStr);
 						bool bMoreToFollow = !(bGotAllCandidates && (index == (nIceCandidatesCount - 1)));
