@@ -202,6 +202,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSDibHelper.cxx"
+					>
+				</File>
+				<File
 					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSDisplay.cxx"
 					>
 				</File>
@@ -235,6 +239,14 @@
 				</File>
 				<File
 					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSOutputStream.cxx"
+					>
+				</File>
+				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSPushSourceDesktop.cxx"
+					>
+				</File>
+				<File
+					RelativePath="..\thirdparties\source\doubango\plugins\pluginDirectShow\internals\DSScreenCastGraph.cxx"
 					>
 				</File>
 				<File
