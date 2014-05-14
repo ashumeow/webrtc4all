@@ -68,12 +68,15 @@ void _Utils::Initialize(void)
 		static tsk_bool_t g_bIceEnabled = tsk_false;
 		static tsk_bool_t g_bZeroartifactsEnabled = tsk_true;
 		static tmedia_mode_t g_eAvpfMode = tmedia_mode_optional;
+		// See issue 382: https://code.google.com/p/doubango/issues/detail?id=382
+		static int g_nMotionRank = 1; // low(1),medium(2),high(4)
 #else
 		static tmedia_srtp_mode_t g_eSrtpMode = tmedia_srtp_mode_optional;
 		static tmedia_srtp_type_t g_eSrtpType = (tmedia_srtp_type_t)(tmedia_srtp_type_sdes | tmedia_srtp_type_dtls);
 		static tsk_bool_t g_bIceEnabled = tsk_true;
 		static tsk_bool_t g_bZeroartifactsEnabled = tsk_true;
 		static tmedia_mode_t g_eAvpfMode = tmedia_mode_optional;
+		static int g_nMotionRank = 2; // low(1),medium(2),high(4)
 #endif
 
 		// Disable AMR, G.729, H.261 codecs
@@ -138,6 +141,10 @@ void _Utils::Initialize(void)
 		
 		tmedia_defaults_set_opus_maxcapturerate(16000); /* Because of WebRTC AEC only 8000 and 16000 are supported */
 		tmedia_defaults_set_opus_maxplaybackrate(48000);
+
+		tmedia_defaults_set_video_motion_rank(g_nMotionRank);
+		tmedia_defaults_set_bandwidth_video_download_max(-1);
+		tmedia_defaults_set_bandwidth_video_upload_max(-1);
 	}
 }
 
