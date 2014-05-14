@@ -269,18 +269,19 @@ bool _PeerConnection::ProcessContent(const char* req_name, const char* content_t
 	}
 	if (mSessionMgr && tsk_striequals("application/media_control+xml", content_type)){ /* rfc5168: XML Schema for Media Control */
 		static uint32_t __ssrc_media_fake = 0;
-		static tmedia_type_t __tmedia_type_video = tmedia_video;
-		tsk_bool_t picture_fast_update = tsk_false;
+		static tmedia_type_t __tmedia_type_video = tmedia_video; // TODO: add bfcpvideo?
+		tsk_bool_t is_fir = tsk_false;
+		uint64_t sessionId = 0;
 #if HAVE_LIBXML2
-
 		{
 			xmlDoc *pDoc;
 			xmlNode *pRootElement;
 			xmlXPathContext *pPathCtx;
 			xmlXPathObject *pPathObj;
-			static const xmlChar* __xpath_expr = (const xmlChar*)"/media_control/vc_primitive/to_encoder/picture_fast_update";
+			static const xmlChar* __xpath_expr_picture_fast_update = (const xmlChar*)"/media_control/vc_primitive/to_encoder/picture_fast_update";
+			static const xmlChar* __xpath_expr_stream_id = (const xmlChar*)"/media_control/vc_primitive/stream_id";
 			
-			if (!(pDoc = xmlParseDoc((const xmlChar*)content_ptr))) {
+			if (!(pDoc = xmlParseDoc((const xmlChar *)content_ptr))) {
 				TSK_DEBUG_ERROR("Failed to parse XML content [%s]", content_ptr);
 				return 0;
 			}
@@ -289,31 +290,46 @@ bool _PeerConnection::ProcessContent(const char* req_name, const char* content_t
 				xmlFreeDoc(pDoc);
 				return 0;
 			}
-			;
 			if (!(pPathCtx = xmlXPathNewContext(pDoc))) {
 				TSK_DEBUG_ERROR("Failed to create path context from XML content [%s]", content_ptr);
 				xmlFreeDoc(pDoc);
 				return 0;
 			}
-			if (!(pPathObj = xmlXPathEvalExpression(__xpath_expr, pPathCtx))) {
-				TSK_DEBUG_ERROR("Error: unable to evaluate xpath expression: %s", __xpath_expr);
-				xmlXPathFreeContext(pPathCtx); 
+			// picture_fast_update
+			if (!(pPathObj = xmlXPathEvalExpression(__xpath_expr_picture_fast_update, pPathCtx))) {
+				TSK_DEBUG_ERROR("Error: unable to evaluate xpath expression: %s", __xpath_expr_picture_fast_update);
+				xmlXPathFreeContext(pPathCtx);
 				xmlFreeDoc(pDoc);
 				return 0;
 			}
-			
-			picture_fast_update = (pPathObj->type == XPATH_NODESET && pPathObj->nodesetval->nodeNr > 0);
-
+			is_fir = (pPathObj->type == XPATH_NODESET && pPathObj->nodesetval->nodeNr > 0);
 			xmlXPathFreeObject(pPathObj);
+			// stream_id
+			if (!(pPathObj = xmlXPathEvalExpression(__xpath_expr_stream_id, pPathCtx))) {
+				TSK_DEBUG_ERROR("Error: unable to evaluate xpath expression: %s", __xpath_expr_stream_id);
+				xmlXPathFreeContext(pPathCtx);
+				xmlFreeDoc(pDoc);
+			}
+			else if (pPathObj->type == XPATH_NODESET && pPathObj->nodesetval->nodeNr > 0 && pPathObj->nodesetval->nodeTab[0]->children && pPathObj->nodesetval->nodeTab[0]->children->content) {
+				sessionId = tsk_atoi64((const char*)pPathObj->nodesetval->nodeTab[0]->children->content);
+			}
+			xmlXPathFreeObject(pPathObj);
+			
 			xmlXPathFreeContext(pPathCtx); 
 			xmlFreeDoc(pDoc);
 		}
 #else
-		picture_fast_update = (tsk_strcontains((const char*)content_ptr, content_size, "to_encoder") && tsk_strcontains((const char*)content_ptr, content_size, "picture_fast_update"));
+		is_fir = (tsk_strcontains(content_ptr, content_size, "to_encoder") && tsk_strcontains(content_ptr, content_size, "picture_fast_update"));
 #endif
-		TSK_DEBUG_INFO("Incoming Content(application/media_control+xml, picture_fast_update=%s)", picture_fast_update ? "yes" : "no");
-		if (picture_fast_update) {
-			return (tmedia_session_mgr_recv_rtcp_event(mSessionMgr, __tmedia_type_video, tmedia_rtcp_event_type_fir, __ssrc_media_fake) == 0);
+		TSK_DEBUG_INFO("Incoming Content(application/media_control+xml, picture_fast_update=%s)", is_fir ? "yes" : "no");
+		if (is_fir) {
+			TSK_DEBUG_INFO("Incoming SIP INFO(picture_fast_update)");
+			if (sessionId) {
+				tmedia_session_mgr_recv_rtcp_event_2(mSessionMgr, tmedia_rtcp_event_type_fir, sessionId);
+			}
+			else {
+				tmedia_session_mgr_recv_rtcp_event(mSessionMgr, __tmedia_type_video, tmedia_rtcp_event_type_fir, __ssrc_media_fake);
+			}
 		}
 	} //end-of-if("application/media_control+xml")
 	return true;
