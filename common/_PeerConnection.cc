@@ -76,14 +76,14 @@ bool _PeerConnection::Close()
 	return true;
 }
 
-bool _PeerConnection::CreateOffer(bool has_audio, bool has_video, char** sdp, int* sdp_len)
+bool _PeerConnection::CreateOffer(bool has_audio, bool has_video, bool has_bfcpvideo, char** sdp, int* sdp_len)
 {
-	return CreateLo(has_audio, has_video, sdp, sdp_len, true);
+	return CreateLo(has_audio, has_video, has_bfcpvideo, sdp, sdp_len, true);
 }
 
-bool _PeerConnection::CreateAnswer(bool has_audio, bool has_video, char** sdp, int* sdp_len)
+bool _PeerConnection::CreateAnswer(bool has_audio, bool has_video, bool has_bfcpvideo, char** sdp, int* sdp_len)
 {
-	return CreateLo(has_audio, has_video, sdp, sdp_len, false);
+	return CreateLo(has_audio, has_video, has_bfcpvideo, sdp, sdp_len, false);
 }
 
 bool _PeerConnection::StartIce(int IceOptions)
@@ -170,11 +170,20 @@ bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription
 
 	mRemoteHaveIce = IceIsEnabled(sdpObj->GetSdp());
 
-	if(!mSessionMgr){
-		if(!CreateSessionMgr(tmedia_type_from_sdp(sdpObj->GetSdp()), mRemoteHaveIce, false)){
+	if (!mSessionMgr) {
+		if (!CreateSessionMgr(tmedia_type_from_sdp(sdpObj->GetSdp()), mRemoteHaveIce, false)) {
 			iRet = -1;
 			goto bail;
 		}
+	}
+	else {
+		/*if (!mRemoteHaveIce) {
+			TSK_OBJECT_SAFE_FREE(mIceCtxAudio);
+			TSK_OBJECT_SAFE_FREE(mIceCtxVideo);
+		}
+		if ((iRet = tmedia_session_mgr_set_ice_ctx(mSessionMgr, mRemoteHaveIce ? mIceCtxAudio : tsk_null, mRemoteHaveIce ? mIceCtxVideo : tsk_null))) {
+			goto bail;
+		}*/
 	}
 	
 	if((iRet = tmedia_session_mgr_set_ro(mSessionMgr, sdpObj->GetSdp(), ro_type)) != 0){
@@ -212,9 +221,19 @@ bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription
 	mSdpRemote = (tsdp_message_t*)tsk_object_ref((tsdp_message_t*)sdpObj->GetSdp());
 	mReadyState = (mSdpLocal && mSdpRemote) ? ReadyStateActive : ReadyStateOpening;
 
-	if(mRemoteHaveIce && mReadyState == ReadyStateActive){
-		IceSetTimeout((tmedia_defaults_get_profile() == tmedia_profile_rtcweb) ? ICE_TIMEOUT_ENDLESS : ICE_TIMEOUT_VAL);
+	if (mRemoteHaveIce) {
+		if (mReadyState == ReadyStateActive) {
+			IceSetTimeout((tmedia_defaults_get_profile() == tmedia_profile_rtcweb) ? ICE_TIMEOUT_ENDLESS : ICE_TIMEOUT_VAL);
+		}
 	 }
+	else {
+		if (mReadyState == ReadyStateActive) {
+			if (!StartMedia()) {
+				iRet = -5;
+				goto bail;
+			}
+		}
+	}
 	
 bail:
 	return (iRet == 0);
@@ -394,33 +413,43 @@ bool _PeerConnection::CreateSessionMgr(tmedia_type_t eMediaType, bool iceEnabled
 	return true;
 }
 
-bool _PeerConnection::CreateLo(bool has_audio, bool has_video, char** sdpStr, int* sdp_len, bool offerer)
+bool _PeerConnection::CreateLo(bool has_audio, bool has_video, bool has_bfcpvideo, char** sdpStr, int* sdp_len, bool offerer)
 {
 	tmedia_type_t eMediaType = tmedia_none;
-	if(has_audio) eMediaType = (tmedia_type_t)(eMediaType | tmedia_audio);
-	if(has_video) eMediaType = (tmedia_type_t)(eMediaType | tmedia_video);
+	if (has_audio) eMediaType = (tmedia_type_t)(eMediaType | tmedia_audio);
+	if (has_video) eMediaType = (tmedia_type_t)(eMediaType | tmedia_video);
+	if (has_bfcpvideo) eMediaType = (tmedia_type_t)(eMediaType | tmedia_bfcp_video);
 
 	*sdpStr = NULL;
 	*sdp_len = 0;
 
-	if(!mSessionMgr && !CreateSessionMgr(eMediaType, (mSdpRemote ? IceIsEnabled(mSdpRemote) : true), offerer)){
-		return false;
+	if (!mSessionMgr) {
+		if (!CreateSessionMgr(eMediaType, (mSdpRemote ? IceIsEnabled(mSdpRemote) : true), offerer)) {
+			TSK_DEBUG_ERROR("Failed to create media session manager");
+			return false;
+		}
+	}
+	else {
+		// update media type
+		if (tmedia_session_mgr_set_media_type(mSessionMgr, eMediaType)) {
+			TSK_DEBUG_ERROR("Failed to update media type %d->%d", mSessionMgr->type, eMediaType);
+			return false;
+		}
 	}
 	
 	const tsdp_message_t* sdp_lo = tmedia_session_mgr_get_lo(mSessionMgr);
-	if(!sdp_lo){
+	if (!sdp_lo) {
 		TSK_DEBUG_ERROR("Cannot get local offer");
 		return false;
 	}
-
-
+	
 	*sdpStr = tsdp_message_tostring(sdp_lo);
-	if(!*sdpStr){
+	if (!*sdpStr) {
 		TSK_DEBUG_ERROR("Cannot serialize local offer");
 		return false;
 	}
 	*sdp_len = tsk_strlen(*sdpStr);
-
+	
 	 TSK_OBJECT_SAFE_FREE(mSdpLocal);
 	 mSdpLocal = (tsdp_message_t*)tsk_object_ref((tsk_object_t*)sdp_lo);
 	 mReadyState = (mSdpLocal && tmedia_session_mgr_get_ro(mSessionMgr)) ? ReadyStateActive : ReadyStateOpening;

@@ -212,9 +212,10 @@ bool PeerConnection::Invoke(NPObject* obj, NPIdentifier methodName,
 	  bool is_offer = !strcmp(name, kFuncCreateOffer);
 	  bool has_audio = (argCount > 0 && NPVARIANT_IS_BOOLEAN(args[0]) && NPVARIANT_TO_BOOLEAN(args[0]));
 	  bool has_video = (argCount > 1 && NPVARIANT_IS_BOOLEAN(args[1]) && NPVARIANT_TO_BOOLEAN(args[1]));
+	  static bool __has_bfcpvideo = false;
 	  char* sdpStr = NULL;
 	  int sdpStrLen;
-	  ret_val = This->CreateLo(has_audio, has_video, &sdpStr, &sdpStrLen, is_offer);
+	  ret_val = This->CreateLo(has_audio, has_video, __has_bfcpvideo, &sdpStr, &sdpStrLen, is_offer);
 	  if(ret_val){
 		  SessionDescription* sdpObj = (SessionDescription*)BrowserFuncs->createobject(This->m_npp, &SessionDescriptionClass);
 		  if((ret_val = sdpObj->Init(sdpStr, sdpStrLen))){

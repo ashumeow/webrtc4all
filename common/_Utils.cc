@@ -70,6 +70,8 @@ void _Utils::Initialize(void)
 		static tmedia_mode_t g_eAvpfMode = tmedia_mode_optional;
 		// See issue 382: https://code.google.com/p/doubango/issues/detail?id=382
 		static int g_nMotionRank = 1; // low(1),medium(2),high(4)
+		static int g_nFps = 30;
+		static tmedia_pref_video_size_t g_ePrefVideoSize = tmedia_pref_video_size_720p;
 #else
 		static tmedia_srtp_mode_t g_eSrtpMode = tmedia_srtp_mode_optional;
 		static tmedia_srtp_type_t g_eSrtpType = (tmedia_srtp_type_t)(tmedia_srtp_type_sdes | tmedia_srtp_type_dtls);
@@ -77,6 +79,8 @@ void _Utils::Initialize(void)
 		static tsk_bool_t g_bZeroartifactsEnabled = tsk_true;
 		static tmedia_mode_t g_eAvpfMode = tmedia_mode_optional;
 		static int g_nMotionRank = 2; // low(1),medium(2),high(4)
+		static int g_nFps = 15;
+		static tmedia_pref_video_size_t g_ePrefVideoSize = tmedia_pref_video_size_vga;
 #endif
 
 		// Disable AMR, G.729, H.261 codecs
@@ -135,11 +139,11 @@ void _Utils::Initialize(void)
 		tmedia_defaults_set_jb_margin(0);
 		tmedia_defaults_set_jb_max_late_rate(1);
 
-		tmedia_defaults_set_video_fps(15);
+		tmedia_defaults_set_video_fps(g_nFps);
 		tmedia_defaults_set_video_zeroartifacts_enabled(g_bZeroartifactsEnabled);
-		tmedia_defaults_set_pref_video_size(tmedia_pref_video_size_vga);
+		tmedia_defaults_set_pref_video_size(g_ePrefVideoSize);
 		
-		tmedia_defaults_set_opus_maxcapturerate(16000); /* Because of WebRTC AEC only 8000 and 16000 are supported */
+		tmedia_defaults_set_opus_maxcapturerate(16000); /* Because of WebRTC AEC: only 8000 and 16000 are supported */
 		tmedia_defaults_set_opus_maxplaybackrate(48000);
 
 		tmedia_defaults_set_video_motion_rank(g_nMotionRank);

@@ -62,31 +62,24 @@ STDMETHODIMP CPeerConnection::close(void)
 }
 
 STDMETHODIMP CPeerConnection::createOffer(VARIANT_BOOL has_audio, VARIANT_BOOL has_video, BSTR* offer)
-{
-	char *_offer = NULL;
-	int _offer_len;
-	bool ret = _PeerConnection::CreateLo((has_audio == VARIANT_TRUE), (has_video == VARIANT_TRUE), &_offer, &_offer_len, true);
-	if(_offer){
-		bstr_t bstr(_offer);
-		*offer = bstr.GetBSTR();
-	}
-	TSK_FREE(_offer);
-	return ret ? S_OK : E_FAIL;
+{	
+	return createOfferEx(has_audio, has_video, VARIANT_FALSE/*has_bfcpvideo*/, offer);
 }
 
 STDMETHODIMP CPeerConnection::createAnswer(VARIANT_BOOL has_audio, VARIANT_BOOL has_video, BSTR* answer)
 {
-	char *_answer = NULL;
-	int _answer_len;
-	bool ret = _PeerConnection::CreateLo((has_audio == VARIANT_TRUE), (has_video == VARIANT_TRUE), &_answer, &_answer_len, false);
-	if(_answer){
-		bstr_t bstr(_answer);
-		*answer = bstr.GetBSTR();
-	}
-	TSK_FREE(_answer);
-	return ret ? S_OK : E_FAIL;
+	return createAnswerEx(has_audio, has_video, VARIANT_FALSE/*has_bfcpvideo*/, answer);
 }
 
+STDMETHODIMP CPeerConnection::createOfferEx(VARIANT_BOOL has_audio, VARIANT_BOOL has_video, VARIANT_BOOL has_bfcpvideo, BSTR* offer)
+{	
+	return _createSDP(has_audio, has_video, has_bfcpvideo, offer, true);
+}
+
+STDMETHODIMP CPeerConnection::createAnswerEx(VARIANT_BOOL has_audio, VARIANT_BOOL has_video, VARIANT_BOOL has_bfcpvideo, BSTR* answer)
+{
+	return _createSDP(has_audio, has_video, has_bfcpvideo, answer, false);
+}
 
 STDMETHODIMP CPeerConnection::startIce(SHORT IceOptions, LONGLONG looper)
 {
@@ -268,4 +261,17 @@ void CPeerConnection::Rfc5168CallbackFire(const char* commandStr)
 LONGLONG CPeerConnection::GetWindowHandle()
 {
 	return (LONGLONG)mLooperHandle;
+}
+
+HRESULT CPeerConnection::_createSDP(VARIANT_BOOL has_audio, VARIANT_BOOL has_video, VARIANT_BOOL has_bfcpvideo, BSTR* sdp, bool is_offerer)
+{
+	char *_sdp = NULL;
+	int _sdp_len;
+	bool ret = _PeerConnection::CreateLo((has_audio == VARIANT_TRUE), (has_video == VARIANT_TRUE), (has_bfcpvideo == VARIANT_TRUE), &_sdp, &_sdp_len, is_offerer);
+	if (_sdp) {
+		bstr_t bstr(_sdp);
+		*sdp = bstr.GetBSTR();
+	}
+	TSK_FREE(_sdp);
+	return ret ? S_OK : E_FAIL;
 }

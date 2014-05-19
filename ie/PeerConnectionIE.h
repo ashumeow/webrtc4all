@@ -85,6 +85,8 @@ public:
 	STDMETHOD(close)(void);
 	STDMETHOD(createOffer)(VARIANT_BOOL has_audio, VARIANT_BOOL has_video, BSTR* sdp);
 	STDMETHOD(createAnswer)(VARIANT_BOOL has_audio, VARIANT_BOOL has_video, BSTR* sdp);
+	STDMETHOD(createOfferEx)(VARIANT_BOOL has_audio, VARIANT_BOOL has_video, VARIANT_BOOL has_bfcpvideo, BSTR* sdp);
+	STDMETHOD(createAnswerEx)(VARIANT_BOOL has_audio, VARIANT_BOOL has_video, VARIANT_BOOL has_bfcpvideo, BSTR* sdp);
 	STDMETHOD(startIce)(SHORT IceOptions, LONGLONG looper);
 	STDMETHOD(startMedia)();
 	STDMETHOD(setLocalDescription)(USHORT action, BSTR desc);
@@ -110,6 +112,9 @@ public:
 	virtual void IceCallbackFire(const PeerConnectionEvent* e);
 	virtual void Rfc5168CallbackFire(const char* commandStr);
 	virtual LONGLONG GetWindowHandle();
+
+private:
+	HRESULT _createSDP(VARIANT_BOOL has_audio, VARIANT_BOOL has_video, VARIANT_BOOL has_bfcpvideo, BSTR* sdp, bool is_offerer);
 
 private:
 	HWND mLooperHandle;

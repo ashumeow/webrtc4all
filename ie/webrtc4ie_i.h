@@ -4,9 +4,9 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Sat Mar 22 00:20:26 2014
+/* at Mon May 19 04:50:09 2014
  */
-/* Compiler settings for .\webrtc4ie.idl:
+/* Compiler settings for ..\ie\webrtc4ie.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
     protocol : dce , ms_ext, c_ext, robust
     error checks: stub_data 
@@ -338,6 +338,18 @@ EXTERN_C const IID IID_IPeerConnection;
             /* [in] */ VARIANT_BOOL has_video,
             /* [retval][out] */ BSTR *sdp) = 0;
         
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE createOfferEx( 
+            /* [in] */ VARIANT_BOOL has_audio,
+            /* [in] */ VARIANT_BOOL has_video,
+            /* [in] */ VARIANT_BOOL has_bfcpvideo,
+            /* [retval][out] */ BSTR *sdp) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE createAnswerEx( 
+            /* [in] */ VARIANT_BOOL has_audio,
+            /* [in] */ VARIANT_BOOL has_video,
+            /* [in] */ VARIANT_BOOL has_bfcpvideo,
+            /* [retval][out] */ BSTR *sdp) = 0;
+        
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE startIce( 
             /* [in] */ SHORT IceOptions,
             /* [in] */ LONGLONG looper) = 0;
@@ -460,6 +472,20 @@ EXTERN_C const IID IID_IPeerConnection;
             IPeerConnection * This,
             /* [in] */ VARIANT_BOOL has_audio,
             /* [in] */ VARIANT_BOOL has_video,
+            /* [retval][out] */ BSTR *sdp);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *createOfferEx )( 
+            IPeerConnection * This,
+            /* [in] */ VARIANT_BOOL has_audio,
+            /* [in] */ VARIANT_BOOL has_video,
+            /* [in] */ VARIANT_BOOL has_bfcpvideo,
+            /* [retval][out] */ BSTR *sdp);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *createAnswerEx )( 
+            IPeerConnection * This,
+            /* [in] */ VARIANT_BOOL has_audio,
+            /* [in] */ VARIANT_BOOL has_video,
+            /* [in] */ VARIANT_BOOL has_bfcpvideo,
             /* [retval][out] */ BSTR *sdp);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *startIce )( 
@@ -585,6 +611,12 @@ EXTERN_C const IID IID_IPeerConnection;
 
 #define IPeerConnection_createAnswer(This,has_audio,has_video,sdp)	\
     ( (This)->lpVtbl -> createAnswer(This,has_audio,has_video,sdp) ) 
+
+#define IPeerConnection_createOfferEx(This,has_audio,has_video,has_bfcpvideo,sdp)	\
+    ( (This)->lpVtbl -> createOfferEx(This,has_audio,has_video,has_bfcpvideo,sdp) ) 
+
+#define IPeerConnection_createAnswerEx(This,has_audio,has_video,has_bfcpvideo,sdp)	\
+    ( (This)->lpVtbl -> createAnswerEx(This,has_audio,has_video,has_bfcpvideo,sdp) ) 
 
 #define IPeerConnection_startIce(This,IceOptions,looper)	\
     ( (This)->lpVtbl -> startIce(This,IceOptions,looper) ) 
