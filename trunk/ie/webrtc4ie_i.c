@@ -6,9 +6,9 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Sat Mar 22 00:20:26 2014
+/* at Mon May 19 04:50:09 2014
  */
-/* Compiler settings for .\webrtc4ie.idl:
+/* Compiler settings for ..\ie\webrtc4ie.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
     protocol : dce , ms_ext, c_ext, robust
     error checks: stub_data 

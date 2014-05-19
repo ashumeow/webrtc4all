@@ -94,8 +94,8 @@ public:
 
  protected:
 	virtual bool Close();
-	virtual bool CreateOffer(bool has_audio, bool has_video, char** sdp, int* sdp_len);
-	virtual bool CreateAnswer(bool has_audio, bool has_video, char** sdp, int* sdp_len);
+	virtual bool CreateOffer(bool has_audio, bool has_video, bool has_bfcpvideo, char** sdp, int* sdp_len);
+	virtual bool CreateAnswer(bool has_audio, bool has_video, bool has_bfcpvideo, char** sdp, int* sdp_len);
 	virtual bool StartIce(int IceOptions);
 	
 	virtual bool SetLocalDescription(int action, const _SessionDescription* sdpObj);
@@ -114,7 +114,7 @@ public:
 
 protected:
 	virtual bool CreateSessionMgr(enum tmedia_type_e eMediaType, bool iceEnabled, bool offerer);
-	virtual bool CreateLo(bool has_audio, bool has_video, char** sdpStr, int* sdp_len, bool offerer);
+	virtual bool CreateLo(bool has_audio, bool has_video, bool has_bfcpvideo, char** sdpStr, int* sdp_len, bool offerer);
 	virtual bool SerializeSdp(const struct tsdp_message_s* sdp, char** sdpStr, int* sdp_len);
 	virtual bool SignalNoMoreIceCandidateToFollow();
 	virtual bool IceCreateCtx(enum tmedia_type_e eMediaType);
