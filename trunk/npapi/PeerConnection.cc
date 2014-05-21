@@ -25,6 +25,8 @@
 #define kFuncClose  "close"
 #define kFuncCreateOffer  "createOffer"
 #define kFuncCreateAnswer  "createAnswer"
+#define kFuncCreateOfferEx  "createOfferEx"
+#define kFuncCreateAnswerEx  "createAnswerEx"
 #define kFuncStartIce  "startIce"
 #define kFuncSetLocalDescription  "setLocalDescription"
 #define kFuncSetRemoteDescription  "setRemoteDescription"
@@ -165,6 +167,8 @@ bool PeerConnection::HasMethod(NPObject* obj, NPIdentifier methodName)
 		!strcmp(name, kFuncStartIce) ||
 		!strcmp(name, kFuncCreateOffer) ||
 		!strcmp(name, kFuncCreateAnswer) ||
+		!strcmp(name, kFuncCreateOfferEx) ||
+		!strcmp(name, kFuncCreateAnswerEx) ||
 		!strcmp(name, kFuncSetLocalDescription) ||
 		!strcmp(name, kFuncSetRemoteDescription) ||
 		!strcmp(name, kFuncSetCallbackFuncName) ||
@@ -208,15 +212,15 @@ bool PeerConnection::Invoke(NPObject* obj, NPIdentifier methodName,
 	  int IceOptions = (argCount > 0 && NPVARIANT_IS_INT32(args[0])) ? NPVARIANT_TO_INT32(args[0]) : 0;
 	  ret_val = This->StartIce(IceOptions);
   }
-  else if(!strcmp(name, kFuncCreateOffer) || !strcmp(name, kFuncCreateAnswer)){
-	  bool is_offer = !strcmp(name, kFuncCreateOffer);
+  else if(!strcmp(name, kFuncCreateOffer) || !strcmp(name, kFuncCreateAnswer) || !strcmp(name, kFuncCreateOfferEx) || !strcmp(name, kFuncCreateAnswerEx)){
+	  bool is_offer = !strcmp(name, kFuncCreateOffer) || !strcmp(name, kFuncCreateOfferEx);
 	  bool has_audio = (argCount > 0 && NPVARIANT_IS_BOOLEAN(args[0]) && NPVARIANT_TO_BOOLEAN(args[0]));
 	  bool has_video = (argCount > 1 && NPVARIANT_IS_BOOLEAN(args[1]) && NPVARIANT_TO_BOOLEAN(args[1]));
-	  static bool __has_bfcpvideo = false;
+	  bool has_bfcpvideo = (argCount > 2 && NPVARIANT_IS_BOOLEAN(args[2]) && NPVARIANT_TO_BOOLEAN(args[2]));
 	  char* sdpStr = NULL;
 	  int sdpStrLen;
-	  ret_val = This->CreateLo(has_audio, has_video, __has_bfcpvideo, &sdpStr, &sdpStrLen, is_offer);
-	  if(ret_val){
+	  ret_val = This->CreateLo(has_audio, has_video, has_bfcpvideo, &sdpStr, &sdpStrLen, is_offer);
+	  if (ret_val) {
 		  SessionDescription* sdpObj = (SessionDescription*)BrowserFuncs->createobject(This->m_npp, &SessionDescriptionClass);
 		  if((ret_val = sdpObj->Init(sdpStr, sdpStrLen))){
 			OBJECT_TO_NPVARIANT(sdpObj, *result);
@@ -310,7 +314,8 @@ bool PeerConnection::HasProperty(NPObject* obj, NPIdentifier propertyName)
 		!strcmp(name, kPropRemoteDescription) ||
 		!strcmp(name, kPropOpaque) ||
 		!strcmp(name, kPropLocalVideo) ||
-		!strcmp(name, kPropRemoteVideo);
+		!strcmp(name, kPropRemoteVideo) ||
+		!strcmp(name, kPropIceState);
 	BrowserFuncs->memfree(name);
 	return ret_val;
 }
@@ -351,6 +356,11 @@ bool PeerConnection::GetProperty(NPObject* obj, NPIdentifier propertyName, NPVar
 		DOUBLE_TO_NPVARIANT((double)This->mRemoteVideo, *result);
 		ret_val = true;
 	}
+	else if(!strcmp(name, kPropIceState)){
+		INT32_TO_NPVARIANT((int32_t)This->mIceState, *result);
+		ret_val = true;
+	}
+	
 	else{
 		// BrowserFuncs->setexception(obj, "Unknown property");
 	}
