@@ -25,5 +25,5 @@
 class Utils : public _Utils
 {
 public:
-	static void* MemDup(const void* mem, unsigned n);
+	// static void* MemDup(const void* mem, unsigned n);
 };

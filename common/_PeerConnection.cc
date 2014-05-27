@@ -20,6 +20,8 @@
 #include "_Utils.h"
 #include "../common/_SessionDescription.h"
 
+#include "tsk_string.h"
+
 #include <sys/stat.h> /* stat() */
 
 #if HAVE_LIBXML2
@@ -29,8 +31,8 @@
 #include <libxml/xpathInternals.h>
 #endif
 
-static BOOL g_bAlwaysCreateOnCurrentThread = TRUE; // because "ThreadingModel 'Apartment'"
-static BOOL g_bAVPF = TRUE;
+static bool g_bAlwaysCreateOnCurrentThread = true; // because "ThreadingModel 'Apartment'"
+static bool g_bAVPF = true;
 
 _PeerConnection::_PeerConnection(BrowserType_t browserType): 
 	mBrowserType(browserType),
@@ -49,7 +51,9 @@ _PeerConnection::_PeerConnection(BrowserType_t browserType):
 	mFullScreen(false)
 {
 	_Utils::Initialize();
+#if W4A_UNDER_WINDOWS
 	InitializeCriticalSection(&mCSIceCallback);
+#endif
 }
 
 _PeerConnection::~_PeerConnection()
@@ -61,7 +65,9 @@ _PeerConnection::~_PeerConnection()
 	TSK_OBJECT_SAFE_FREE(mSdpLocal);
 	TSK_OBJECT_SAFE_FREE(mSdpRemote);
 	
+#if W4A_UNDER_WINDOWS
 	DeleteCriticalSection(&mCSIceCallback);
+#endif
 }
 
 bool _PeerConnection::Close()
@@ -157,6 +163,7 @@ bool _PeerConnection::SetLocalDescription(int action, const _SessionDescription*
 bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription* sdpObj)
 {
 	int iRet = 0;
+    tmedia_ro_type_t ro_type;
 
 	if(!sdpObj){
 		TSK_DEBUG_ERROR("Invalid argument");
@@ -164,7 +171,7 @@ bool _PeerConnection::SetRemoteDescription(int action, const _SessionDescription
 		goto bail;
 	}
 
-	tmedia_ro_type_t ro_type = (action == SdpActionProvisionalAnswer) 
+    ro_type = (action == SdpActionProvisionalAnswer)
 		? tmedia_ro_type_provisional
 		: (action == SdpActionAnswer ? tmedia_ro_type_answer : tmedia_ro_type_offer);
 
@@ -338,7 +345,8 @@ bool _PeerConnection::ProcessContent(const char* req_name, const char* content_t
 			xmlFreeDoc(pDoc);
 		}
 #else
-		is_fir = (tsk_strcontains(content_ptr, content_size, "to_encoder") && tsk_strcontains(content_ptr, content_size, "picture_fast_update"));
+        tsk_size_t content_size = (tsk_size_t)tsk_strlen((const char*)content_ptr);
+		is_fir = (tsk_strcontains((const char*)content_ptr, content_size, "to_encoder") && tsk_strcontains((const char*)content_ptr, content_size, "picture_fast_update"));
 #endif
 		TSK_DEBUG_INFO("Incoming Content(application/media_control+xml, picture_fast_update=%s)", is_fir ? "yes" : "no");
 		if (is_fir) {
@@ -386,7 +394,7 @@ bool _PeerConnection::CreateSessionMgr(tmedia_type_t eMediaType, bool iceEnabled
 	// DTLS certificates
 	static char* __dtlsCertificate = tsk_null;
 	static bool __dtlsCertificateExist = false;
-	if(!__dtlsCertificate){
+	if (!__dtlsCertificate) {
 		tsk_sprintf(&__dtlsCertificate, "%s/pub.pem", _Utils::GetCurrentDirectoryPath());
 		TSK_DEBUG_INFO("Path to DTLS-SRTP cert=%s", __dtlsCertificate);
 	}
@@ -476,11 +484,10 @@ bool _PeerConnection::SerializeSdp(const tsdp_message_t* sdp, char** sdpStr, int
 // The JavaScript code subscribe to this callback to know that the SDP is ready to be sent
 bool _PeerConnection::SignalNoMoreIceCandidateToFollow()
 {
-	HWND hWnd = reinterpret_cast<HWND>(GetWindowHandle());
 	static const bool kMoreToFollowIsFalse = false;
 	PeerConnectionEvent* oEvent = new PeerConnectionEvent(tsk_null, tsk_null, kMoreToFollowIsFalse);
-	if(!PostMessageA(hWnd, WM_ICE_EVENT_CANDIDATE, reinterpret_cast<WPARAM>(this), reinterpret_cast<LPARAM>(oEvent))){
-		TSK_DEBUG_ERROR("PostMessageA() failed");
+	if (!_Utils::PostMessage(GetWindowHandle(), WM_ICE_EVENT_CANDIDATE, this, (void**)&oEvent)) {
+		TSK_DEBUG_ERROR("PostMessage(WM_ICE_EVENT_CANDIDATE) failed");
 		IceCallbackFire(oEvent);
 		if(oEvent) delete oEvent, oEvent = NULL; // even will be destroyed by the listener if succeed
 	}
@@ -543,7 +550,7 @@ bool _PeerConnection::IceSetTimeout(int32_t timeout)
 	if(mIceCtxVideo){
 		tnet_ice_ctx_set_concheck_timeout(mIceCtxVideo, timeout);
 	}
-	return S_OK;
+	return true;
 }
 
 bool _PeerConnection::IceGotLocalCandidates()
@@ -652,8 +659,9 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 	_PeerConnection *This;
 
 	This = (_PeerConnection *)e->userdata;
-
+#if W4A_UNDER_WINDOWS
 	EnterCriticalSection(&This->mCSIceCallback);
+#endif
 
 	TSK_DEBUG_INFO("W4A::_PeerConnection::ICE callback: %s", e->phrase);
 
@@ -678,7 +686,7 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 					const tsdp_header_M_t* M = tsdp_message_find_media(This->mSdpLocal, mediaStr);
 					tnet_ice_candidate_t* pc_candidate;
 					tsk_size_t nIceCandidatesCount = tnet_ice_ctx_count_local_candidates(e->ctx);
-					for(USHORT index = 0; index < nIceCandidatesCount; ++index){
+					for(unsigned short index = 0; index < nIceCandidatesCount; ++index){
 						candidateStr = tsk_strdup(tnet_ice_candidate_tostring((pc_candidate = ((tnet_ice_candidate_t*)tnet_ice_ctx_get_local_candidate_at(e->ctx, index)))));
 						if(M){
 							tsdp_header_M_add_headers((tsdp_header_M_t*)M, TSDP_HEADER_A_VA_ARGS("candidate", candidateStr), tsk_null);
@@ -688,10 +696,10 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 						}
 						tsk_strcat_2(&candidateStr, " webrtc4ie-ufrag %s webrtc4ie-pwd %s", ufragStr, pwdStr);
 						bool bMoreToFollow = !(bGotAllCandidates && (index == (nIceCandidatesCount - 1)));
-						if(This->GetWindowHandle()){
+						/*if (This->GetWindowHandle()) */{
 							PeerConnectionEvent* oEvent = new PeerConnectionEvent(mediaStr, candidateStr, bMoreToFollow);
-							if(!PostMessageA((HWND)This->GetWindowHandle(), WM_ICE_EVENT_CANDIDATE, reinterpret_cast<WPARAM>(This), reinterpret_cast<LPARAM>(oEvent))){
-								TSK_DEBUG_ERROR("PostMessageA() failed");
+							if (!_Utils::PostMessage(This->GetWindowHandle(), WM_ICE_EVENT_CANDIDATE, This, (void**)&oEvent)) {
+								TSK_DEBUG_ERROR("PostMessage(WM_ICE_EVENT_CANDIDATE) failed");
 								This->IceCallbackFire(oEvent);
 								if(oEvent) delete oEvent, oEvent = NULL;
 							}
@@ -705,26 +713,16 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 					}
 				}
 				else if(e->type == tnet_ice_event_type_conncheck_succeed){
-					if(This->IceIsDone()){
+					if (This->IceIsDone()) {
 						This->mIceState = IceStateConnected;
-						if(This->GetWindowHandle()){
-							PostMessageA((HWND)This->GetWindowHandle(), WM_ICE_EVENT_CONNECTED, reinterpret_cast<WPARAM>(This), NULL);
-							//if(This->mStartDelayedUntilIceDone) {
-							//	This->StartMedia();// Start() must not be called on worker thread
-							//}
-						}
+						_Utils::PostMessage(This->GetWindowHandle(), WM_ICE_EVENT_CONNECTED, This, (void**)0);
 					}
 				}
 				else if(e->type == tnet_ice_event_type_conncheck_failed || e->type == tnet_ice_event_type_cancelled){
 					// "tnet_ice_event_type_cancelled" means remote party doesn't support ICE -> Not an error
 					This->mIceState = (e->type == tnet_ice_event_type_conncheck_failed) ? IceStateFailed : IceStateClosed;
-					if(This->GetWindowHandle()){
-						PostMessageA((HWND)This->GetWindowHandle(), (e->type == tnet_ice_event_type_conncheck_failed) ? WM_ICE_EVENT_FAILED : WM_ICE_EVENT_CANCELLED, reinterpret_cast<WPARAM>(This), NULL);
-						//if(This->mStartDelayedUntilIceDone) {
-						//	This->StartMedia();// Start() must not be called on worker thread
-						//}
-					}
-					if(e->type == tnet_ice_event_type_cancelled) {
+                    _Utils::PostMessage(This->GetWindowHandle(), WM_ICE_EVENT_CANCELLED, This, (void**)0);
+					if (e->type == tnet_ice_event_type_cancelled) {
 						This->SignalNoMoreIceCandidateToFollow();
 					}
 				}
@@ -739,8 +737,9 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 				break;
 			}
 	}
-
+#if W4A_UNDER_WINDOWS
 	LeaveCriticalSection(&This->mCSIceCallback);
+#endif
 
 	return ret;
 }
@@ -748,7 +747,7 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 // callback function called when media session events (related to rfc5168) occures asynchronously
 int _PeerConnection::Rfc5168Callback(const void* usrdata, const struct tmedia_session_s* session, const char* reason, enum tmedia_session_rfc5168_cmd_e command)
 {
-	int ret = 0;
+	// int ret = 0;
 	_PeerConnection *This;
 
 	This = (_PeerConnection *)usrdata;
@@ -757,13 +756,8 @@ int _PeerConnection::Rfc5168Callback(const void* usrdata, const struct tmedia_se
 	
 	if (This) {
 		if (command == tmedia_session_rfc5168_cmd_picture_fast_update) {
-			if (This->GetWindowHandle()) {
-				static const char* __command_picture_fast_update = "picture_fast_update";
-				PostMessageA((HWND)This->GetWindowHandle(), WM_RFC5168_EVENT, reinterpret_cast<WPARAM>(This), reinterpret_cast<LPARAM>(__command_picture_fast_update));
-			}
-			else {
-				TSK_DEBUG_ERROR("No handle");
-			}
+            static const char* __command_picture_fast_update = "picture_fast_update";
+            _Utils::PostMessage(This->GetWindowHandle(), WM_RFC5168_EVENT, This, (void**)&__command_picture_fast_update);
 		}
 	}
 	return 0;

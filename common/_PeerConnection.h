@@ -20,6 +20,7 @@
 #define _WEBRTC4ALL__PEERCONNECTION_H_
 
 #include "_Config.h"
+#include "_Utils.h"
 
 typedef enum IceOptions_e
 {
@@ -64,15 +65,18 @@ class PeerConnectionEvent
 {
 public:
 	PeerConnectionEvent(const char* media, const char* candidate, bool moreToFollow):
-		mMedia(tsk_strdup(media)),
-		mCandidate(tsk_strdup(candidate)),
+		mMedia(NULL),
+		mCandidate(NULL),
 		mMoreToFollow(moreToFollow)
-		{ }
+		{
+            mMedia = (char*)_Utils::MemDup(media, (unsigned)tsk_strlen(media));
+            mCandidate = (char*)_Utils::MemDup(candidate, (unsigned)tsk_strlen(candidate));
+        }
 
 	~PeerConnectionEvent()
 	{
-		TSK_FREE(mMedia);
-		TSK_FREE(mCandidate);
+		_Utils::MemFree((void**)&mMedia);
+		_Utils::MemFree((void**)&mCandidate);
 	}
 
 	const char* GetMedia()const{ return mMedia; }
@@ -145,7 +149,7 @@ protected:
 
 	enum ReadyState_e mReadyState;
 	enum IceState_e mIceState;
-
+    
 	LONGLONG mRemoteVideo;
 	LONGLONG mLocalVideo;
 
@@ -154,8 +158,9 @@ protected:
 	bool mStartDelayedUntilIceDone;
 
 	BrowserType_t mBrowserType;
-
+#if W4A_UNDER_WINDOWS
 	CRITICAL_SECTION mCSIceCallback;
+#endif
 };
 
 #endif /* _WEBRTC4ALL__PEERCONNECTION_H_ */

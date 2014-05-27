@@ -49,6 +49,7 @@ bool _SessionDescription::AddCandidate(const char* media, const char* candidate)
 {
 	bool bRet = true;
 	tnet_ice_candidate_t* oCandidate = NULL;
+    const tsdp_header_M_t* M;
 
 	if(!media || !candidate){
 		TSK_DEBUG_ERROR("Invalid argument");
@@ -61,7 +62,7 @@ bool _SessionDescription::AddCandidate(const char* media, const char* candidate)
 		goto bail;
 	}
 	
-	const tsdp_header_M_t* M = tsdp_message_find_media(m_Sdp, media);
+	M = tsdp_message_find_media(m_Sdp, media);
 	if(!M){
 		TSK_DEBUG_ERROR("Failed to find mediaType=%s", media);
 		bRet = false;

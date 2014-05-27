@@ -22,10 +22,12 @@
 extern NPNetscapeFuncs* BrowserFuncs;
 
 _NPObject::_NPObject(NPP instance)
-: m_npp(instance),
-m_pWindow(NULL),
-m_pWinProc(NULL),
-m_BrowserType(BrowserType_None)
+: m_npp(instance)
+, m_pWindow(NULL)
+#if W4A_UNDER_WINDOWS
+, m_pWinProc(NULL)
+#endif
+, m_BrowserType(BrowserType_None)
 {
 	_Utils::Initialize();
 	const char* uagent = BrowserFuncs->uagent(m_npp);
@@ -48,6 +50,7 @@ _NPObject::~_NPObject()
 
 bool _NPObject::SetWindow(NPWindow* pWindow, bool bSubClass)
 {
+#if W4A_UNDER_WINDOWS
 	if(m_pWindow && m_pWindow->window && m_pWinProc){
 		SetWindowLongPtr((HWND)m_pWindow->window, GWL_WNDPROC, (LONG)m_pWinProc);
 		m_pWinProc = NULL;
@@ -62,6 +65,7 @@ bool _NPObject::SetWindow(NPWindow* pWindow, bool bSubClass)
 			}
 		}
 	}
+#endif
 	
 	return true;
 }

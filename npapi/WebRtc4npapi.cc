@@ -76,9 +76,11 @@ bool WebRtc4npapi::Construct(NPObject *npobj, const NPVariant *args, uint32_t ar
 }
 
 WebRtc4npapi::WebRtc4npapi(NPP instance)
-: m_npp(instance),
-m_pWindow(NULL),
-m_pWinProc(NULL)
+: m_npp(instance)
+, m_pWindow(NULL)
+#if W4A_UNDER_WINDOWS
+, m_pWinProc(NULL)
+#endif
 {
 	TSK_DEBUG_INFO("WebRtc4npapi::WebRtc4all");
 	_Utils::Initialize();
@@ -91,6 +93,7 @@ WebRtc4npapi::~WebRtc4npapi()
 
 bool WebRtc4npapi::SetWindow(NPWindow* pWindow)
 {
+#if W4A_UNDER_WINDOWS
 	if(m_pWindow && m_pWindow->window && m_pWinProc){
 		SetWindowLongPtr((HWND)m_pWindow->window, GWL_WNDPROC, (LONG)m_pWinProc);
 		m_pWinProc = NULL;
@@ -103,6 +106,7 @@ bool WebRtc4npapi::SetWindow(NPWindow* pWindow)
 			return false;
 		}
 	}
+#endif
 	return true;
 }
 
@@ -222,7 +226,7 @@ bool WebRtc4npapi::GetProperty(NPObject* obj, NPIdentifier propertyName, NPVaria
 		ret_val = true;
 	}
 	else if(!strcmp(name, kPropVersion)){
-		char* _str = (char*)Utils::MemDup(THIS_VERSION, tsk_strlen(THIS_VERSION));
+		char* _str = (char*)_Utils::MemDup(THIS_VERSION, tsk_strlen(THIS_VERSION));
 		STRINGN_TO_NPVARIANT(_str, tsk_strlen(_str), *result);
 		ret_val = true;
 	}

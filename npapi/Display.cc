@@ -19,7 +19,9 @@
 #include "Display.h"
 #include "../common/_Utils.h"
 
+#if W4A_UNDER_WINDOWS
 #include "internals/DSDisplay.h" /* plugins/pluginDirectShow */
+#endif
 
 #include <string>
 
@@ -53,11 +55,17 @@ Display::Display(NPP instance)
 : _NPObject(instance)
 {
 	TSK_DEBUG_INFO("Display::Display");
+#if W4A_UNDER_APPLE
+    m_pRootLayer = [[CALayer layer] retain];
+#endif
 	_Utils::Initialize();
 }
 
 Display::~Display()
 {
+#if W4A_UNDER_APPLE
+    [m_pRootLayer release], m_pRootLayer = NULL;
+#endif
 }
 
 NPObject* Display::Allocate(NPP instance, NPClass* npclass)
@@ -100,9 +108,11 @@ bool Display::Invoke(NPObject* obj, NPIdentifier methodName,
 		}
 		else{
 			if(This->m_pWindow && This->m_pWindow->window){
-				static const BOOL __fsTrue = TRUE;
-				static const BOOL __fsFalse = FALSE;
+				static const bool __fsTrue = true;
+				static const bool __fsFalse = false;
+#if W4A_UNDER_WINDOWS
 				PostMessageA((HWND)This->GetWindowHandle(), WM_FULLSCREEN_SET, reinterpret_cast<WPARAM>(This), reinterpret_cast<LPARAM>((args[0].value.boolValue ? &__fsTrue : &__fsFalse)));
+#endif
 			}
 		}
 	}
@@ -158,7 +168,9 @@ bool Display::SetProperty(NPObject *npobj, NPIdentifier propertyName, const NPVa
 		else{
 			ret_val = true;
 			if(This->m_pWindow && This->m_pWindow->window){
+#if W4A_UNDER_WINDOWS
 				ShowWindow(((HWND)This->m_pWindow->window), value->value.boolValue ? SW_HIDE : SW_SHOW);
+#endif
 			}
 		}
 	}

@@ -68,6 +68,7 @@ NPClass PeerConnectionClass = {
 PeerConnection::PeerConnection(NPP instance)
     : _NPObject(instance),
 	_PeerConnection(m_BrowserType),
+    m_Instance(instance),
 	m_Opaque(NULL),
 	m_CallbackFuncName(NULL),
 	m_Rfc5168CallbackFuncName(NULL)
@@ -122,7 +123,7 @@ void PeerConnection::IceCallbackFire(const PeerConnectionEvent* e)
 
 void PeerConnection::Rfc5168CallbackFire(const char* commandStr)
 {
-	if(!m_Rfc5168CallbackFuncName){
+	if (!m_Rfc5168CallbackFuncName) {
 		TSK_DEBUG_ERROR("No callback function defined. Did you forget to call '%s'", kFuncSetRfc5168CallbackFuncName);
 		return;
 	}
@@ -130,6 +131,7 @@ void PeerConnection::Rfc5168CallbackFire(const char* commandStr)
 	NPVariant retval, args[4];
 	
 	NPIdentifier js_callback = BrowserFuncs->getstringidentifier(m_Rfc5168CallbackFuncName);
+    char* _commandStr = (char*)_Utils::MemDup(commandStr, (unsigned)tsk_strlen(commandStr)); // use memalloc()
 
 	NPObject* window = NULL;
 	BrowserFuncs->getvalue(m_npp, NPNVWindowNPObject, &window);
@@ -137,7 +139,7 @@ void PeerConnection::Rfc5168CallbackFire(const char* commandStr)
 	uint32_t arg_count = 2;
 	VOID_TO_NPVARIANT(retval);
 	OBJECT_TO_NPVARIANT(m_Opaque, args[0]);
-	STRINGN_TO_NPVARIANT(commandStr, tsk_strlen(commandStr), args[1]);
+	STRINGN_TO_NPVARIANT(_commandStr, tsk_strlen(_commandStr), args[1]);
 
 	BrowserFuncs->invoke(m_npp,
 		window,
@@ -147,6 +149,7 @@ void PeerConnection::Rfc5168CallbackFire(const char* commandStr)
 		&retval);
 	BrowserFuncs->releasevariantvalue(&retval);
 	BrowserFuncs->releaseobject(window);
+    _Utils::MemFree((void**)&_commandStr);
 }
 
 NPObject* PeerConnection::Allocate(NPP instance, NPClass* npclass)
@@ -330,18 +333,18 @@ bool PeerConnection::GetProperty(NPObject* obj, NPIdentifier propertyName, NPVar
 		ret_val = true;
 		if(This->mSdpLocal){
 			char* _sdp = tsdp_message_tostring(This->mSdpLocal);
-			char* _str = (char*)Utils::MemDup(_sdp, tsk_strlen(_sdp));
+			char* _str = (char*)_Utils::MemDup(_sdp, (unsigned)tsk_strlen(_sdp));
 			STRINGN_TO_NPVARIANT(_str, tsk_strlen(_str), *result);
-			TSK_FREE(_sdp);
+			_Utils::MemFree((void**)&_sdp);
 		}
 	}
 	else if(!strcmp(name, kPropRemoteDescription)){
 		ret_val = true;
 		if(This->mSdpRemote){
 			char* _sdp = tsdp_message_tostring(This->mSdpRemote);
-			char* _str = (char*)Utils::MemDup(_sdp, tsk_strlen(_sdp));
+			char* _str = (char*)_Utils::MemDup(_sdp, (unsigned)tsk_strlen(_sdp));
 			STRINGN_TO_NPVARIANT(_str, tsk_strlen(_str), *result);
-			TSK_FREE(_sdp);
+			_Utils::MemFree((void**)&_sdp);
 		}
 	}
 	else if(!strcmp(name, kPropOpaque)){

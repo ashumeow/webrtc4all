@@ -20,6 +20,8 @@
 #include "Display.h"// FIXME
 #include "WebRtc4npapi.h" // FIXME
 
+#include "tsk_string.h"
+
 #include <stdlib.h>
 #include <string>
 #include <stdio.h>
@@ -59,6 +61,9 @@ typedef struct InstanceData_s
 	NPP npp;
 	NPWindow window;
 	NPObject* object;
+#if W4A_UNDER_APPLE
+    CALayer *rootLayer;
+#endif
 } 
 InstanceData_t;
 
@@ -132,13 +137,46 @@ NP_Shutdown()
 
 NPError
 NPP_New(NPMIMEType pluginType, NPP instance, uint16_t mode, int16_t argc, char* argn[], char* argv[], NPSavedData* saved) {
+#if 0
   // Make sure we can render this plugin
   NPBool browserSupportsWindowless = false;
   BrowserFuncs->getvalue(instance, NPNVSupportsWindowless, &browserSupportsWindowless);
   if (!browserSupportsWindowless) {
-    printf("Windowless mode not supported by the browser\n");
+    TSK_DEBUG_ERROR("Windowless mode not supported by the browser");
     return NPERR_GENERIC_ERROR;
   }
+#endif
+    
+#if W4A_UNDER_APPLE
+    // Ask the browser if it supports the Core Animation drawing model
+    NPBool supportsCoreAnimation;
+    if (BrowserFuncs->getvalue(instance, NPNVsupportsCoreAnimationBool, &supportsCoreAnimation) != NPERR_NO_ERROR) {
+        supportsCoreAnimation = FALSE;
+    }
+    
+    if (!supportsCoreAnimation) {
+        TSK_DEBUG_ERROR("CoreAnimation not supported");
+        return NPERR_INCOMPATIBLE_VERSION_ERROR;
+    }
+    
+    // If the browser supports the Core Animation drawing model, enable it.
+    BrowserFuncs->setvalue(instance, NPPVpluginDrawingModel, (void *)NPDrawingModelCoreAnimation);
+    
+    // If the browser supports the Cocoa event model, enable it.
+    NPBool supportsCocoa;
+    if (BrowserFuncs->getvalue(instance, NPNVsupportsCocoaBool, &supportsCocoa) != NPERR_NO_ERROR) {
+        supportsCocoa = FALSE;
+    }
+    
+    if (!supportsCocoa) {
+        TSK_DEBUG_ERROR("Cocoa not supported...but not required");
+        // return NPERR_INCOMPATIBLE_VERSION_ERROR;
+    }
+    else {
+        BrowserFuncs->setvalue(instance, NPPVpluginEventModel, (void *)NPEventModelCocoa);
+    }
+    
+#endif
 
   // set up our our instance data
   InstanceData_t* instanceData = (InstanceData_t*)malloc(sizeof(InstanceData_t));
@@ -150,19 +188,19 @@ NPP_New(NPMIMEType pluginType, NPP instance, uint16_t mode, int16_t argc, char* 
   instanceData->npp = instance;
   instance->pdata = instanceData;
 
-  if(!stricmp(pluginType, kMimeTypeWebRtc4all)){
+  if(!tsk_stricmp(pluginType, kMimeTypeWebRtc4all)){
 	  instanceData->type = PluginType_WebRtc4npapi;
   }
-  else if(!stricmp(pluginType, kMimeTypePeerConnection)){
+  else if(!tsk_stricmp(pluginType, kMimeTypePeerConnection)){
 	  instanceData->type = PluginType_PeerConnection;
   }
-  else if(!stricmp(pluginType, kMimeTypeNetwork)){
+  else if(!tsk_stricmp(pluginType, kMimeTypeNetwork)){
 	  instanceData->type = PluginType_NetTransport;
   }
-  else if(!stricmp(pluginType, kMimeTypeDisplay)){
+  else if(!tsk_stricmp(pluginType, kMimeTypeDisplay)){
 	  instanceData->type = PluginType_Display;
   }
-  else if(!stricmp(pluginType, kMimeTypeSdp)){
+  else if(!tsk_stricmp(pluginType, kMimeTypeSdp)){
 	  instanceData->type = PluginType_Sdp;
   }
   else{
@@ -177,18 +215,22 @@ NPP_New(NPMIMEType pluginType, NPP instance, uint16_t mode, int16_t argc, char* 
 
 NPError
 NPP_Destroy(NPP instance, NPSavedData** save) {
-  InstanceData_t* instanceData = (InstanceData_t*)(instance->pdata);
-  if(instanceData->object){
-	  NP_OBJECT_RELEASE(instanceData->object);
-  }
-  free(instanceData);
-  return NPERR_NO_ERROR;
+    InstanceData_t* instanceData = (InstanceData_t*)(instance->pdata);
+    if (instanceData->object) {
+        NP_OBJECT_RELEASE(instanceData->object);
+    }
+    [instanceData->rootLayer release], instanceData->rootLayer = NULL;
+    free(instanceData);
+    return NPERR_NO_ERROR;
 }
 
 NPError
 NPP_SetWindow(NPP instance, NPWindow* window) {
   InstanceData_t* instanceData = (InstanceData_t*)(instance->pdata);
   instanceData->window = *window;
+    if (instanceData->window.window) {
+        TSK_DEBUG_INFO("Got window");
+    }
   return NPERR_NO_ERROR;
 }
 
@@ -233,21 +275,45 @@ NPP_URLNotify(NPP instance, const char* URL, NPReason reason, void* notifyData) 
 
 }
 
+//FIXME
+CALayer *__layerDisplayProducer = NULL;
+CALayer *__layerDisplayConsumer = NULL;
+
 NPError
 NPP_GetValue(NPP instance, NPPVariable variable, void *value) {
-	switch(variable) {
+    if (!instance) {
+        TSK_DEBUG_ERROR("Invalid argument");
+        return NPERR_INVALID_INSTANCE_ERROR;
+    }
+    InstanceData_t* instanceData = (InstanceData_t*)(instance->pdata);
+    
+	switch (variable) {
 	  default:
-		return NPERR_GENERIC_ERROR;
+        {
+            return NPERR_GENERIC_ERROR;
+        }
 	  case NPPVpluginNameString:
+        {
 			*((char **)value) = kPluginName;
-		break;
+            break;
+        }
 	  case NPPVpluginDescriptionString:
+        {
 			*((char **)value) = kPluginDescription;
-		break;
+            break;
+        }
+#if W4A_UNDER_APPLE
+        case NPPVpluginCoreAnimationLayer:
+        {
+            if (!instanceData->rootLayer && instanceData->type == PluginType_Display) {
+                instanceData->rootLayer = [[CALayer layer] retain];
+                instanceData->rootLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+                *(CALayer **)value = instanceData->rootLayer;
+            }
+            break;
+        }
+#endif
 	  case NPPVpluginScriptableNPObject: {
-		  if(instance == NULL)
-			return NPERR_INVALID_INSTANCE_ERROR;
-		  InstanceData_t* instanceData = (InstanceData_t*)(instance->pdata);
 		  if(!instanceData->object){
 			  NPClass *aClass = NULL;
 			  switch(instanceData->type){
@@ -273,13 +339,35 @@ NPP_GetValue(NPP instance, NPPVariable variable, void *value) {
 					  return NPERR_GENERIC_ERROR;
 				  }
 			  }
+              
+#if W4A_UNDER_APPLE
+              if (instanceData->type == PluginType_Display) {
+                  if (instanceData->rootLayer) {
+                      [instanceData->rootLayer setBounds: CGRectMake(instanceData->window.x, instanceData->window.y, instanceData->window.width, instanceData->window.height)];
+                  }
+                  ((Display*)instanceData->object)->setRootLayer(instanceData->rootLayer);
+                  // FIXME
+                  if (instanceData->window.width > 0) {
+                      if (instanceData->window.width > 90) {
+                          __layerDisplayConsumer = instanceData->rootLayer;
+                          //__layerDisplayConsumer.backgroundColor = CGColorCreateGenericRGB(255.0, 0.0, 0.0, 1.0);
+                      }
+                      else {
+                          __layerDisplayProducer = instanceData->rootLayer;
+                          //__layerDisplayProducer.backgroundColor = CGColorCreateGenericRGB(0.0, 255.0, 0.0, 1.0);
+                      }
+                  }
+              }
+#endif
 		  }
 		  *(NPObject **)value = BrowserFuncs->retainobject(instanceData->object);
 		}
 		break;
 	  case NPPVpluginNeedsXEmbed:
-		*((char *)value) = 1;
-		break;
+        {
+            *((char *)value) = 1;
+            break;
+        }
   }
   return NPERR_NO_ERROR;
 }

@@ -21,8 +21,10 @@
 
 #include "_NPObject.h"
 
-#include "../thirdparties/source/npapi-sdk/headers/npapi.h"
-#include "../thirdparties/source/npapi-sdk/headers/npfunctions.h"
+#if W4A_UNDER_APPLE
+#include <QuartzCore/QuartzCore.h>
+#include <QTKit/QTKit.h>
+#endif
 
 class Display: public _NPObject {
 public:
@@ -45,8 +47,15 @@ public:
 		const NPVariant *value);
 	static bool Enumeration(NPObject *npobj, NPIdentifier **value, 
 						uint32_t *count);
+#if W4A_UNDER_APPLE
+    CALayer * rootLayer() { return m_pRootLayer; }
+    void setRootLayer(CALayer *rootLayer) { [m_pRootLayer release], m_pRootLayer = NULL; if (rootLayer) { m_pRootLayer = [rootLayer retain]; } }
+#endif
 
 private:
+#if W4A_UNDER_APPLE
+    CALayer *m_pRootLayer;
+#endif
 };
 
 #endif /* _WEBRTC4NPAPI_DISPLAY_H_ */

@@ -22,9 +22,6 @@
 #include "../common/_NetTransport.h"
 #include "_NPObject.h"
 
-#include "../thirdparties/source/npapi-sdk/headers/npapi.h"
-#include "../thirdparties/source/npapi-sdk/headers/npfunctions.h"
-
 class NetTransport: public _NPObject, public _NetTransport {
 public:
 	NetTransport(NPP instance);
@@ -52,6 +49,7 @@ public:
 public:
 	virtual LONGLONG GetWindowHandle();
 	virtual void DgramCbFire(const NetTransportEvent* e);
+    NPP GetInstance() { return m_Instance; }
 
 private:
 	virtual bool SetDomain(NPString domain);
@@ -63,6 +61,7 @@ private:
 private:
 	char* m_CallbackFuncName;
 	NPObject* m_Opaque;
+    NPP m_Instance;
 };
 
 #endif /* _WEBRTC4NPAPI_NETTRANSPORT_H_ */

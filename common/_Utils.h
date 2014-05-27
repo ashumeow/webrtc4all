@@ -34,8 +34,12 @@ public:
 	static void Initialize(void);
 	static bool StartDebug(void);
 	static bool StopDebug(void);
-	static const char* GetCurrentDirectoryPath();
+    static const char* GetCurrentDirectoryPath();
+    static bool PostMessage(LONGLONG handle, unsigned msg, void* wParam, void** lParam);
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+    static void* MemAlloc(unsigned n);
+    static void* MemDup(const void* mem, unsigned n);
+    static void MemFree(void** mem);
 };
 
 

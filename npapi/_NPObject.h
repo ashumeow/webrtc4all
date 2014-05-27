@@ -16,13 +16,10 @@
 * You should have received a copy of the GNU General Public License
 * along with webrtc4ie.
 */
-#ifndef _WEBRTC4NPAPI_NPOBJECT_H_
+#if !defined(_WEBRTC4NPAPI_NPOBJECT_H_)
 #define _WEBRTC4NPAPI_NPOBJECT_H_
 
 #include "../common/_Config.h"
-
-#include "../thirdparties/source/npapi-sdk/headers/npapi.h"
-#include "../thirdparties/source/npapi-sdk/headers/npfunctions.h"
 
 class _NPObject: public NPObject {
 public:
@@ -30,12 +27,15 @@ public:
 	virtual ~_NPObject();
 	bool SetWindow(NPWindow* pWindow, bool bSubClass);
 	LONGLONG GetWindowHandle();
+    
 	bool StartDebug();
 	bool StopDebug();
 
 protected:
 	NPWindow* m_pWindow;
+#if W4A_UNDER_WINDOWS
 	WNDPROC m_pWinProc;
+#endif
 	NPP m_npp;
 	BrowserType_t m_BrowserType;
 };
