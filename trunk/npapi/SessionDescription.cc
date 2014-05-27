@@ -103,9 +103,9 @@ bool SessionDescription::Invoke(NPObject* obj, NPIdentifier methodName,
 	else if(!strcmp(name, kFuncToSdp)){
 		if(This->m_Sdp){
 			char* sdpStr = tsdp_message_tostring(This->m_Sdp);
-			char* npSdpStr = (char*)Utils::MemDup(sdpStr, tsk_strlen(sdpStr));
+			char* npSdpStr = (char*)Utils::MemDup(sdpStr, (unsigned)tsk_strlen(sdpStr));
 			STRINGN_TO_NPVARIANT(npSdpStr, tsk_strlen(npSdpStr), *result);
-			TSK_FREE(sdpStr);
+			_Utils::MemFree((void**)&sdpStr);
 		}
 		ret_val = true;
 	}

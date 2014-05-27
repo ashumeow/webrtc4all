@@ -20,10 +20,7 @@
 */
 #include "Utils.h"
 
-#include "../thirdparties/source/npapi-sdk/headers/npapi.h"
-#include "../thirdparties/source/npapi-sdk/headers/npfunctions.h"
-
-extern NPNetscapeFuncs* BrowserFuncs;
+/*extern NPNetscapeFuncs* BrowserFuncs;
 
 // http://code.google.com/p/chromium/issues/detail?id=13564
 void* Utils::MemDup(const void* mem, unsigned n)
@@ -37,4 +34,4 @@ void* Utils::MemDup(const void* mem, unsigned n)
 	}
 
 	return np_ret;
-}
+}*/

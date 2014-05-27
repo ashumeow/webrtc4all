@@ -46,7 +46,7 @@ bool _NetTransport::_SetDomain(const char* domain)
 	tnet_port_t port;
 	TSK_FREE(m_DefaultDestAddr);
 	
-	char* addr = NULL;
+	// char* addr = NULL;
 	if(tnet_dns_query_naptr_srv(dnsCtx, domain, "SIP+D2U", &m_DefaultDestAddr, &port) == 0){
 		m_DefaultDestPort = port;
 	}
@@ -137,18 +137,14 @@ int _NetTransport::DgramCb(const struct tnet_transport_event_s* e)
 	}
 
 	NetTransportEvent* oEvent = new NetTransportEvent(e->type, e->data, e->size);
-	if(oEvent){
-		if(This->GetWindowHandle()){
-			if(!PostMessageA((HWND)This->GetWindowHandle(), WM_NET_EVENT, reinterpret_cast<WPARAM>(This), reinterpret_cast<LPARAM>(oEvent))){
-				TSK_DEBUG_ERROR("PostMessageA() failed");
-				This->DgramCbFire(oEvent);
-				if(oEvent) delete oEvent, oEvent = NULL;
-			}
-		}
-		else{
-			This->DgramCbFire(oEvent);
-			delete oEvent, oEvent = NULL;
-		}
+	if (oEvent) {
+		if (!_Utils::PostMessage(This->GetWindowHandle(), WM_NET_EVENT, This, (void**)&oEvent)) {
+            TSK_DEBUG_ERROR("PostMessage(WM_NET_EVENT) failed");
+            This->DgramCbFire(oEvent);
+        }
+        if (oEvent) {
+            delete oEvent, oEvent = NULL;
+        }
 	}
 
 	return 0;

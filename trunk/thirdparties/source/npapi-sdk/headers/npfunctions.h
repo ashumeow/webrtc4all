@@ -250,8 +250,10 @@ typedef OSErr (*BP_GetSupportedMIMETypesProcPtr)(BPSupportedMIMETypes*, UInt32);
 #else
 #if defined(__OS2__)
 #define OSCALL _System
+#define NP_EXPORT(__type) __type
 #else
 #define OSCALL
+#define NP_EXPORT(__type) __type
 #endif
 #endif
 

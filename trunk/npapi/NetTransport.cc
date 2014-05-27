@@ -59,6 +59,7 @@ NetTransport::NetTransport(NPP instance)
 : _NPObject(instance),
 _NetTransport(),
 m_Opaque(NULL),
+m_Instance(instance),
 m_CallbackFuncName(NULL)
 {
 }
@@ -185,8 +186,8 @@ bool NetTransport::Invoke(NPObject* obj, NPIdentifier methodName,
 			BrowserFuncs->setexception(obj, "Invalid arguments");
 		}
 		else{
-			NP_MEMFREE(This->m_CallbackFuncName);
-			This->m_CallbackFuncName = (char*)Utils::MemDup(args[0].value.stringValue.UTF8Characters, args[0].value.stringValue.UTF8Length);
+			_Utils::MemFree((void**)&This->m_CallbackFuncName);
+			This->m_CallbackFuncName = (char*)_Utils::MemDup(args[0].value.stringValue.UTF8Characters, args[0].value.stringValue.UTF8Length);
 			ret_val = (This->m_CallbackFuncName != NULL);
 		}
 	}
@@ -219,7 +220,7 @@ bool NetTransport::GetProperty(NPObject* obj, NPIdentifier propertyName, NPVaria
 
 	if(!strcmp(name, kPropDefaultDestAddr)){
 		if(This->m_DefaultDestAddr){
-			char* _str = (char*)Utils::MemDup(This->m_DefaultDestAddr, tsk_strlen(This->m_DefaultDestAddr));
+			char* _str = (char*)_Utils::MemDup(This->m_DefaultDestAddr, (unsigned)tsk_strlen(This->m_DefaultDestAddr));
 			STRINGN_TO_NPVARIANT(_str, tsk_strlen(_str), *result);
 		}
 		ret_val = true;
@@ -230,7 +231,7 @@ bool NetTransport::GetProperty(NPObject* obj, NPIdentifier propertyName, NPVaria
 	}
 	else if(!strcmp(name, kPropLocalIP)){
 		if(This->m_pTransport && This->m_pTransport->master){
-			char* _str = (char*)Utils::MemDup(This->m_pTransport->master->ip, tsk_strlen(This->m_pTransport->master->ip));
+			char* _str = (char*)_Utils::MemDup(This->m_pTransport->master->ip, (unsigned)tsk_strlen(This->m_pTransport->master->ip));
 			STRINGN_TO_NPVARIANT(_str, tsk_strlen(_str), *result);
 		}
 		ret_val = true;

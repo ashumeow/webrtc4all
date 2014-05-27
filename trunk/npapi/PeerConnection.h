@@ -22,9 +22,6 @@
 #include "../common/_PeerConnection.h"
 #include "_NPObject.h"
 
-#include "../thirdparties/source/npapi-sdk/headers/npapi.h"
-#include "../thirdparties/source/npapi-sdk/headers/npfunctions.h"
-
 class PeerConnection: public _NPObject, public _PeerConnection {
 public:
   PeerConnection(NPP instance);
@@ -45,15 +42,17 @@ public:
   static bool SetProperty(NPObject *npobj, NPIdentifier propertyName, 
 						 const NPVariant *value);
   static bool Enumeration(NPObject *npobj, NPIdentifier **value, 
-						uint32_t *count);
+                          uint32_t *count);
 
 public:
 	virtual LONGLONG GetWindowHandle();
 	virtual void IceCallbackFire(const PeerConnectionEvent* e);
 	virtual void Rfc5168CallbackFire(const char* commandStr);
+    NPP GetInstance() { return m_Instance; }
 
 private:
 	NPObject* m_Opaque;
+    NPP m_Instance;
 	char* m_CallbackFuncName;
 	char* m_Rfc5168CallbackFuncName;
 };

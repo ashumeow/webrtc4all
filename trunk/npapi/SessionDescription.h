@@ -22,9 +22,6 @@
 #include "../common/_SessionDescription.h"
 #include "_NPObject.h"
 
-#include "../thirdparties/source/npapi-sdk/headers/npapi.h"
-#include "../thirdparties/source/npapi-sdk/headers/npfunctions.h"
-
 class SessionDescription: public _NPObject, public _SessionDescription {
 public:
 	SessionDescription(NPP instance);

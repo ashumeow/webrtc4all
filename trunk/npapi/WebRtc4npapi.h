@@ -21,9 +21,6 @@
 
 #include "../common/_Config.h"
 
-#include "../thirdparties/source/npapi-sdk/headers/npapi.h"
-#include "../thirdparties/source/npapi-sdk/headers/npfunctions.h"
-
 class WebRtc4npapi: public NPObject {
 public:
 	WebRtc4npapi(NPP instance);
@@ -51,7 +48,9 @@ public:
 
 private:
 	NPWindow* m_pWindow;
+#if W4A_UNDER_WINDOWS
 	WNDPROC m_pWinProc;
+#endif
 	NPP m_npp;
 };
 

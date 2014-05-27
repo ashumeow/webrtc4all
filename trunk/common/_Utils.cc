@@ -19,15 +19,26 @@
 #include "_Utils.h"
 #include "_PeerConnection.h"
 #include "_NetTransport.h"
+#if !W4A_IE
+#include "PeerConnection.h"
+#include "NetTransport.h"
+#endif
+#if W4A_UNDER_APPLE
+#include <dispatch/dispatch.h>
+#endif
 
+#if W4A_UNDER_WINDOWS
 #include <Shlwapi.h>
+#endif
 
-BOOL g_bInitialized = FALSE;
-BOOL g_bHasDebugConsole = FALSE;
+bool g_bInitialized = false;
+bool g_bHasDebugConsole = false;
 char* g_sNullTerminated = NULL;
-UINT g_iNullTerminated = 0;
-INT g_nEchoTail = 100;
+unsigned g_iNullTerminated = 0;
+signed g_nEchoTail = 100;
+#if W4A_UNDER_WINDOWS
 CRITICAL_SECTION g_CS;
+#endif
 
 _Utils::_Utils()
 {
@@ -41,26 +52,36 @@ _Utils::~_Utils()
 
 void _Utils::Initialize(void)
 {
-	if(!g_bInitialized){
+	/*if(!g_bInitialized)*/{
 
 #if 0
 		StartDebug();
 #endif
 
 		int iRet;
-		if((iRet = tnet_startup()) != 0){
+		if ((iRet = tnet_startup()) != 0) {
 			TSK_DEBUG_ERROR("tnet_startup failed with error code=%d", iRet);
 			return;
 		}
-		if(tdav_init() == 0){
+		if (tdav_init() == 0) {
 			g_bInitialized = TRUE;
 			TSK_DEBUG_INFO("Library succeesfully initilized");
 		}
-		else{
+		else {
 			TSK_DEBUG_ERROR("Failed to initialize");
 		}
-
+#if W4A_UNDER_WINDOWS
 		InitializeCriticalSection(&g_CS);
+#endif
+    
+#if W4A_UNDER_MAC
+        extern const tmedia_producer_plugin_def_t *w4a_producer_video_qt_plugin_def_t;
+        extern const tmedia_producer_plugin_def_t *w4a_producer_screencast_osx_plugin_def_t;
+        extern const tmedia_consumer_plugin_def_t *w4a_consumer_video_osx_plugin_def_t;
+        tmedia_producer_plugin_register(w4a_producer_video_qt_plugin_def_t);
+        tmedia_producer_plugin_register(w4a_producer_screencast_osx_plugin_def_t);
+        tmedia_consumer_plugin_register(w4a_consumer_video_osx_plugin_def_t);
+#endif
 		
 #if METROPOLIS /* G2J.COM TelePresence client */
 		static tmedia_srtp_mode_t g_eSrtpMode = tmedia_srtp_mode_optional; // "TANDBERG/4120 (X7.2.2.2) returns SAVPF without crypto lines"
@@ -154,6 +175,7 @@ void _Utils::Initialize(void)
 
 bool _Utils::StartDebug(void)
 {
+#if W4A_UNDER_WINDOWS
 	if (AllocConsole()){
 		freopen("CONIN$", "r", stdin); 
 		freopen("CONOUT$", "w", stdout); 
@@ -161,23 +183,22 @@ bool _Utils::StartDebug(void)
 		SetConsoleTitleA("WebRTC extension for Safari, Opera, FireFox and IE");
 		return TRUE;
 	}
-	return FALSE;
+#endif
+	return false;
 }
 
 bool _Utils::StopDebug(void)
 {
+#if W4A_UNDER_WINDOWS
 	return (FreeConsole() == TRUE);
-}
-
-static const HMODULE GetCurrentModule()
-{
-	HMODULE hm = {0};
-    GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, (LPCTSTR)GetCurrentModule, &hm);   
-    return hm;
+#else
+    return false;
+#endif
 }
 
 const char* _Utils::GetCurrentDirectoryPath()
 {
+#if W4A_UNDER_WINDOWS
 	static char CURRENT_DIR_PATH[MAX_PATH] = { 0 };
 	static DWORD CURRENT_DIR_PATH_LEN = 0;
 	if(CURRENT_DIR_PATH_LEN == 0) {
@@ -193,59 +214,181 @@ const char* _Utils::GetCurrentDirectoryPath()
 		}
 	}
 	return CURRENT_DIR_PATH;
+#else
+    return ".";
+#endif
 }
 
+class _NPAsyncData {
+public:
+    _NPAsyncData(HWND _hWnd, UINT _uMsg, WPARAM _wParam, LPARAM _lParam)
+    : hWnd(_hWnd)
+    , uMsg(_uMsg)
+    , wParam(_wParam)
+    , lParam(_lParam)
+    {}
+    HWND hWnd;
+    UINT uMsg;
+    WPARAM wParam;
+    LPARAM lParam;
+};
+static void _NPWndProc(void *npdata)
+{
+    _NPAsyncData* _npdata = dynamic_cast<_NPAsyncData*>((_NPAsyncData*)npdata);
+    _Utils::WndProc(_npdata->hWnd, _npdata->uMsg, _npdata->wParam, _npdata->lParam);
+    delete _npdata;
+}
+
+bool _Utils::PostMessage(LONGLONG handle, unsigned msg, void* wParam, void** lParam)
+{
+    HWND hWnd = reinterpret_cast<HWND>(handle);
+    LPARAM _lParam = lParam ? reinterpret_cast<LPARAM>(*lParam) : (LPARAM)NULL;
+    bool ret = false;
+#if W4A_UNDER_WINDOWS
+    ret = (PostMessageA(hWnd, msg, reinterpret_cast<WPARAM>(wParam), _lParam) == TRUE);
+#else
+    _NPAsyncData* _npdata = new _NPAsyncData(hWnd, msg, reinterpret_cast<WPARAM>(wParam), _lParam);
+    if (_npdata) {
+#if 0 // NPN_PluginThreadAsyncCall doesn't work on OSX
+        NPP npplugin = NULL;
+        switch(msg){
+            case WM_ICE_EVENT_CANDIDATE:
+            case WM_ICE_EVENT_CONNECTED:
+            case WM_ICE_EVENT_FAILED:
+            case WM_ICE_EVENT_CANCELLED:
+            case WM_RFC5168_EVENT:
+            default:
+            {
+                PeerConnection* pc = reinterpret_cast<PeerConnection*>(wParam);
+                npplugin = pc->GetInstance();
+            }
+            case WM_NET_EVENT:
+            {
+                NetTransport* nt = reinterpret_cast<NetTransport*>(wParam);
+                npplugin = nt->GetInstance();
+            }
+                break;
+        }
+        extern NPNetscapeFuncs* BrowserFuncs;
+        BrowserFuncs->pluginthreadasynccall(npplugin, _NPWndProc, _npdata);
+#else
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _NPWndProc(_npdata);
+        });
+#endif
+        ret = true;
+    }
+
+#endif
+    if (ret) {
+        if (msg != WM_RFC5168_EVENT) {
+            if (lParam) {
+                *lParam = NULL;
+            }
+        }
+    }
+    return ret;
+}
 
 LRESULT CALLBACK _Utils::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch(uMsg){
 		case WM_ICE_EVENT_CANDIDATE:
-			{
-				TSK_DEBUG_INFO("_Utils::WndProc::WM_ICE_EVENT");
-				_PeerConnection* This = reinterpret_cast<_PeerConnection*>(wParam);
-				PeerConnectionEvent* oEvent = reinterpret_cast<PeerConnectionEvent*>(lParam);
-				if(oEvent){
-					This->IceCallbackFire(oEvent);
-					delete oEvent;
-				}
-				break;
-			}
+        {
+            TSK_DEBUG_INFO("_Utils::WndProc::WM_ICE_EVENT");
+            _PeerConnection* This = reinterpret_cast<_PeerConnection*>(wParam);
+            PeerConnectionEvent* oEvent = reinterpret_cast<PeerConnectionEvent*>(lParam);
+            if(oEvent){
+                This->IceCallbackFire(oEvent);
+                delete oEvent;
+            }
+            break;
+        }
 		case WM_ICE_EVENT_CONNECTED: /* Both parties support ICE and ConnCheck succeed */
 		case WM_ICE_EVENT_FAILED: /* Both parties support ICE but ConnCheck failed: Use Address in SDP "c=" line */
 		case WM_ICE_EVENT_CANCELLED: /* Remote paty doesn't support: Use Address in SDP "c=" line */
-			{
-				const char* pcMsg = uMsg == WM_ICE_EVENT_CONNECTED ? "WM_ICE_EVENT_CONNECTED"
-						: uMsg == WM_ICE_EVENT_FAILED ? "WM_ICE_EVENT_FAILED"
-						: uMsg == WM_ICE_EVENT_CANCELLED ? "WM_ICE_EVENT_CANCELLED"
-						: "WM_ICE_EVENT_UNKNOWN";
-				TSK_DEBUG_INFO("_Utils::WndProc::%s", pcMsg);
-				_PeerConnection* This = reinterpret_cast<_PeerConnection*>(wParam);
-				This->StartMedia(); // Start() must not be called on worker thread
-				break;
-			}
+        {
+            const char* pcMsg = uMsg == WM_ICE_EVENT_CONNECTED ? "WM_ICE_EVENT_CONNECTED"
+            : uMsg == WM_ICE_EVENT_FAILED ? "WM_ICE_EVENT_FAILED"
+            : uMsg == WM_ICE_EVENT_CANCELLED ? "WM_ICE_EVENT_CANCELLED"
+            : "WM_ICE_EVENT_UNKNOWN";
+            TSK_DEBUG_INFO("_Utils::WndProc::%s", pcMsg);
+            _PeerConnection* This = reinterpret_cast<_PeerConnection*>(wParam);
+            This->StartMedia(); // Start() must not be called on worker thread
+            break;
+        }
 		case WM_NET_EVENT:
-			{
-				TSK_DEBUG_INFO("_Utils::WndProc::WM_NET_EVENT");		
-				_NetTransport* This = reinterpret_cast<_NetTransport*>(wParam);
-				NetTransportEvent* oEvent = reinterpret_cast<NetTransportEvent*>(lParam);
-				if(oEvent){
-					This->DgramCbFire(oEvent);
-					delete oEvent;
-				}
-				break;
-			}
-
+        {
+            TSK_DEBUG_INFO("_Utils::WndProc::WM_NET_EVENT");
+            _NetTransport* This = reinterpret_cast<_NetTransport*>(wParam);
+            NetTransportEvent* oEvent = reinterpret_cast<NetTransportEvent*>(lParam);
+            if(oEvent){
+                This->DgramCbFire(oEvent);
+                delete oEvent;
+            }
+            break;
+        }
+            
 		case WM_RFC5168_EVENT:
-			{
-				TSK_DEBUG_INFO("_Utils::WndProc::WM_RFC5168_EVENT");
-				_PeerConnection* This = reinterpret_cast<_PeerConnection*>(wParam);
-				const char* sCommand = reinterpret_cast<const char*>(lParam);
-				if (sCommand) {
-					This->Rfc5168CallbackFire(sCommand);
-					// must not free (it's a static string)
-				}
-				break;
-			}
+        {
+            TSK_DEBUG_INFO("_Utils::WndProc::WM_RFC5168_EVENT");
+            _PeerConnection* This = reinterpret_cast<_PeerConnection*>(wParam);
+            const char* sCommand = reinterpret_cast<const char*>(lParam);
+            if (sCommand) {
+                This->Rfc5168CallbackFire(sCommand);
+                // must not free (it's a static string)
+            }
+            break;
+        }
 	}
+#if W4A_UNDER_WINDOWS
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+#else
+    return 0;
+#endif
 }
+
+void* _Utils::MemAlloc(unsigned n)
+{
+#if W4A_IE
+    return malloc(n);
+#else
+    extern NPNetscapeFuncs* BrowserFuncs;
+    return BrowserFuncs->memalloc(n);
+#endif
+}
+
+void* _Utils::MemDup(const void* mem, unsigned n)
+{
+    void *ret = NULL;
+	if(mem && n){
+		if((ret = _Utils::MemAlloc((n + 1)))){
+			memcpy(ret, mem, n);
+			((uint8_t*)ret)[n] = '\0';
+		}
+	}
+    return ret;
+}
+
+void _Utils::MemFree(void** mem)
+{
+    if (mem && *mem) {
+#if W4A_IE
+        free(*mem);
+#else
+        extern NPNetscapeFuncs* BrowserFuncs;
+        BrowserFuncs->memfree(*mem);
+#endif
+        *mem = NULL;
+    }
+}
+
+#if W4A_UNDER_WINDOWS
+static const HMODULE GetCurrentModule()
+{
+	HMODULE hm = {0};
+    GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, (LPCTSTR)GetCurrentModule, &hm);   
+    return hm;
+}
+
+#endif

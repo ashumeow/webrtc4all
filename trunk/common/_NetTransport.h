@@ -20,6 +20,7 @@
 #define _WEBRTC4ALL__NETTRANSPORT_H_
 
 #include "_Config.h"
+#include "_Utils.h"
 
 class NetTransportEvent
 {
@@ -28,15 +29,14 @@ public:
 		:mDataLen(0)
 	{
 		mType = type;
-		if(mData = malloc(dataLen)){
-			memcpy(mData, data, dataLen);
+		if ((mData = _Utils::MemDup(data, dataLen))) {
 			mDataLen = dataLen;
 		}
 	}
 
 	~NetTransportEvent()
 	{
-		TSK_FREE(mData);
+		_Utils::MemFree(&mData);
 	}
 
 	int GetType()const{ return mType; }

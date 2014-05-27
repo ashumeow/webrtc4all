@@ -21,10 +21,16 @@
 
 #include "../common/_Config.h"
 
-#include "../thirdparties/source/npapi-sdk/headers/npapi.h"
-#include "../thirdparties/source/npapi-sdk/headers/npfunctions.h"
+#if defined(__GNUC__)
+#pragma GCC visibility push(default)
+#endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+    
 NPError OSCALL NP_Initialize(NPNetscapeFuncs* aNPNFuncs);
+    NPError OSCALL NP_GetEntryPoints(NPPluginFuncs* pluginFuncs);
 NPError OSCALL NP_Shutdown();
 
 NPError NPP_New(NPMIMEType pluginType, NPP instance, uint16_t mode, int16_t argc, char* argn[], char* argv[], NPSavedData* saved);
@@ -40,5 +46,13 @@ int16_t NPP_HandleEvent(NPP instance, void* event);
 void    NPP_URLNotify(NPP instance, const char* URL, NPReason reason, void* notifyData);
 NPError NPP_GetValue(NPP instance, NPPVariable variable, void *value);
 NPError NPP_SetValue(NPP instance, NPNVariable variable, void *value);
+    
+#ifdef __cplusplus
+}
+#endif
+
+#if defined(__GNUC__)
+#pragma GCC visibility pop
+#endif
 
 #endif /* _WEBRTC4NPAPI_PLUGIN_H_ */
