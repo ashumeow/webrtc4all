@@ -52,7 +52,8 @@ class ATL_NO_VTABLE CPluginInstance :
 	public IObjectSafetyImpl<CPluginInstance, INTERFACESAFE_FOR_UNTRUSTED_CALLER>,
 #endif
 	public CComCoClass<CPluginInstance, &CLSID_pluginInstance>,
-	public CComControl<CPluginInstance>
+	public CComControl<CPluginInstance>,
+	public IObjectSafetyImpl<CPluginInstance, INTERFACESAFE_FOR_UNTRUSTED_CALLER | INTERFACESAFE_FOR_UNTRUSTED_DATA>
 {
 public:
 
@@ -98,6 +99,7 @@ BEGIN_COM_MAP(CPluginInstance)
 #ifdef _WIN32_WCE // IObjectSafety is required on Windows CE for the control to be loaded correctly
 	COM_INTERFACE_ENTRY_IID(IID_IObjectSafety, IObjectSafety)
 #endif
+	COM_INTERFACE_ENTRY(IObjectSafety)
 END_COM_MAP()
 
 BEGIN_PROP_MAP(CPluginInstance)
