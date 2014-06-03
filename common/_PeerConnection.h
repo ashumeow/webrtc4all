@@ -109,11 +109,15 @@ public:
 	virtual bool _StartDebug(void);
 	virtual bool _StopDebug(void);
 
-	virtual bool SetDisplays(LONGLONG local, LONGLONG remote);
-	virtual bool SetDisplayLocal(LONGLONG local);
-	virtual bool SetDisplayRemote(LONGLONG remote);
+	virtual bool SetDisplays(LONGLONG localVideo, LONGLONG remoteVideo, LONGLONG localScreencast, LONGLONG srcScreencast);
+	virtual bool SetDisplayLocalVideo(LONGLONG local);
+	virtual bool SetDisplayRemoteVideo(LONGLONG remote);
+	virtual bool SetDisplayLocalScreencast(LONGLONG local);
+	virtual bool SetDisplaySrcScreencast(LONGLONG src);
 
 	virtual bool ProcessContent(const char* req_name, const char* content_type, const void* content_ptr, int content_size);
+
+	virtual bool SendDTMF(uint8_t digit);
 
 
 protected:
@@ -130,11 +134,13 @@ protected:
 	virtual bool IceIsEnabled(const struct tsdp_message_s* sdp);
 	static int IceCallback(const struct tnet_ice_event_s *e);
 	static int Rfc5168Callback(const void* usrdata, const struct tmedia_session_s* session, const char* reason, enum tmedia_session_rfc5168_cmd_e command);
+	static int BfcpCallback(const void* usrdata, const struct tmedia_session_s* session, const struct tmedia_session_bfcp_evt_xs* evt);
 
 public:
 	virtual bool StartMedia();
 	virtual void IceCallbackFire(const PeerConnectionEvent* e) = 0;
 	virtual void Rfc5168CallbackFire(const char* commandStr) = 0;
+	virtual void BfcpCallbackFire(const char* descStr) = 0;
 	virtual LONGLONG GetWindowHandle() = 0;
 
 protected:
@@ -152,6 +158,8 @@ protected:
     
 	LONGLONG mRemoteVideo;
 	LONGLONG mLocalVideo;
+	LONGLONG mLocalScreencast;
+	LONGLONG mSrcScreencast;
 
 	bool mFullScreen;
 	bool mRemoteHaveIce;

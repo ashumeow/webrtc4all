@@ -230,6 +230,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PluginInstanceIE.cc"
+				>
+			</File>
+			<File
 				RelativePath=".\SessionDescriptionIE.cc"
 				>
 			</File>
@@ -262,6 +266,10 @@
 				</File>
 				<File
 					RelativePath="..\common\_PeerConnection.cc"
+					>
+				</File>
+				<File
+					RelativePath="..\common\_PluginInstance.cc"
 					>
 				</File>
 				<File
@@ -316,6 +324,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PluginInstanceIE.h"
+				>
+			</File>
+			<File
 				RelativePath=".\resource.h"
 				>
 			</File>
@@ -340,6 +352,10 @@
 				</File>
 				<File
 					RelativePath="..\common\_PeerConnection.h"
+					>
+				</File>
+				<File
+					RelativePath="..\common\_PluginInstance.h"
 					>
 				</File>
 				<File
@@ -371,6 +387,14 @@
 			</File>
 			<File
 				RelativePath=".\PeerConnection.rgs"
+				>
+			</File>
+			<File
+				RelativePath=".\pluginInstance.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\PluginInstance.rgs"
 				>
 			</File>
 			<File

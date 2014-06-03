@@ -7,6 +7,7 @@
 #include "olectl.h"
 #include "olectl.h"
 #include "olectl.h"
+#include "olectl.h"
 import "oaidl.idl";
 import "ocidl.idl";
 
@@ -44,20 +45,25 @@ interface IPeerConnection : IDispatch{
 	[id(10), helpstring("method setLocalDescription")] HRESULT setLocalDescription([in] USHORT action, [in] BSTR desc);
 	[id(11), helpstring("method setRemoteDescription")] HRESULT setRemoteDescription([in] USHORT action, [in] BSTR desc);
 	[id(12), helpstring("method processContent")] HRESULT processContent([in] BSTR req_name, [in] BSTR content_type, [in] BSTR content_ptr, [in] INT content_size);
+	[id(13), helpstring("method sendDTMF")] HRESULT sendDTMF([in] USHORT digit);
 	
-	[propget, id(13), helpstring("property readyState")] HRESULT readyState([out, retval] USHORT* pVal);
-	[propget, id(14), helpstring("property iceState")] HRESULT iceState([out, retval] USHORT* pVal);
-	[propget, id(15), helpstring("property remoteVideo")] HRESULT remoteVideo([out, retval] LONGLONG* pVal);
-	[propput, id(15), helpstring("property remoteVideo")] HRESULT remoteVideo([in] LONGLONG newVal);
-	[propget, id(16), helpstring("property localVideo")] HRESULT localVideo([out, retval] LONGLONG* pVal);
-	[propput, id(16), helpstring("property localVideo")] HRESULT localVideo([in] LONGLONG newVal);
-	[propget, id(17), helpstring("property version")] HRESULT version([out, retval] BSTR* pVal);
-	[propget, id(18), helpstring("property fullScreen")] HRESULT fullScreen([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(18), helpstring("property fullScreen")] HRESULT fullScreen([in] VARIANT_BOOL newVal);
+	[propget, id(14), helpstring("property readyState")] HRESULT readyState([out, retval] USHORT* pVal);
+	[propget, id(15), helpstring("property iceState")] HRESULT iceState([out, retval] USHORT* pVal);
+	[propget, id(16), helpstring("property remoteVideo")] HRESULT remoteVideo([out, retval] LONGLONG* pVal);
+	[propput, id(16), helpstring("property remoteVideo")] HRESULT remoteVideo([in] LONGLONG newVal);
+	[propget, id(17), helpstring("property localVideo")] HRESULT localVideo([out, retval] LONGLONG* pVal);
+	[propput, id(17), helpstring("property localVideo")] HRESULT localVideo([in] LONGLONG newVal);
+	[propget, id(18), helpstring("property localScreencast")] HRESULT localScreencast([out, retval] LONGLONG* pVal);
+	[propput, id(18), helpstring("property localScreencast")] HRESULT localScreencast([in] LONGLONG newVal);
+	[propget, id(19), helpstring("property srcScreencast")] HRESULT srcScreencast([out, retval] LONGLONG* pVal);
+	[propput, id(19), helpstring("property srcScreencast")] HRESULT srcScreencast([in] LONGLONG newVal);
+	[propget, id(20), helpstring("property version")] HRESULT version([out, retval] BSTR* pVal);
+	[propget, id(21), helpstring("property fullScreen")] HRESULT fullScreen([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(21), helpstring("property fullScreen")] HRESULT fullScreen([in] VARIANT_BOOL newVal);
 	
-	[id(19), helpstring("method Init")] HRESULT Init([in] BSTR desc);
-	[id(20), helpstring("method StartDebug")] HRESULT StartDebug(void);
-	[id(21), helpstring("method StopDebug")] HRESULT StopDebug(void);
+	[id(22), helpstring("method Init")] HRESULT Init([in] BSTR desc);
+	[id(23), helpstring("method StartDebug")] HRESULT StartDebug(void);
+	[id(24), helpstring("method StopDebug")] HRESULT StopDebug(void);
 };
 
 [
@@ -117,6 +123,37 @@ interface ILooper : IDispatch{
 };
 
 [
+	object,
+	uuid(ACE5665C-BA38-4935-8D73-2E3693ED6899),
+	dual,
+	nonextensible,
+	helpstring("IPluginInstance Interface"),
+	pointer_default(unique)
+]
+interface IPluginInstance : IDispatch{
+	[propget, id(1), helpstring("property version")] HRESULT version([out, retval] BSTR* pVal);
+	[propget, id(2), helpstring("property supportsPeerConnection")] HRESULT supportsPeerConnection([out, retval] VARIANT_BOOL* pVal);
+	[propget, id(3), helpstring("property supportsSessionDescription")] HRESULT supportsSessionDescription([out, retval] VARIANT_BOOL* pVal);
+	[propget, id(4), helpstring("property supportsNetTransport")] HRESULT supportsNetTransport([out, retval] VARIANT_BOOL* pVal);
+	[propget, id(5), helpstring("property windowHandle")] HRESULT windowHandle([out, retval] LONGLONG* pVal);
+
+	[propget, id(6), helpstring("property fps")] HRESULT fps([out, retval] LONG* pVal);
+	[propput, id(6), helpstring("property fps")] HRESULT fps([in] LONG newVal);
+	[propget, id(7), helpstring("property maxVideoSize")] HRESULT maxVideoSize([out, retval] BSTR* pVal);
+	[propput, id(7), helpstring("property maxVideoSize")] HRESULT maxVideoSize([in] BSTR newVal);
+	[propget, id(8), helpstring("property maxBandwidthUp")] HRESULT maxBandwidthUp([out, retval] LONG* pVal);
+	[propput, id(8), helpstring("property maxBandwidthUp")] HRESULT maxBandwidthUp([in] LONG newVal);
+	[propget, id(9), helpstring("property maxBandwidthDown")] HRESULT maxBandwidthDown([out, retval] LONG* pVal);
+	[propput, id(9), helpstring("property maxBandwidthDown")] HRESULT maxBandwidthDown([in] LONG newVal);
+
+	[id(10), helpstring("method createPeerConnection")] HRESULT createPeerConnection([out,retval] IDispatch** ppPeerConnection);
+	[id(11), helpstring("method createSessionDescription")] HRESULT createSessionDescription([out,retval] IDispatch** ppSessionDescription);
+	[id(12), helpstring("method createNetTransport")] HRESULT createNetTransport([out,retval] IDispatch** ppNetTransport);
+
+	[id(13), helpstring("method runningApps")] HRESULT runningApps([out,retval] BSTR* pApps);
+};
+
+[
 	uuid(F40DFDA2-873B-449A-B8B6-165D57291E1B),
 	version(1.0),
 	helpstring("webrtc4ie 1.0 Type Library")
@@ -142,6 +179,7 @@ library webrtc4ieLib
 		methods:
 		[id(1), helpstring("method IceCallback")] void IceCallback([in]BSTR media, [in] BSTR candidate, [in] VARIANT_BOOL moreToFollow);
 		[id(2), helpstring("method Rfc5168Callback")] void Rfc5168Callback([in]BSTR command);
+		[id(3), helpstring("method BfcpCallback")] void BfcpCallback([in]BSTR description);
 	};
 	[
 		uuid(56D10AD3-8F52-4AA4-854B-41F4D6F9CEA3),
@@ -208,5 +246,14 @@ library webrtc4ieLib
 	{
 		[default] interface ILooper;
 		[default, source] dispinterface _ILooperEvents;
+	};
+	[
+		uuid(69E4A9D1-824C-40DA-9680-C7424A27B6A0),
+		control,
+		helpstring("pluginInstance Class")
+	]
+	coclass pluginInstance
+	{
+		[default] interface IPluginInstance;
 	};
 };

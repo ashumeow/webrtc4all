@@ -4,9 +4,9 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Mon May 19 04:50:09 2014
+/* at Tue Jun 03 03:04:08 2014
  */
-/* Compiler settings for ..\ie\webrtc4ie.idl:
+/* Compiler settings for .\webrtc4ie.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
     protocol : dce , ms_ext, c_ext, robust
     error checks: stub_data 
@@ -73,6 +73,12 @@ typedef interface INetTransport INetTransport;
 #define __ILooper_FWD_DEFINED__
 typedef interface ILooper ILooper;
 #endif 	/* __ILooper_FWD_DEFINED__ */
+
+
+#ifndef __IPluginInstance_FWD_DEFINED__
+#define __IPluginInstance_FWD_DEFINED__
+typedef interface IPluginInstance IPluginInstance;
+#endif 	/* __IPluginInstance_FWD_DEFINED__ */
 
 
 #ifndef __SessionDescription_FWD_DEFINED__
@@ -157,6 +163,18 @@ typedef struct Looper Looper;
 #endif /* __cplusplus */
 
 #endif 	/* __Looper_FWD_DEFINED__ */
+
+
+#ifndef __pluginInstance_FWD_DEFINED__
+#define __pluginInstance_FWD_DEFINED__
+
+#ifdef __cplusplus
+typedef class pluginInstance pluginInstance;
+#else
+typedef struct pluginInstance pluginInstance;
+#endif /* __cplusplus */
+
+#endif 	/* __pluginInstance_FWD_DEFINED__ */
 
 
 /* header files for imported files */
@@ -376,6 +394,9 @@ EXTERN_C const IID IID_IPeerConnection;
             /* [in] */ BSTR content_ptr,
             /* [in] */ INT content_size) = 0;
         
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE sendDTMF( 
+            /* [in] */ USHORT digit) = 0;
+        
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_readyState( 
             /* [retval][out] */ USHORT *pVal) = 0;
         
@@ -392,6 +413,18 @@ EXTERN_C const IID IID_IPeerConnection;
             /* [retval][out] */ LONGLONG *pVal) = 0;
         
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_localVideo( 
+            /* [in] */ LONGLONG newVal) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_localScreencast( 
+            /* [retval][out] */ LONGLONG *pVal) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_localScreencast( 
+            /* [in] */ LONGLONG newVal) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_srcScreencast( 
+            /* [retval][out] */ LONGLONG *pVal) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_srcScreencast( 
             /* [in] */ LONGLONG newVal) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_version( 
@@ -521,6 +554,10 @@ EXTERN_C const IID IID_IPeerConnection;
             /* [in] */ BSTR content_ptr,
             /* [in] */ INT content_size);
         
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *sendDTMF )( 
+            IPeerConnection * This,
+            /* [in] */ USHORT digit);
+        
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_readyState )( 
             IPeerConnection * This,
             /* [retval][out] */ USHORT *pVal);
@@ -542,6 +579,22 @@ EXTERN_C const IID IID_IPeerConnection;
             /* [retval][out] */ LONGLONG *pVal);
         
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_localVideo )( 
+            IPeerConnection * This,
+            /* [in] */ LONGLONG newVal);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_localScreencast )( 
+            IPeerConnection * This,
+            /* [retval][out] */ LONGLONG *pVal);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_localScreencast )( 
+            IPeerConnection * This,
+            /* [in] */ LONGLONG newVal);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_srcScreencast )( 
+            IPeerConnection * This,
+            /* [retval][out] */ LONGLONG *pVal);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_srcScreencast )( 
             IPeerConnection * This,
             /* [in] */ LONGLONG newVal);
         
@@ -639,6 +692,9 @@ EXTERN_C const IID IID_IPeerConnection;
 #define IPeerConnection_processContent(This,req_name,content_type,content_ptr,content_size)	\
     ( (This)->lpVtbl -> processContent(This,req_name,content_type,content_ptr,content_size) ) 
 
+#define IPeerConnection_sendDTMF(This,digit)	\
+    ( (This)->lpVtbl -> sendDTMF(This,digit) ) 
+
 #define IPeerConnection_get_readyState(This,pVal)	\
     ( (This)->lpVtbl -> get_readyState(This,pVal) ) 
 
@@ -656,6 +712,18 @@ EXTERN_C const IID IID_IPeerConnection;
 
 #define IPeerConnection_put_localVideo(This,newVal)	\
     ( (This)->lpVtbl -> put_localVideo(This,newVal) ) 
+
+#define IPeerConnection_get_localScreencast(This,pVal)	\
+    ( (This)->lpVtbl -> get_localScreencast(This,pVal) ) 
+
+#define IPeerConnection_put_localScreencast(This,newVal)	\
+    ( (This)->lpVtbl -> put_localScreencast(This,newVal) ) 
+
+#define IPeerConnection_get_srcScreencast(This,pVal)	\
+    ( (This)->lpVtbl -> get_srcScreencast(This,pVal) ) 
+
+#define IPeerConnection_put_srcScreencast(This,newVal)	\
+    ( (This)->lpVtbl -> put_srcScreencast(This,newVal) ) 
 
 #define IPeerConnection_get_version(This,pVal)	\
     ( (This)->lpVtbl -> get_version(This,pVal) ) 
@@ -1187,6 +1255,287 @@ EXTERN_C const IID IID_ILooper;
 #endif 	/* __ILooper_INTERFACE_DEFINED__ */
 
 
+#ifndef __IPluginInstance_INTERFACE_DEFINED__
+#define __IPluginInstance_INTERFACE_DEFINED__
+
+/* interface IPluginInstance */
+/* [unique][helpstring][nonextensible][dual][uuid][object] */ 
+
+
+EXTERN_C const IID IID_IPluginInstance;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("ACE5665C-BA38-4935-8D73-2E3693ED6899")
+    IPluginInstance : public IDispatch
+    {
+    public:
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_version( 
+            /* [retval][out] */ BSTR *pVal) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_supportsPeerConnection( 
+            /* [retval][out] */ VARIANT_BOOL *pVal) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_supportsSessionDescription( 
+            /* [retval][out] */ VARIANT_BOOL *pVal) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_supportsNetTransport( 
+            /* [retval][out] */ VARIANT_BOOL *pVal) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_windowHandle( 
+            /* [retval][out] */ LONGLONG *pVal) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_fps( 
+            /* [retval][out] */ LONG *pVal) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_fps( 
+            /* [in] */ LONG newVal) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_maxVideoSize( 
+            /* [retval][out] */ BSTR *pVal) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_maxVideoSize( 
+            /* [in] */ BSTR newVal) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_maxBandwidthUp( 
+            /* [retval][out] */ LONG *pVal) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_maxBandwidthUp( 
+            /* [in] */ LONG newVal) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_maxBandwidthDown( 
+            /* [retval][out] */ LONG *pVal) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_maxBandwidthDown( 
+            /* [in] */ LONG newVal) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE createPeerConnection( 
+            /* [retval][out] */ IDispatch **ppPeerConnection) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE createSessionDescription( 
+            /* [retval][out] */ IDispatch **ppSessionDescription) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE createNetTransport( 
+            /* [retval][out] */ IDispatch **ppNetTransport) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE runningApps( 
+            /* [retval][out] */ BSTR *pApps) = 0;
+        
+    };
+    
+#else 	/* C style interface */
+
+    typedef struct IPluginInstanceVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            IPluginInstance * This,
+            /* [in] */ REFIID riid,
+            /* [iid_is][out] */ 
+            __RPC__deref_out  void **ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            IPluginInstance * This);
+        
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            IPluginInstance * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
+            IPluginInstance * This,
+            /* [out] */ UINT *pctinfo);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
+            IPluginInstance * This,
+            /* [in] */ UINT iTInfo,
+            /* [in] */ LCID lcid,
+            /* [out] */ ITypeInfo **ppTInfo);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
+            IPluginInstance * This,
+            /* [in] */ REFIID riid,
+            /* [size_is][in] */ LPOLESTR *rgszNames,
+            /* [range][in] */ UINT cNames,
+            /* [in] */ LCID lcid,
+            /* [size_is][out] */ DISPID *rgDispId);
+        
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
+            IPluginInstance * This,
+            /* [in] */ DISPID dispIdMember,
+            /* [in] */ REFIID riid,
+            /* [in] */ LCID lcid,
+            /* [in] */ WORD wFlags,
+            /* [out][in] */ DISPPARAMS *pDispParams,
+            /* [out] */ VARIANT *pVarResult,
+            /* [out] */ EXCEPINFO *pExcepInfo,
+            /* [out] */ UINT *puArgErr);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_version )( 
+            IPluginInstance * This,
+            /* [retval][out] */ BSTR *pVal);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_supportsPeerConnection )( 
+            IPluginInstance * This,
+            /* [retval][out] */ VARIANT_BOOL *pVal);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_supportsSessionDescription )( 
+            IPluginInstance * This,
+            /* [retval][out] */ VARIANT_BOOL *pVal);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_supportsNetTransport )( 
+            IPluginInstance * This,
+            /* [retval][out] */ VARIANT_BOOL *pVal);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_windowHandle )( 
+            IPluginInstance * This,
+            /* [retval][out] */ LONGLONG *pVal);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_fps )( 
+            IPluginInstance * This,
+            /* [retval][out] */ LONG *pVal);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_fps )( 
+            IPluginInstance * This,
+            /* [in] */ LONG newVal);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_maxVideoSize )( 
+            IPluginInstance * This,
+            /* [retval][out] */ BSTR *pVal);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_maxVideoSize )( 
+            IPluginInstance * This,
+            /* [in] */ BSTR newVal);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_maxBandwidthUp )( 
+            IPluginInstance * This,
+            /* [retval][out] */ LONG *pVal);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_maxBandwidthUp )( 
+            IPluginInstance * This,
+            /* [in] */ LONG newVal);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_maxBandwidthDown )( 
+            IPluginInstance * This,
+            /* [retval][out] */ LONG *pVal);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_maxBandwidthDown )( 
+            IPluginInstance * This,
+            /* [in] */ LONG newVal);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *createPeerConnection )( 
+            IPluginInstance * This,
+            /* [retval][out] */ IDispatch **ppPeerConnection);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *createSessionDescription )( 
+            IPluginInstance * This,
+            /* [retval][out] */ IDispatch **ppSessionDescription);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *createNetTransport )( 
+            IPluginInstance * This,
+            /* [retval][out] */ IDispatch **ppNetTransport);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *runningApps )( 
+            IPluginInstance * This,
+            /* [retval][out] */ BSTR *pApps);
+        
+        END_INTERFACE
+    } IPluginInstanceVtbl;
+
+    interface IPluginInstance
+    {
+        CONST_VTBL struct IPluginInstanceVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IPluginInstance_QueryInterface(This,riid,ppvObject)	\
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+
+#define IPluginInstance_AddRef(This)	\
+    ( (This)->lpVtbl -> AddRef(This) ) 
+
+#define IPluginInstance_Release(This)	\
+    ( (This)->lpVtbl -> Release(This) ) 
+
+
+#define IPluginInstance_GetTypeInfoCount(This,pctinfo)	\
+    ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
+
+#define IPluginInstance_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
+    ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
+
+#define IPluginInstance_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
+    ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
+
+#define IPluginInstance_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
+    ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
+
+
+#define IPluginInstance_get_version(This,pVal)	\
+    ( (This)->lpVtbl -> get_version(This,pVal) ) 
+
+#define IPluginInstance_get_supportsPeerConnection(This,pVal)	\
+    ( (This)->lpVtbl -> get_supportsPeerConnection(This,pVal) ) 
+
+#define IPluginInstance_get_supportsSessionDescription(This,pVal)	\
+    ( (This)->lpVtbl -> get_supportsSessionDescription(This,pVal) ) 
+
+#define IPluginInstance_get_supportsNetTransport(This,pVal)	\
+    ( (This)->lpVtbl -> get_supportsNetTransport(This,pVal) ) 
+
+#define IPluginInstance_get_windowHandle(This,pVal)	\
+    ( (This)->lpVtbl -> get_windowHandle(This,pVal) ) 
+
+#define IPluginInstance_get_fps(This,pVal)	\
+    ( (This)->lpVtbl -> get_fps(This,pVal) ) 
+
+#define IPluginInstance_put_fps(This,newVal)	\
+    ( (This)->lpVtbl -> put_fps(This,newVal) ) 
+
+#define IPluginInstance_get_maxVideoSize(This,pVal)	\
+    ( (This)->lpVtbl -> get_maxVideoSize(This,pVal) ) 
+
+#define IPluginInstance_put_maxVideoSize(This,newVal)	\
+    ( (This)->lpVtbl -> put_maxVideoSize(This,newVal) ) 
+
+#define IPluginInstance_get_maxBandwidthUp(This,pVal)	\
+    ( (This)->lpVtbl -> get_maxBandwidthUp(This,pVal) ) 
+
+#define IPluginInstance_put_maxBandwidthUp(This,newVal)	\
+    ( (This)->lpVtbl -> put_maxBandwidthUp(This,newVal) ) 
+
+#define IPluginInstance_get_maxBandwidthDown(This,pVal)	\
+    ( (This)->lpVtbl -> get_maxBandwidthDown(This,pVal) ) 
+
+#define IPluginInstance_put_maxBandwidthDown(This,newVal)	\
+    ( (This)->lpVtbl -> put_maxBandwidthDown(This,newVal) ) 
+
+#define IPluginInstance_createPeerConnection(This,ppPeerConnection)	\
+    ( (This)->lpVtbl -> createPeerConnection(This,ppPeerConnection) ) 
+
+#define IPluginInstance_createSessionDescription(This,ppSessionDescription)	\
+    ( (This)->lpVtbl -> createSessionDescription(This,ppSessionDescription) ) 
+
+#define IPluginInstance_createNetTransport(This,ppNetTransport)	\
+    ( (This)->lpVtbl -> createNetTransport(This,ppNetTransport) ) 
+
+#define IPluginInstance_runningApps(This,pApps)	\
+    ( (This)->lpVtbl -> runningApps(This,pApps) ) 
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* __IPluginInstance_INTERFACE_DEFINED__ */
+
+
 
 #ifndef __webrtc4ieLib_LIBRARY_DEFINED__
 #define __webrtc4ieLib_LIBRARY_DEFINED__
@@ -1663,6 +2012,14 @@ EXTERN_C const CLSID CLSID_Looper;
 
 class DECLSPEC_UUID("7082C446-54A8-4280-A18D-54143846211A")
 Looper;
+#endif
+
+EXTERN_C const CLSID CLSID_pluginInstance;
+
+#ifdef __cplusplus
+
+class DECLSPEC_UUID("69E4A9D1-824C-40DA-9680-C7424A27B6A0")
+pluginInstance;
 #endif
 #endif /* __webrtc4ieLib_LIBRARY_DEFINED__ */
 

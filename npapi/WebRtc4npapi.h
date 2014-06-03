@@ -20,12 +20,13 @@
 #define _WEBRTC4NPAPI_WEBRTC4ALL_H_
 
 #include "../common/_Config.h"
+#include "../common/_PluginInstance.h"
+#include "_NPObject.h"
 
-class WebRtc4npapi: public NPObject {
+class WebRtc4npapi: public _NPObject, public _PluginInstance {
 public:
 	WebRtc4npapi(NPP instance);
 	virtual ~WebRtc4npapi();
-	bool SetWindow(NPWindow* pWindow);
 
 public:
 	static NPObject* Allocate(NPP instance, NPClass* npclass);
@@ -47,11 +48,7 @@ public:
 	static bool Construct(NPObject *npobj, const NPVariant *args, uint32_t argCount, NPVariant *result);
 
 private:
-	NPWindow* m_pWindow;
-#if W4A_UNDER_WINDOWS
-	WNDPROC m_pWinProc;
-#endif
-	NPP m_npp;
+
 };
 
 #endif /* _WEBRTC4NPAPI_WEBRTC4ALL_H_ */

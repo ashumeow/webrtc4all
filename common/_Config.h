@@ -87,6 +87,11 @@ typedef void* HWND;
 using namespace ATL;
 #endif /* W4A_IE */
 
+#include "tsk.h"
+#include "tinynet.h"
+#include "tinymedia.h"
+#include "tinydav/tdav.h"
+
 #if W4A_UNDER_APPLE
 #import <WebKit/npapi.h>
 #import <WebKit/npfunctions.h>
@@ -117,6 +122,7 @@ using namespace ATL;
 #define WM_ICE_EVENT_CANCELLED	(WM_NET_EVENT + 3)
 #define WM_ICE_EVENT_FAILED		(WM_NET_EVENT + 4)
 #define WM_RFC5168_EVENT		(WM_NET_EVENT + 5)
+#define WM_BFCP_EVENT			(WM_NET_EVENT + 6)
 
 typedef enum BrowserType_e
 {
@@ -129,9 +135,5 @@ typedef enum BrowserType_e
 }
 BrowserType_t;
 
-#include "tsk.h"
-#include "tinynet.h"
-#include "tinymedia.h"
-#include "tinydav/tdav.h"
 
 #endif /* _WEBRTC4ALL_CONFIG_H_ */

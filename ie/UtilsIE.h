@@ -26,4 +26,5 @@ class Utils : public _Utils
 {
 public:
 	static _bstr_t ToBSTR(const char* notNullTerminated, UINT size);
+	static BSTR SysAllocStringBytes(LPCSTR psz);
 };

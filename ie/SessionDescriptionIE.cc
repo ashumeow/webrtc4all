@@ -17,6 +17,7 @@
 * along with webrtc4ie.
 */
 #include "SessionDescriptionIE.h"
+#include "UtilsIE.h"
 
 #include <comutil.h>
 #include <stdio.h>
@@ -60,9 +61,8 @@ STDMETHODIMP CSessionDescription::toSdp(BSTR* sdp)
 		TSK_DEBUG_ERROR("Cannot serialize local offer");
 		return E_FAIL;
 	}
-
-	 _bstr_t bstr(sdp_str);
-	 *sdp = bstr.GetBSTR();
+	 
+	*sdp = Utils::SysAllocStringBytes(sdp_str);
 
 	 TSK_FREE(sdp_str);
 

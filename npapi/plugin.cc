@@ -219,7 +219,9 @@ NPP_Destroy(NPP instance, NPSavedData** save) {
     if (instanceData->object) {
         NP_OBJECT_RELEASE(instanceData->object);
     }
+#if W4A_UNDER_APPLE
     [instanceData->rootLayer release], instanceData->rootLayer = NULL;
+#endif
     free(instanceData);
     return NPERR_NO_ERROR;
 }
@@ -276,8 +278,10 @@ NPP_URLNotify(NPP instance, const char* URL, NPReason reason, void* notifyData) 
 }
 
 //FIXME
+#if W4A_UNDER_APPLE
 CALayer *__layerDisplayProducer = NULL;
 CALayer *__layerDisplayConsumer = NULL;
+#endif
 
 NPError
 NPP_GetValue(NPP instance, NPPVariable variable, void *value) {
@@ -326,20 +330,13 @@ NPP_GetValue(NPP instance, NPPVariable variable, void *value) {
 			  if(!(instanceData->object = BrowserFuncs->createobject(instanceData->npp, aClass))){
 				  return NPERR_OUT_OF_MEMORY_ERROR;
 			  }
-			
-			  // FIXME:
-			  if(instanceData->type == PluginType_WebRtc4npapi){
-				  if(!((WebRtc4npapi*)instanceData->object)->SetWindow(&instanceData->window)){
+			  
+			  if (instanceData->type == PluginType_WebRtc4npapi) {
+				  if (!((WebRtc4npapi*)instanceData->object)->SetWindow(&instanceData->window, true)) {
 					  return NPERR_GENERIC_ERROR;
 				  }
 			  }
-			  // FIXME:
-			  if(instanceData->type == PluginType_Display){
-				  if(!((Display*)instanceData->object)->SetWindow(&instanceData->window, false)){
-					  return NPERR_GENERIC_ERROR;
-				  }
-			  }
-              
+
 #if W4A_UNDER_APPLE
               if (instanceData->type == PluginType_Display) {
                   if (instanceData->rootLayer) {

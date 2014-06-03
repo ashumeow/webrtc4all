@@ -1,21 +1,7 @@
-/*
-* Copyright (C) 2012 Doubango Telecom <http://www.doubango.org>
-*	
-* This file is part of Open Source webrtc4all project <http://code.google.com/p/webrtc4all/>
-*
-* webrtc4all is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as publishd by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*	
-* webrtc4all is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*	
-* You should have received a copy of the GNU General Public License
-* along with webrtc4ie.
-*/
+//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ generated include file.
+// Used by webrtc4ie.rc
+//
 #define IDS_PROJNAME                    100
 #define IDR_WEBRTC4IE                   101
 #define IDR_SESSIONDESCRIPTION          103
@@ -25,6 +11,8 @@
 #define IDR_NETTRANSPORT                114
 #define IDB_LOOPER                      115
 #define IDR_LOOPER                      116
+#define IDB_PLUGININSTANCE              117
+#define IDR_PLUGININSTANCE              118
 
 // Next default values for new objects
 // 
@@ -33,6 +21,6 @@
 #define _APS_NEXT_RESOURCE_VALUE        201
 #define _APS_NEXT_COMMAND_VALUE         32768
 #define _APS_NEXT_CONTROL_VALUE         201
-#define _APS_NEXT_SYMED_VALUE           117
+#define _APS_NEXT_SYMED_VALUE           119
 #endif
 #endif

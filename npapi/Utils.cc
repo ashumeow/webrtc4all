@@ -20,18 +20,18 @@
 */
 #include "Utils.h"
 
-/*extern NPNetscapeFuncs* BrowserFuncs;
-
-// http://code.google.com/p/chromium/issues/detail?id=13564
-void* Utils::MemDup(const void* mem, unsigned n)
+void* _UtilsMemAlloc(unsigned n)
 {
-	void *np_ret = NULL;
-	if(mem && n){
-		if((np_ret = BrowserFuncs->memalloc((n + 1)))){
-			memcpy(np_ret, mem, n);
-			((uint8_t*)np_ret)[n] = '\0';
-		}
-	}
+    extern NPNetscapeFuncs* BrowserFuncs;
+    return BrowserFuncs->memalloc(n);
+}
 
-	return np_ret;
-}*/
+void _UtilsMemFree(void** mem)
+{
+    if (mem && *mem) {
+        extern NPNetscapeFuncs* BrowserFuncs;
+        BrowserFuncs->memfree(*mem);
+        *mem = NULL;
+    }
+}
+

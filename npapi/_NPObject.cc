@@ -51,15 +51,15 @@ _NPObject::~_NPObject()
 bool _NPObject::SetWindow(NPWindow* pWindow, bool bSubClass)
 {
 #if W4A_UNDER_WINDOWS
-	if(m_pWindow && m_pWindow->window && m_pWinProc){
+	if (m_pWindow && m_pWindow->window && m_pWinProc) {
 		SetWindowLongPtr((HWND)m_pWindow->window, GWL_WNDPROC, (LONG)m_pWinProc);
 		m_pWinProc = NULL;
 	}
 
-	if((m_pWindow = pWindow) && m_pWindow->window){
-		if(bSubClass){
+	if ((m_pWindow = pWindow) && m_pWindow->window) {
+		if (bSubClass) {
 			m_pWinProc = (WNDPROC) SetWindowLongPtr((HWND)m_pWindow->window, GWL_WNDPROC, (LONG)_Utils::WndProc);
-			if(!m_pWinProc){
+			if (!m_pWinProc) {
 				TSK_DEBUG_ERROR("SetWindowLongPtr() failed with errcode=%d", GetLastError());
 				return false;
 			}

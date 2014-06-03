@@ -103,6 +103,7 @@ IDR_PEERCONNECTION      REGISTRY                "PeerConnection.rgs"
 IDR_VIDEODISPLAY        REGISTRY                "VideoDisplay.rgs"
 IDR_NETTRANSPORT        REGISTRY                "NetTransport.rgs"
 IDR_LOOPER              REGISTRY                "Looper.rgs"
+IDR_PLUGININSTANCE      REGISTRY                "pluginInstance.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -111,6 +112,7 @@ IDR_LOOPER              REGISTRY                "Looper.rgs"
 
 IDB_VIDEODISPLAY        BITMAP                  "VideoDisplay.bmp"
 IDB_LOOPER              BITMAP                  "Looper.bmp"
+IDB_PLUGININSTANCE      BITMAP                  "pluginInstance.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
