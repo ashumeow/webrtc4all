@@ -28,10 +28,17 @@
 #define kFuncCreatePeerConnection  "createPeerConnection"
 #define kFuncCreateSessionDescription "createSessionDescription"
 #define kFuncCreateNetTransport "createNetTransport"
+#define kFuncRunningApps "runningApps"
+
 #define kPropSupportsPeerConnection "supportsPeerConnection"
 #define kPropSupportsSessionDescription "supportsSessionDescription"
 #define kPropSupportsNetTransport "supportsNetTransport"
 #define kPropVersion			"version"
+#define kPropWindowHandle		"windowHandle"
+#define kPropFps				"fps"
+#define kPropMaxVideoSize		"maxVideoSize"
+#define kPropMaxBandwidthUp		"maxBandwidthUp"
+#define kPropMaxBandwidthDown	"maxBandwidthDown"
 
 extern NPClass PeerConnectionClass;
 extern NPClass NetTransportClass;
@@ -60,11 +67,6 @@ void WebRtc4npapi::Invalidate(NPObject *npobj)
 {
 }
 
-bool WebRtc4npapi::SetProperty(NPObject *npobj, NPIdentifier name, const NPVariant *value)
-{
-	return false;
-}
-
 bool WebRtc4npapi::RemoveProperty(NPObject *npobj, NPIdentifier name)
 {
 	return false;
@@ -76,11 +78,8 @@ bool WebRtc4npapi::Construct(NPObject *npobj, const NPVariant *args, uint32_t ar
 }
 
 WebRtc4npapi::WebRtc4npapi(NPP instance)
-: m_npp(instance)
-, m_pWindow(NULL)
-#if W4A_UNDER_WINDOWS
-, m_pWinProc(NULL)
-#endif
+: _NPObject(instance)
+, _PluginInstance()
 {
 	TSK_DEBUG_INFO("WebRtc4npapi::WebRtc4all");
 	_Utils::Initialize();
@@ -88,26 +87,6 @@ WebRtc4npapi::WebRtc4npapi(NPP instance)
 
 WebRtc4npapi::~WebRtc4npapi()
 {
-	SetWindow(NULL);
-}
-
-bool WebRtc4npapi::SetWindow(NPWindow* pWindow)
-{
-#if W4A_UNDER_WINDOWS
-	if(m_pWindow && m_pWindow->window && m_pWinProc){
-		SetWindowLongPtr((HWND)m_pWindow->window, GWL_WNDPROC, (LONG)m_pWinProc);
-		m_pWinProc = NULL;
-	}
-
-	if((m_pWindow = pWindow) && m_pWindow->window){
-		m_pWinProc = (WNDPROC) SetWindowLongPtr((HWND)m_pWindow->window, GWL_WNDPROC, (LONG)_Utils::WndProc);
-		if(!m_pWinProc){
-			TSK_DEBUG_ERROR("SetWindowLongPtr() failed with errcode=%d", GetLastError());
-			return false;
-		}
-	}
-#endif
-	return true;
 }
 
 NPObject* WebRtc4npapi::Allocate(NPP instance, NPClass* npclass)
@@ -126,7 +105,9 @@ bool WebRtc4npapi::HasMethod(NPObject* obj, NPIdentifier methodName)
 	char* name = BrowserFuncs->utf8fromidentifier(methodName);
 	bool ret_val = !strcmp(name, kFuncCreatePeerConnection) ||
 		!strcmp(name, kFuncCreateNetTransport) ||
-		!strcmp(name, kFuncCreateSessionDescription);
+		!strcmp(name, kFuncCreateSessionDescription) ||
+		!strcmp(name, kFuncRunningApps)
+		;
 	BrowserFuncs->memfree(name);
 	return ret_val;
 }
@@ -169,7 +150,7 @@ bool WebRtc4npapi::Invoke(NPObject* obj, NPIdentifier methodName,
 			}
 		}
 	}
-	else if(!strcmp(name, kFuncCreateSessionDescription)){
+	else if (!strcmp(name, kFuncCreateSessionDescription)) {
 		SessionDescription* sdpObj = (SessionDescription*)BrowserFuncs->createobject(This->m_npp, &SessionDescriptionClass);
 		if(sdpObj){
 			if(argCount > 0 && NPVARIANT_IS_STRING(args[0])){
@@ -186,7 +167,20 @@ bool WebRtc4npapi::Invoke(NPObject* obj, NPIdentifier methodName,
 			}
 		}
 	}
-	else{
+	else if (!strcmp(name, kFuncRunningApps)) {
+		_ActiveApps* activeApps = _Utils::GetActiveApps();
+		if (activeApps && activeApps->GetDataPtr() && activeApps->GetDataSize()) {
+			char* npMem = (char*)Utils::MemDup(activeApps->GetDataPtr(), activeApps->GetDataSize());
+			if (npMem) {
+				STRINGZ_TO_NPVARIANT(npMem, *result);
+				ret_val = true;
+			}
+		}
+		if (activeApps) {
+			delete activeApps;
+		}
+	}
+	else {
 		// BrowserFuncs->setexception(obj, "Unknown method");
 	}
 
@@ -200,38 +194,98 @@ bool WebRtc4npapi::HasProperty(NPObject* obj, NPIdentifier propertyName)
 	bool ret_val = !strcmp(name, kPropSupportsPeerConnection) ||
 			!strcmp(name, kPropSupportsSessionDescription) ||
 			!strcmp(name, kPropVersion) ||
-			!strcmp(name, kPropSupportsNetTransport);
+			!strcmp(name, kPropSupportsNetTransport) ||
+			!strcmp(name, kPropWindowHandle) ||
+			!strcmp(name, kPropFps) ||
+			!strcmp(name, kPropMaxVideoSize) ||
+			!strcmp(name, kPropMaxBandwidthUp) ||
+			!strcmp(name, kPropMaxBandwidthDown)
+			;
 	BrowserFuncs->memfree(name);
 	return ret_val;
 }
 
 bool WebRtc4npapi::GetProperty(NPObject* obj, NPIdentifier propertyName, NPVariant* result) 
 {
+	WebRtc4npapi *This = dynamic_cast<WebRtc4npapi*>((WebRtc4npapi*)obj);
 	char* name = BrowserFuncs->utf8fromidentifier(propertyName);
 	bool ret_val = false;
 	if (!name) {
 		return ret_val;
 	}
 
-	if(!strcmp(name, kPropSupportsPeerConnection)){
+	if (!strcmp(name, kPropSupportsPeerConnection)) {
 		BOOLEAN_TO_NPVARIANT(true, *result);
 		ret_val = true;
 	}
-	else if(!strcmp(name, kPropSupportsSessionDescription)){
+	else if (!strcmp(name, kPropSupportsSessionDescription)) {
 		BOOLEAN_TO_NPVARIANT(true, *result);
 		ret_val = true;
 	}
-	else if(!strcmp(name, kPropSupportsNetTransport)){
+	else if (!strcmp(name, kPropSupportsNetTransport)) {
 		BOOLEAN_TO_NPVARIANT(true, *result);
 		ret_val = true;
 	}
-	else if(!strcmp(name, kPropVersion)){
+	else if (!strcmp(name, kPropVersion)) {
 		char* _str = (char*)_Utils::MemDup(THIS_VERSION, tsk_strlen(THIS_VERSION));
-		STRINGN_TO_NPVARIANT(_str, tsk_strlen(_str), *result);
+		STRINGZ_TO_NPVARIANT(_str, *result);
+		ret_val = true;
+	}
+	else if (!strcmp(name, kPropWindowHandle)) {
+		DOUBLE_TO_NPVARIANT((double)This->GetWindowHandle(), *result);
+		ret_val = true;
+	}
+	else if (!strcmp(name, kPropFps)) {
+		DOUBLE_TO_NPVARIANT(_PluginInstance::GetFps(), *result);
+		ret_val = true;
+	}
+	else if (!strcmp(name, kPropMaxVideoSize)) {
+		char* _str = (char*)_Utils::MemDup(_PluginInstance::GetMaxVideoSize(), tsk_strlen(THIS_VERSION));
+		STRINGZ_TO_NPVARIANT(_str, *result);
+		ret_val = true;
+	}
+	else if (!strcmp(name, kPropMaxBandwidthUp)) {
+		DOUBLE_TO_NPVARIANT(_PluginInstance::GetMaxBandwidthUp(), *result);
+		ret_val = true;
+	}
+	else if (!strcmp(name, kPropMaxBandwidthDown)) {
+		DOUBLE_TO_NPVARIANT(_PluginInstance::GetMaxBandwidthDown(), *result);
 		ret_val = true;
 	}
 
 	BrowserFuncs->memfree(name);
+	return ret_val;
+}
+
+bool WebRtc4npapi::SetProperty(NPObject *npobj, NPIdentifier propertyName, const NPVariant *value)
+{
+	WebRtc4npapi *This = dynamic_cast<WebRtc4npapi*>((WebRtc4npapi*)npobj);
+	char* name = BrowserFuncs->utf8fromidentifier(propertyName);
+	bool ret_val = false;
+
+	if (!strcmp(name, kPropFps)) {
+		if ((NPVARIANT_IS_DOUBLE(*value) || NPVARIANT_IS_INT32(*value))) {
+			ret_val = _PluginInstance::SetFps((long)(NPVARIANT_IS_DOUBLE(*value) ? value->value.doubleValue : value->value.intValue));
+		}
+	}
+	else if (!strcmp(name, kPropMaxVideoSize)) {
+		char* maxSize = tsk_strndup((const char*)value->value.stringValue.UTF8Characters, value->value.stringValue.UTF8Length);
+		ret_val = _PluginInstance::SetMaxVideoSize(maxSize);
+		TSK_FREE(maxSize);
+	}
+	else if (!strcmp(name, kPropMaxBandwidthUp)) {
+		if ((NPVARIANT_IS_DOUBLE(*value) || NPVARIANT_IS_INT32(*value))) {
+			ret_val = _PluginInstance::SetMaxBandwidthUp((long)(NPVARIANT_IS_DOUBLE(*value) ? value->value.doubleValue : value->value.intValue));
+		}
+	}
+	else if (!strcmp(name, kPropMaxBandwidthDown)) {
+		if ((NPVARIANT_IS_DOUBLE(*value) || NPVARIANT_IS_INT32(*value))) {
+			ret_val = _PluginInstance::SetMaxBandwidthDown((long)(NPVARIANT_IS_DOUBLE(*value) ? value->value.doubleValue : value->value.intValue));
+		}
+	}
+	
+	BrowserFuncs->memfree(name);
+
 	return ret_val;
 }
 

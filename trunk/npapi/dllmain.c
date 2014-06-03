@@ -16,7 +16,7 @@
 * You should have received a copy of the GNU General Public License
 * along with webrtc4ie.
 */
-#include "../common/_Config.h"
+#include <Windows.h>
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,

@@ -47,6 +47,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tinySDP", "thirdparties\sou
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{8BAE6EA0-8809-4C49-B76A-0CC0969FFCCF}"
+	ProjectSection(SolutionItems) = preProject
+		test.htm = test.htm
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "webrtc4ie", "ie\webrtc4ie.vcproj", "{9B2F5906-27A5-4A7A-96CD-8675FEBA25AE}"
 	ProjectSection(ProjectDependencies) = postProject

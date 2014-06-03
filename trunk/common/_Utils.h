@@ -21,9 +21,22 @@
 
 #include "_Config.h"
 
-#if W4A_IE
+#if W4A_UNDER_WINDOWS
 #	include <comutil.h>
 #endif
+
+class _ActiveApps
+{
+public:
+	_ActiveApps();
+	virtual ~_ActiveApps();
+	bool AppendApp(LONGLONG windowID, const void* descPtr, size_t descSize, const void* iconDataPtr, size_t iconDataSize, const void* iconTypePtr, size_t iconTypeSize);
+	const void* GetDataPtr() { return m_pDataPtr; }
+	size_t GetDataSize() { return m_nDataSize; }
+private:
+	void* m_pDataPtr;
+	size_t m_nDataSize;
+};
 
 class _Utils
 {
@@ -39,7 +52,9 @@ public:
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
     static void* MemAlloc(unsigned n);
     static void* MemDup(const void* mem, unsigned n);
+	static void* MemReAlloc(void* mem, unsigned n);
     static void MemFree(void** mem);
+	static _ActiveApps* GetActiveApps();
 };
 
 

@@ -38,6 +38,8 @@ _PeerConnection::_PeerConnection(BrowserType_t browserType):
 	mBrowserType(browserType),
 	mRemoteVideo(0),
 	mLocalVideo(0),
+	mSrcScreencast(0),
+	mLocalScreencast(0),
 	mReadyState(ReadyStateNew),
 	mIceState(IceStateClosed),
 	mSessionMgr(NULL),
@@ -60,7 +62,7 @@ _PeerConnection::~_PeerConnection()
 {
 	Close();
 	
-	SetDisplays(NULL, NULL);
+	SetDisplays(NULL, NULL, NULL, NULL);
 	
 	TSK_OBJECT_SAFE_FREE(mSdpLocal);
 	TSK_OBJECT_SAFE_FREE(mSdpRemote);
@@ -140,6 +142,7 @@ bool _PeerConnection::StartMedia()
 		// set callback functions now that all sessions are up
 		// tmedia_session_mgr_set_onerror_cbfn(self->msession_mgr, self, tsip_dialog_invite_msession_onerror_cb);
 		tmedia_session_mgr_set_rfc5168_cbfn(mSessionMgr, this, _PeerConnection::Rfc5168Callback);
+		tmedia_session_mgr_set_bfcp_cbfn(mSessionMgr, this, _PeerConnection::BfcpCallback);
 
 		return (tmedia_session_mgr_start(mSessionMgr) == 0);
 	}
@@ -261,29 +264,51 @@ bool _PeerConnection::_StopDebug(void)
 	return _Utils::StopDebug();
 }
 
-bool _PeerConnection::SetDisplays(LONGLONG local, LONGLONG remote)
+bool _PeerConnection::SetDisplays(LONGLONG localVideo, LONGLONG remoteVideo, LONGLONG localScreencast, LONGLONG srcScreencast)
 {
-	mLocalVideo = (LONGLONG)local;
-	mRemoteVideo = (LONGLONG)remote;
+	mLocalVideo = (LONGLONG)localVideo;
+	mRemoteVideo = (LONGLONG)remoteVideo;
+	mLocalScreencast = (LONGLONG)localScreencast;
+	mSrcScreencast = (LONGLONG)srcScreencast;
 
-	if(mSessionMgr){
-		tmedia_session_mgr_set(mSessionMgr,
-			TMEDIA_SESSION_PRODUCER_SET_INT64(tmedia_video, "local-hwnd", mLocalVideo),
-			TMEDIA_SESSION_CONSUMER_SET_INT64(tmedia_video, "remote-hwnd", mRemoteVideo),
+	if (mSessionMgr) {
+		if ((mSessionMgr->type & tmedia_video) == tmedia_video) {
+			tmedia_session_mgr_set(mSessionMgr,
+				TMEDIA_SESSION_PRODUCER_SET_INT64(tmedia_video, "local-hwnd", mLocalVideo),
+				TMEDIA_SESSION_CONSUMER_SET_INT64(tmedia_video, "remote-hwnd", mRemoteVideo),
+				
 				TMEDIA_SESSION_SET_NULL());
+		}
+		if ((mSessionMgr->type & tmedia_bfcp_video) == tmedia_bfcp_video) {
+			tmedia_session_mgr_set(mSessionMgr,
+				TMEDIA_SESSION_PRODUCER_SET_INT64(tmedia_bfcp_video, "local-hwnd", mLocalScreencast),
+				TMEDIA_SESSION_PRODUCER_SET_INT64(tmedia_bfcp_video, "src-hwnd", mSrcScreencast),
+				
+				TMEDIA_SESSION_SET_NULL());
+		}	
 	}
 
 	return true;
 }
 
-bool _PeerConnection::SetDisplayLocal(LONGLONG local)
+bool _PeerConnection::SetDisplayLocalVideo(LONGLONG local) 
 {
-	return SetDisplays(local, mRemoteVideo);
+	return SetDisplays(local, mRemoteVideo, mLocalScreencast, mSrcScreencast);
 }
 
-bool _PeerConnection::SetDisplayRemote(LONGLONG remote)
+bool _PeerConnection::SetDisplayRemoteVideo(LONGLONG remote)
 {
-	return SetDisplays(mLocalVideo, remote);
+	return SetDisplays(mLocalVideo, remote, mLocalScreencast, mSrcScreencast);
+}
+
+bool _PeerConnection::SetDisplayLocalScreencast(LONGLONG local)
+{
+	return SetDisplays(mLocalVideo, mRemoteVideo, local, mSrcScreencast);
+}
+
+bool _PeerConnection::SetDisplaySrcScreencast(LONGLONG src)
+{
+	return SetDisplays(mLocalVideo, mRemoteVideo, mLocalScreencast, src);
 }
 
 bool _PeerConnection::ProcessContent(const char* req_name, const char* content_type, const void* content_ptr, int content_size)
@@ -362,9 +387,17 @@ bool _PeerConnection::ProcessContent(const char* req_name, const char* content_t
 	return true;
 }
 
+bool _PeerConnection::SendDTMF(uint8_t digit)
+{
+	if (mSessionMgr) {
+		return (tmedia_session_mgr_send_dtmf(mSessionMgr, digit) == 0);
+	}
+	return false;
+}
+
 bool _PeerConnection::CreateSessionMgr(tmedia_type_t eMediaType, bool iceEnabled, bool offerer)
 {
-	if(mSessionMgr){
+	if (mSessionMgr) {
 		TSK_DEBUG_WARN("Session manager already defined");
 		return true;
 	}
@@ -759,6 +792,43 @@ int _PeerConnection::Rfc5168Callback(const void* usrdata, const struct tmedia_se
             static const char* __command_picture_fast_update = "picture_fast_update";
             _Utils::PostMessage(This->GetWindowHandle(), WM_RFC5168_EVENT, This, (void**)&__command_picture_fast_update);
 		}
+	}
+	return 0;
+}
+
+int _PeerConnection::BfcpCallback(const void* usrdata, const struct tmedia_session_s* session, const struct tmedia_session_bfcp_evt_xs* evt)
+{
+	_PeerConnection *This;
+
+	This = (_PeerConnection *)usrdata;
+	
+	TSK_DEBUG_INFO("W4A::_PeerConnection::BfcpCallback: %d", evt->type);
+	
+
+	if (This) {
+		char desc_str[1024];
+		int desc_len;
+		switch (evt->type) {
+			case tmedia_session_bfcp_evt_type_err:
+				{
+					desc_len = sprintf(desc_str, "Error: reason=%s, code=%d", evt->reason, evt->err.code);
+					break;
+				}
+			case tmedia_session_bfcp_evt_type_flreq_status:
+				{
+					// https://tools.ietf.org/html/rfc4582#section-5.2.5
+					desc_len = sprintf(desc_str, "FloorRequestStatus: reason=%s, status=%d", evt->reason, evt->flreq.status);
+					break;
+				}
+			default:
+				{
+					TSK_DEBUG_ERROR("%d not supported BFCP event type", evt->type);
+					return -2;
+				}
+		}
+		char* npDesc = (char*)_Utils::MemDup((const void*)desc_str, desc_len);
+        _Utils::PostMessage(This->GetWindowHandle(), WM_BFCP_EVENT, This, (void**)&npDesc);
+		// up to the recaiver to free "npDesc"
 	}
 	return 0;
 }

@@ -17,6 +17,7 @@
 * along with webrtc4ie.
 */
 #include "PeerConnectionIE.h"
+#include "UtilsIE.h"
 
 #include "../common/_SessionDescription.h"
 
@@ -137,14 +138,18 @@ STDMETHODIMP CPeerConnection::processContent(BSTR req_name, BSTR content_type, B
 	return (ret ? S_OK : E_FAIL);
 }
 
+STDMETHODIMP CPeerConnection::sendDTMF(USHORT digit)
+{
+	return _PeerConnection::SendDTMF((uint8_t)digit) ? S_OK : E_FAIL;
+}
+
 STDMETHODIMP CPeerConnection::get_localDescription(BSTR* pVal)
 {
 	char* sdpStr = NULL;
 	int sdpLen = 0;
 	bool ret = _PeerConnection::SerializeSdp(mSdpLocal, &sdpStr, &sdpLen);
 	if(ret){
-		bstr_t bstr(sdpStr);
-		*pVal = bstr.GetBSTR();
+		*pVal = Utils::SysAllocStringBytes(sdpStr);
 	}
 	TSK_FREE(sdpStr);
 	return (ret ? S_OK : E_FAIL);
@@ -156,8 +161,7 @@ STDMETHODIMP CPeerConnection::get_remoteDescription(BSTR* pVal)
 	int sdpLen = 0;
 	bool ret = _PeerConnection::SerializeSdp(mSdpRemote, &sdpStr, &sdpLen);
 	if(ret){
-		bstr_t bstr(sdpStr);
-		*pVal = bstr.GetBSTR();
+		*pVal = Utils::SysAllocStringBytes(sdpStr);
 	}
 	TSK_FREE(sdpStr);
 	return (ret ? S_OK : E_FAIL);
@@ -184,7 +188,7 @@ STDMETHODIMP CPeerConnection::get_remoteVideo(LONGLONG* pVal)
 STDMETHODIMP CPeerConnection::put_remoteVideo(LONGLONG newVal)
 {
 	mRemoteVideo = newVal;
-	return _PeerConnection::SetDisplays(mLocalVideo, mRemoteVideo) ? S_OK : E_FAIL;
+	return _PeerConnection::SetDisplayRemoteVideo(newVal) ? S_OK : E_FAIL;
 }
 
 STDMETHODIMP CPeerConnection::get_localVideo(LONGLONG* pVal)
@@ -196,12 +200,36 @@ STDMETHODIMP CPeerConnection::get_localVideo(LONGLONG* pVal)
 STDMETHODIMP CPeerConnection::put_localVideo(LONGLONG newVal)
 {
 	mLocalVideo = newVal;
-	return _PeerConnection::SetDisplays(mLocalVideo, mRemoteVideo) ? S_OK : E_FAIL;
+	return _PeerConnection::SetDisplayLocalVideo(newVal) ? S_OK : E_FAIL;
+}
+
+STDMETHODIMP CPeerConnection::get_localScreencast(LONGLONG* pVal)
+{
+	*pVal = mLocalScreencast;
+	return S_OK;
+}
+
+STDMETHODIMP CPeerConnection::put_localScreencast(LONGLONG newVal)
+{
+	mLocalScreencast = newVal;
+	return _PeerConnection::SetDisplayLocalScreencast(newVal) ? S_OK : E_FAIL;
+}
+
+STDMETHODIMP CPeerConnection::get_srcScreencast(LONGLONG* pVal)
+{
+	*pVal = mSrcScreencast;
+	return S_OK;
+}
+
+STDMETHODIMP CPeerConnection::put_srcScreencast(LONGLONG newVal)
+{
+	mSrcScreencast = newVal;
+	return _PeerConnection::SetDisplaySrcScreencast(newVal) ? S_OK : E_FAIL;
 }
 
 STDMETHODIMP CPeerConnection::get_version(BSTR* pVal)
 {
-	*pVal = _bstr_t(THIS_VERSION);
+	*pVal = Utils::SysAllocStringBytes(THIS_VERSION);
 	return S_OK;
 }
 
@@ -258,6 +286,12 @@ void CPeerConnection::Rfc5168CallbackFire(const char* commandStr)
 	Fire_Rfc5168Callback(command);
 }
 
+void CPeerConnection::BfcpCallbackFire(const char* descStr)
+{
+	bstr_t desc(descStr);
+	Fire_BfcpCallback(desc);
+}
+
 LONGLONG CPeerConnection::GetWindowHandle()
 {
 	return (LONGLONG)mLooperHandle;
@@ -269,8 +303,7 @@ HRESULT CPeerConnection::_createSDP(VARIANT_BOOL has_audio, VARIANT_BOOL has_vid
 	int _sdp_len;
 	bool ret = _PeerConnection::CreateLo((has_audio == VARIANT_TRUE), (has_video == VARIANT_TRUE), (has_bfcpvideo == VARIANT_TRUE), &_sdp, &_sdp_len, is_offerer);
 	if (_sdp) {
-		bstr_t bstr(_sdp);
-		*sdp = bstr.GetBSTR();
+		*sdp = Utils::SysAllocStringBytes(_sdp);
 	}
 	TSK_FREE(_sdp);
 	return ret ? S_OK : E_FAIL;

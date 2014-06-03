@@ -92,6 +92,7 @@ public:
 	STDMETHOD(setLocalDescription)(USHORT action, BSTR desc);
 	STDMETHOD(setRemoteDescription)(USHORT action, BSTR desc);
 	STDMETHOD(processContent)(BSTR req_name, BSTR content_type, BSTR content_ptr, INT content_size);
+	STDMETHOD(sendDTMF)(USHORT digit);
 	STDMETHOD(get_localDescription)(BSTR* pVal);
 	STDMETHOD(get_remoteDescription)(BSTR* pVal);
 	STDMETHOD(get_readyState)(USHORT* pVal);
@@ -100,6 +101,10 @@ public:
 	STDMETHOD(put_remoteVideo)(LONGLONG newVal);
 	STDMETHOD(get_localVideo)(LONGLONG* pVal);
 	STDMETHOD(put_localVideo)(LONGLONG newVal);
+	STDMETHOD(get_localScreencast)(LONGLONG* pVal);
+	STDMETHOD(put_localScreencast)(LONGLONG newVal);
+	STDMETHOD(get_srcScreencast)(LONGLONG* pVal);
+	STDMETHOD(put_srcScreencast)(LONGLONG newVal);
 	STDMETHOD(get_version)(BSTR* pVal);
 	STDMETHOD(get_fullScreen)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_fullScreen)(VARIANT_BOOL newVal);
@@ -111,6 +116,7 @@ public:
 public:
 	virtual void IceCallbackFire(const PeerConnectionEvent* e);
 	virtual void Rfc5168CallbackFire(const char* commandStr);
+	virtual void BfcpCallbackFire(const char* descStr);
 	virtual LONGLONG GetWindowHandle();
 
 private:

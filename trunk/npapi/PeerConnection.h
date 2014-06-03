@@ -48,6 +48,7 @@ public:
 	virtual LONGLONG GetWindowHandle();
 	virtual void IceCallbackFire(const PeerConnectionEvent* e);
 	virtual void Rfc5168CallbackFire(const char* commandStr);
+	virtual void BfcpCallbackFire(const char* descStr);
     NPP GetInstance() { return m_Instance; }
 
 private:
@@ -55,6 +56,7 @@ private:
     NPP m_Instance;
 	char* m_CallbackFuncName;
 	char* m_Rfc5168CallbackFuncName;
+	char* m_BfcpCallbackFuncName;
 };
 
 #endif /* _WEBRTC4NPAPI_PEERCONNECTION_H_ */

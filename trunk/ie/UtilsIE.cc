@@ -25,15 +25,17 @@ extern char* g_sNullTerminated ;
 extern UINT g_iNullTerminated;
 extern CRITICAL_SECTION g_CS;
 
+static BOOL CALLBACK _UtilsEnumWindowsProc( __in  HWND hWnd, __in  LPARAM lParam) ;
+
 _bstr_t Utils::ToBSTR(const char* notNullTerminated, UINT size)
 {
 	EnterCriticalSection(&g_CS);
-	if(g_iNullTerminated < (size + 1)){
-		if(!(g_sNullTerminated = (char*)realloc(g_sNullTerminated, (size + 1)))) g_iNullTerminated = 0;
+	if (g_iNullTerminated < (size + 1)) {
+		if (!(g_sNullTerminated = (char*)realloc(g_sNullTerminated, (size + 1)))) g_iNullTerminated = 0;
 		else g_iNullTerminated = (size + 1);
 	}
 
-	if(g_iNullTerminated){
+	if (g_iNullTerminated) {
 		memcpy(g_sNullTerminated, notNullTerminated, size);
 		g_sNullTerminated[size] = '\0';
 	}
@@ -43,4 +45,40 @@ _bstr_t Utils::ToBSTR(const char* notNullTerminated, UINT size)
 	LeaveCriticalSection(&g_CS);
 
 	return oData;
+}
+
+BSTR Utils::SysAllocStringBytes(LPCSTR psz)
+{
+	if (psz) {
+		_bstr_t b(psz);
+		return b.copy();
+	}
+	return NULL;
+}
+
+
+void* _UtilsMemAlloc(unsigned n)
+{
+	return VirtualAlloc(NULL, n, MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
+}
+
+void _UtilsMemFree(void** mem)
+{
+    if (mem && *mem) {
+		VirtualFree(*mem, 0, MEM_RELEASE);
+        *mem = NULL;
+    }
+}
+
+void* _UtilsMemReAlloc(void* mem, unsigned n)
+{
+	void* _mem = n > 0 ? _UtilsMemAlloc(n) : NULL;
+	if (_mem && mem) {
+		MEMORY_BASIC_INFORMATION pbi;
+		VirtualQuery(mem, &pbi, sizeof(pbi));
+		unsigned sizeToCopy = TSK_MIN((unsigned)pbi.RegionSize, n);
+		memcpy(_mem, mem, sizeToCopy);
+	}
+	_UtilsMemFree(&mem);
+	return _mem;
 }

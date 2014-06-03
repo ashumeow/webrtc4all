@@ -103,8 +103,7 @@ STDMETHODIMP CNetTransport::SendTo(BSTR msg, BSTR addr, USHORT port)
 STDMETHODIMP CNetTransport::get_localIP(BSTR* pVal)
 {
 	if(m_pTransport && m_pTransport->master){
-		_bstr_t bstr(m_pTransport->master->ip);
-		*pVal = bstr.GetBSTR();
+		*pVal = Utils::SysAllocStringBytes(m_pTransport->master->ip);
 	}
 	else *pVal = NULL;
 	return S_OK;
@@ -119,8 +118,7 @@ STDMETHODIMP CNetTransport::get_localPort(USHORT* pVal)
 
 STDMETHODIMP CNetTransport::get_defaultDestAddr(BSTR* pVal)
 {
-	_bstr_t bstr(m_DefaultDestAddr);
-	*pVal = bstr.GetBSTR();
+	*pVal = Utils::SysAllocStringBytes(m_DefaultDestAddr);
 	return S_OK;
 }
 
@@ -132,7 +130,7 @@ STDMETHODIMP CNetTransport::get_defaultDestPort(USHORT* pVal)
 
 STDMETHODIMP CNetTransport::get_version(BSTR* pVal)
 {
-	*pVal = _bstr_t(THIS_VERSION);
+	*pVal = Utils::SysAllocStringBytes(THIS_VERSION);
 	return S_OK;
 }
 
@@ -169,7 +167,7 @@ LONGLONG CNetTransport::GetWindowHandle()
 void CNetTransport::DgramCbFire(const NetTransportEvent* e)
 {
 	USHORT eType = e->GetType();
-	_bstr_t oData = Utils::ToBSTR((const char*)e->GetData(), e->GetDataLen());
-	Fire_OnEvent(eType, oData);
-	::SysFreeString(oData);
+	_bstr_t _data = Utils::ToBSTR((LPCSTR)e->GetData(), e->GetDataLen());
+	Fire_OnEvent(eType, _data.GetBSTR());
+	::SysFreeString(_data);
 }

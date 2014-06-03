@@ -230,6 +230,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\common\_PluginInstance.cc"
+					>
+				</File>
+				<File
 					RelativePath="..\common\_SessionDescription.cc"
 					>
 				</File>
@@ -293,6 +297,10 @@
 				</File>
 				<File
 					RelativePath="..\common\_PeerConnection.h"
+					>
+				</File>
+				<File
+					RelativePath="..\common\_PluginInstance.h"
 					>
 				</File>
 				<File
