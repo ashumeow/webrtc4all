@@ -59,8 +59,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,53,1114
- PRODUCTVERSION 1,0,53,1114
+ FILEVERSION 1,0,55,1114
+ PRODUCTVERSION 1,0,55,1114
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -77,12 +77,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Doubango telecom"
             VALUE "FileDescription", "WebRTC for Internet Explorer"
-            VALUE "FileVersion", "1.0.53.1114"
+            VALUE "FileVersion", "1.0.55.1114"
             VALUE "InternalName", "webrtc4ie.dll"
             VALUE "LegalCopyright", "(c) 2012-2014 Doubango Telecom.  All rights reserved."
             VALUE "OriginalFilename", "webrtc4ie.dll"
             VALUE "ProductName", "Doubango WebRTC for Internet explorer"
-            VALUE "ProductVersion", "1.0.53.1114"
+            VALUE "ProductVersion", "1.0.55.1114"
         END
     END
     BLOCK "VarFileInfo"
