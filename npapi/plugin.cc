@@ -137,9 +137,9 @@ NP_Shutdown()
 
 NPError
 NPP_New(NPMIMEType pluginType, NPP instance, uint16_t mode, int16_t argc, char* argn[], char* argv[], NPSavedData* saved) {
-#if 0
   // Make sure we can render this plugin
-  NPBool browserSupportsWindowless = false;
+	NPBool browserSupportsWindowless = false;
+#if W4A_UNDER_WINDOWS
   BrowserFuncs->getvalue(instance, NPNVSupportsWindowless, &browserSupportsWindowless);
   if (!browserSupportsWindowless) {
     TSK_DEBUG_ERROR("Windowless mode not supported by the browser");
@@ -207,8 +207,10 @@ NPP_New(NPMIMEType pluginType, NPP instance, uint16_t mode, int16_t argc, char* 
 	  return NPERR_GENERIC_ERROR;
   }
 
-  bool bWindowed = (instanceData->type == PluginType_WebRtc4npapi || instanceData->type == PluginType_Display);
-  BrowserFuncs->setvalue(instance, NPPVpluginWindowBool, (void*)bWindowed);
+  if (browserSupportsWindowless) {
+	bool bWindowed = (instanceData->type == PluginType_WebRtc4npapi || instanceData->type == PluginType_Display);
+	BrowserFuncs->setvalue(instance, NPPVpluginWindowBool, (void*)bWindowed);	
+  }
 
   return NPERR_NO_ERROR;
 }
@@ -306,6 +308,11 @@ NPP_GetValue(NPP instance, NPPVariable variable, void *value) {
 			*((char **)value) = kPluginDescription;
             break;
         }
+	  case NPPVpluginTransparentBool:
+		  {
+			  *((NPBool*)value) = true;
+			  break;
+		  }
 #if W4A_UNDER_APPLE
         case NPPVpluginCoreAnimationLayer:
         {
@@ -333,6 +340,11 @@ NPP_GetValue(NPP instance, NPPVariable variable, void *value) {
 			  
 			  if (instanceData->type == PluginType_WebRtc4npapi) {
 				  if (!((WebRtc4npapi*)instanceData->object)->SetWindow(&instanceData->window, true)) {
+					  return NPERR_GENERIC_ERROR;
+				  }
+			  }
+			  else if (instanceData->type == PluginType_Display) {
+				  if (!((Display*)instanceData->object)->SetWindow(&instanceData->window, true)) {
 					  return NPERR_GENERIC_ERROR;
 				  }
 			  }

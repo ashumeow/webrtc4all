@@ -287,6 +287,24 @@ bool _PeerConnection::SetDisplays(LONGLONG localVideo, LONGLONG remoteVideo, LON
 				TMEDIA_SESSION_SET_NULL());
 		}	
 	}
+#if W4A_UNDER_WINDOWS
+	if (mLocalVideo) {
+		//ShowWindow(reinterpret_cast<HWND>(mLocalVideo), SW_HIDE);
+		//BringWindowToTop(reinterpret_cast<HWND>(mLocalVideo));
+		//SetWindowPos(reinterpret_cast<HWND>(mLocalVideo), HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	}
+	if (mLocalScreencast) {
+		//BringWindowToTop(reinterpret_cast<HWND>(mLocalScreencast));
+		//SetWindowPos(reinterpret_cast<HWND>(mLocalScreencast), HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	}
+	if (mRemoteVideo) {
+		//SetWindowPos(reinterpret_cast<HWND>(mRemoteVideo), HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	}
+	if (mLocalVideo && mLocalScreencast && mRemoteVideo) {
+		//SetWindowPos(reinterpret_cast<HWND>(mRemoteVideo), reinterpret_cast<HWND>(mLocalVideo), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+		//SetWindowPos(reinterpret_cast<HWND>(mRemoteVideo), reinterpret_cast<HWND>(mLocalScreencast), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	}
+#endif
 
 	return true;
 }

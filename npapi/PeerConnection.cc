@@ -352,8 +352,10 @@ bool PeerConnection::Invoke(NPObject* obj, NPIdentifier methodName,
 	  }
   }
   else if(!strcmp(name, kFuncSendDTMF)) {
-	  if (argCount == 1 && (NPVARIANT_IS_STRING(args[0]) || NPVARIANT_IS_INT32(args[0]))) {
-		  uint8_t digit = (uint8_t)(NPVARIANT_IS_STRING(args[0]) ? args[0].value.stringValue.UTF8Characters[0] : args[0].value.intValue);
+	  if (argCount == 1 && (NPVARIANT_IS_STRING(args[0]) || NPVARIANT_IS_INT32(args[0]) || NPVARIANT_IS_DOUBLE(args[0]))) {
+		  uint8_t digit = (uint8_t)(NPVARIANT_IS_STRING(args[0]) 
+				? args[0].value.stringValue.UTF8Characters[0] 
+				: (NPVARIANT_IS_INT32(args[0]) ? args[0].value.intValue : args[0].value.doubleValue));
 		  ret_val = This->SendDTMF(digit);
 	  }
   }
