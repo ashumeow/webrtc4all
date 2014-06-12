@@ -48,7 +48,7 @@ public:
 	static bool Construct(NPObject *npobj, const NPVariant *args, uint32_t argCount, NPVariant *result);
 
 private:
-
+	bool m_bHidden;
 };
 
 #endif /* _WEBRTC4NPAPI_WEBRTC4ALL_H_ */

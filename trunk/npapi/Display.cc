@@ -27,6 +27,7 @@
 
 #define kFuncSetFullScreen  "setFullScreen"
 #define kPropHWnd			"hWnd"
+#define kPropWindowHandle		"windowHandle"
 #define kPropSupportsHidden			"supportsHidden"
 #define kPropHidden			"hidden"
 #define kPropVersion			"version"
@@ -125,6 +126,7 @@ bool Display::HasProperty(NPObject* obj, NPIdentifier propertyName)
 {
 	char* name = BrowserFuncs->utf8fromidentifier(propertyName);
 	bool ret_val = !strcmp(name, kPropHWnd) ||
+		!strcmp(name, kPropWindowHandle) ||
 		!strcmp(name, kPropSupportsHidden) ||
 		!strcmp(name, kPropHidden);
 	BrowserFuncs->memfree(name);
@@ -137,7 +139,7 @@ bool Display::GetProperty(NPObject* obj, NPIdentifier propertyName, NPVariant* r
 	char* name = BrowserFuncs->utf8fromidentifier(propertyName);
 	bool ret_val = false;
 	
-	if(!strcmp(name, kPropHWnd)){
+	if(!strcmp(name, kPropHWnd) || !strcmp(name, kPropWindowHandle)){
 		ret_val = true;
 		LONGLONG val = (This->m_pWindow ? (LONGLONG)This->m_pWindow->window : 0);
 		DOUBLE_TO_NPVARIANT((double)val, *result);

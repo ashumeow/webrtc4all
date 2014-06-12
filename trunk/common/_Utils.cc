@@ -299,6 +299,19 @@ bool _Utils::PostMessage(LONGLONG handle, unsigned msg, void* wParam, void** lPa
 LRESULT CALLBACK _Utils::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch(uMsg){
+#if 0
+		case WM_PAINT:
+			{
+				PAINTSTRUCT ps;
+				HDC hdc = BeginPaint(hWnd, &ps);
+
+				SetBkMode(hdc, TRANSPARENT);
+				TextOut(hdc, 50, 50, L"Fake text", lstrlen(L"Fake text"));
+
+				EndPaint(hWnd, &ps);
+				break;
+			}
+#endif
 		case WM_ICE_EVENT_CANDIDATE:
 			{
 				TSK_DEBUG_INFO("_Utils::WndProc::WM_ICE_EVENT");
@@ -421,9 +434,44 @@ static const HMODULE GetCurrentModule()
     return hm;
 }
 
+// http://blogs.msdn.com/b/oldnewthing/archive/2007/10/08/5351207.aspx
+static BOOL _UtilsIsAltTabWindow(HWND hwnd)
+{
+	TITLEBARINFO ti = { 0 };
+    HWND hwndTry, hwndWalk = NULL;
+
+	if (!IsWindowVisible(hwnd)) {
+        return FALSE;
+	}
+
+    hwndTry = GetAncestor(hwnd, GA_ROOTOWNER);
+    while (hwndTry != hwndWalk) {
+        hwndWalk = hwndTry;
+        hwndTry = GetLastActivePopup(hwndWalk);
+		if (IsWindowVisible(hwndTry)) {
+            break;
+		}
+    }
+	if (hwndWalk != hwnd) {
+        return FALSE;
+	}
+
+    if (GetWindowLong(hwnd, GWL_EXSTYLE) & WS_EX_TOOLWINDOW) {
+        return FALSE;
+	}
+
+    ti.cbSize = sizeof(ti);
+    GetTitleBarInfo(hwnd, &ti);
+	if (ti.rgstate[0] & STATE_SYSTEM_INVISIBLE) {
+        return FALSE;
+	}
+
+    return TRUE;
+}
+
 static BOOL CALLBACK _UtilsEnumWindowsProc( __in  HWND hWnd, __in  LPARAM lParam) 
 {
-	if (!::IsIconic(hWnd) || !::IsWindowVisible(hWnd)) {
+	if (!::_UtilsIsAltTabWindow(hWnd)/*!::IsIconic(hWnd) || !::IsWindowVisible(hWnd)*/) {
 		return TRUE;
 	}
 

@@ -35,6 +35,7 @@
 #define kPropSupportsNetTransport "supportsNetTransport"
 #define kPropVersion			"version"
 #define kPropWindowHandle		"windowHandle"
+#define kPropHidden			"hidden"
 #define kPropFps				"fps"
 #define kPropMaxVideoSize		"maxVideoSize"
 #define kPropMaxBandwidthUp		"maxBandwidthUp"
@@ -80,6 +81,7 @@ bool WebRtc4npapi::Construct(NPObject *npobj, const NPVariant *args, uint32_t ar
 WebRtc4npapi::WebRtc4npapi(NPP instance)
 : _NPObject(instance)
 , _PluginInstance()
+, m_bHidden(false)
 {
 	TSK_DEBUG_INFO("WebRtc4npapi::WebRtc4all");
 	_Utils::Initialize();
@@ -196,6 +198,7 @@ bool WebRtc4npapi::HasProperty(NPObject* obj, NPIdentifier propertyName)
 			!strcmp(name, kPropVersion) ||
 			!strcmp(name, kPropSupportsNetTransport) ||
 			!strcmp(name, kPropWindowHandle) ||
+			!strcmp(name, kPropHidden) ||
 			!strcmp(name, kPropFps) ||
 			!strcmp(name, kPropMaxVideoSize) ||
 			!strcmp(name, kPropMaxBandwidthUp) ||
@@ -233,6 +236,10 @@ bool WebRtc4npapi::GetProperty(NPObject* obj, NPIdentifier propertyName, NPVaria
 	}
 	else if (!strcmp(name, kPropWindowHandle)) {
 		DOUBLE_TO_NPVARIANT((double)This->GetWindowHandle(), *result);
+		ret_val = true;
+	}
+	else if (!strcmp(name, kPropHidden)) {
+		BOOLEAN_TO_NPVARIANT(This->m_bHidden, *result);
 		ret_val = true;
 	}
 	else if (!strcmp(name, kPropFps)) {
@@ -281,6 +288,19 @@ bool WebRtc4npapi::SetProperty(NPObject *npobj, NPIdentifier propertyName, const
 	else if (!strcmp(name, kPropMaxBandwidthDown)) {
 		if ((NPVARIANT_IS_DOUBLE(*value) || NPVARIANT_IS_INT32(*value))) {
 			ret_val = _PluginInstance::SetMaxBandwidthDown((long)(NPVARIANT_IS_DOUBLE(*value) ? value->value.doubleValue : value->value.intValue));
+		}
+	}
+	else if (!strcmp(name, kPropHidden)) {
+		if (NPVARIANT_IS_BOOLEAN(*value)) {
+			This->m_bHidden = value->value.boolValue;
+#if W4A_UNDER_WINDOWS
+			if (This->GetWindowHandle()) {
+				ShowWindow(((HWND)This->GetWindowHandle()), This->m_bHidden ? SW_HIDE : SW_SHOW);
+			}
+#elif W4A_UNDER_APPLE
+			// FIXME: not implemented yet
+#endif
+			ret_val = true;
 		}
 	}
 	
