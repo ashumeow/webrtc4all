@@ -39,10 +39,10 @@ STDMETHODIMP CPeerConnection::InterfaceSupportsErrorInfo(REFIID riid)
 	return S_FALSE;
 }
 
-CPeerConnection::CPeerConnection():
-_PeerConnection(BrowserType_IE),
-mLooperHandle(NULL),
-mLooperProc(NULL)
+CPeerConnection::CPeerConnection()
+: _PeerConnection(BrowserType_IE)
+, mLooperHandle(NULL)
+, mLooperProc(NULL)
 {
 }
 
@@ -249,6 +249,30 @@ STDMETHODIMP CPeerConnection::put_fullScreen(VARIANT_BOOL newVal)
 			TMEDIA_SESSION_SET_NULL());
 	}
 	
+	return S_OK;
+}
+
+STDMETHODIMP CPeerConnection::get_muteAudio(VARIANT_BOOL* pVal)
+{
+	*pVal = mMuteAudio ? VARIANT_TRUE : VARIANT_FALSE;
+	return S_OK;
+}
+
+STDMETHODIMP CPeerConnection::put_muteAudio(VARIANT_BOOL newVal)
+{
+	SetMute(false/*audio*/, (newVal == VARIANT_TRUE));
+	return S_OK;
+}
+
+STDMETHODIMP CPeerConnection::get_muteVideo(VARIANT_BOOL* pVal)
+{
+	*pVal = mMuteVideo ? VARIANT_TRUE : VARIANT_FALSE;
+	return S_OK;
+}
+
+STDMETHODIMP CPeerConnection::put_muteVideo(VARIANT_BOOL newVal)
+{
+	SetMute(true/*video*/, (newVal == VARIANT_TRUE));
 	return S_OK;
 }
 

@@ -60,10 +60,14 @@ interface IPeerConnection : IDispatch{
 	[propget, id(20), helpstring("property version")] HRESULT version([out, retval] BSTR* pVal);
 	[propget, id(21), helpstring("property fullScreen")] HRESULT fullScreen([out, retval] VARIANT_BOOL* pVal);
 	[propput, id(21), helpstring("property fullScreen")] HRESULT fullScreen([in] VARIANT_BOOL newVal);
+	[propget, id(22), helpstring("property muteAudio")] HRESULT muteAudio([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(22), helpstring("property muteAudio")] HRESULT muteAudio([in] VARIANT_BOOL newVal);
+	[propget, id(23), helpstring("property muteVideo")] HRESULT muteVideo([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(23), helpstring("property muteVideo")] HRESULT muteVideo([in] VARIANT_BOOL newVal);
 	
-	[id(22), helpstring("method Init")] HRESULT Init([in] BSTR desc);
-	[id(23), helpstring("method StartDebug")] HRESULT StartDebug(void);
-	[id(24), helpstring("method StopDebug")] HRESULT StopDebug(void);
+	[id(24), helpstring("method Init")] HRESULT Init([in] BSTR desc);
+	[id(25), helpstring("method StartDebug")] HRESULT StartDebug(void);
+	[id(26), helpstring("method StopDebug")] HRESULT StopDebug(void);
 };
 
 [
