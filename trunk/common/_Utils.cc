@@ -635,16 +635,16 @@ static BOOL CALLBACK _UtilsEnumWindowsProc( __in  HWND hWnd, __in  LPARAM lParam
 	if (hIcon == NULL) {
 		hIcon = (HICON)SendMessage(hWnd, WM_GETICON, ICON_SMALL2, NULL);
 	}
-	if (hIcon == NULL) {
+	else if (hIcon == NULL) {
 		hIcon = (HICON)SendMessage(hWnd, WM_GETICON, ICON_SMALL, NULL);
 	}
-	if (hIcon == NULL) {
+	else if (hIcon == NULL) {
 		hIcon = (HICON)GetClassLong(hWnd, GCL_HICON); 
 	}
-	if (hIcon == NULL) {
+	else if (hIcon == NULL) {
 		hIcon = (HICON)GetClassLong(hWnd, GCL_HICONSM); 
 	}
-	if (hIcon == NULL) {
+	else if (hIcon == NULL) {
 		hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	}
 
@@ -663,7 +663,7 @@ static BOOL CALLBACK _UtilsEnumWindowsProc( __in  HWND hWnd, __in  LPARAM lParam
 	
 	
 	_Utils::MemFree((void**)&tmpBuffWindowText);
-	_Utils::MemFree((void**)&base64dataPtr);
+	TSK_FREE(base64dataPtr);
 	return TRUE;
 }
 
