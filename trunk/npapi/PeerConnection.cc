@@ -48,6 +48,8 @@
 #define kPropOpaque  "opaque"
 #define kPropVersion  "version"
 #define kPropFullScreen "fullScreen"
+#define kPropMuteVideo "muteVideo"
+#define kPropMuteAudio "muteAudio"
 
 extern NPNetscapeFuncs* BrowserFuncs;
 extern const char* kPluginVersion;
@@ -378,7 +380,9 @@ bool PeerConnection::HasProperty(NPObject* obj, NPIdentifier propertyName)
 		!strcmp(name, kPropRemoteVideo) ||
 		!strcmp(name, kPropLocalScreencast) ||
 		!strcmp(name, kPropSrcScreencast) ||
-		!strcmp(name, kPropIceState);
+		!strcmp(name, kPropIceState) ||
+		!strcmp(name, kPropMuteAudio) ||
+		!strcmp(name, kPropMuteVideo);
 	BrowserFuncs->memfree(name);
 	return ret_val;
 }
@@ -431,6 +435,16 @@ bool PeerConnection::GetProperty(NPObject* obj, NPIdentifier propertyName, NPVar
 		INT32_TO_NPVARIANT((int32_t)This->mIceState, *result);
 		ret_val = true;
 	}
+	else if (!strcmp(name, kPropMuteAudio)) {
+		BOOLEAN_TO_NPVARIANT((int32_t)This->mMuteAudio, *result);
+		ret_val = true;
+	}
+	else if (!strcmp(name, kPropMuteVideo)) {
+		BOOLEAN_TO_NPVARIANT((int32_t)This->mMuteVideo, *result);
+		ret_val = true;
+	}
+
+	
 	
 	else {
 		// BrowserFuncs->setexception(obj, "Unknown property");
@@ -489,6 +503,16 @@ bool PeerConnection::SetProperty(NPObject *npobj, NPIdentifier propertyName, con
 			ret_val = This->SetDisplaySrcScreencast((LONGLONG)(NPVARIANT_IS_DOUBLE(*value) ? value->value.doubleValue : value->value.intValue));
 		}
 	}
+	else if(!strcmp(name, kPropMuteAudio) || !strcmp(name, kPropMuteVideo)){
+		if ((!NPVARIANT_IS_BOOLEAN(*value))) {
+			BrowserFuncs->setexception(npobj, "Invalid argument");
+		}
+		else {
+			/*ret_val =*/ This->SetMute(!strcmp(name, kPropMuteVideo), value->value.boolValue);
+			ret_val = true;
+		}
+	}
+
 	BrowserFuncs->memfree(name);
 
 	return ret_val;

@@ -469,6 +469,141 @@ static BOOL _UtilsIsAltTabWindow(HWND hwnd)
     return TRUE;
 }
 
+// http://msdn.microsoft.com/en-us/library/ms997538.aspx
+typedef struct
+{
+	BYTE	bWidth;               // Width of the image
+	BYTE	bHeight;              // Height of the image (times 2)
+	BYTE	bColorCount;          // Number of colors in image (0 if >=8bpp)
+	BYTE	bReserved;            // Reserved
+	WORD	wPlanes;              // Color Planes
+	WORD	wBitCount;            // Bits per pixel
+	DWORD	dwBytesInRes;         // how many bytes in this resource?
+	DWORD	dwImageOffset;        // where in the file is this image
+} ICONDIRENTRY, *LPICONDIRENTRY;
+typedef struct 
+{
+	WORD			idReserved;   // Reserved
+	WORD			idType;       // resource type (1 for icons)
+	WORD			idCount;      // how many images?
+} ICONDIR, *LPICONDIR;
+typedef struct tagBITMAPINFO_ {
+    BITMAPINFOHEADER    bmiHeader;
+    RGBQUAD             bmiColors[256];
+} BITMAPINFO_, FAR *LPBITMAPINFO_, *PBITMAPINFO_;
+
+static tsk_size_t _UtilsGetBase64Icon(__in HICON hIcon, HWND hWnd, __out void** bufferPtr)
+{
+	tsk_size_t ret = 0;
+	if (!hIcon || !bufferPtr || *bufferPtr) {
+		TSK_DEBUG_ERROR("Invalid parameter");
+		return 0;
+	}
+
+	ICONINFO info = { 0 };
+    if (!GetIconInfo(hIcon, &info)) {
+        return 0;
+    }
+	BITMAP bmpColor = { 0 }, bmpMask = { 0 };
+	byte *dataColorPtr = NULL, *dataMaskPtr = NULL;
+	DWORD dataColorSize = 0, dataMaskSize = 0;
+	
+	if (GetObject(info.hbmColor, sizeof(bmpColor), &bmpColor) &&
+		GetObject(info.hbmMask, sizeof(bmpMask), &bmpMask) &&
+        (bmpColor.bmWidth && bmpColor.bmWidth == bmpMask.bmWidth) &&
+        (bmpColor.bmHeight && bmpColor.bmHeight == bmpMask.bmHeight) &&
+		(bmpColor.bmPlanes == bmpMask.bmPlanes)
+		){
+ 
+        BITMAPINFO_ bmi_ = { 0 };
+        HDC hDC = GetDC(hWnd);
+		
+        bmi_.bmiHeader.biSize = sizeof(bmi_.bmiHeader);
+		bmi_.bmiHeader.biCompression = BI_RGB;
+        bmi_.bmiHeader.biWidth = bmpMask.bmWidth;
+        bmi_.bmiHeader.biHeight = bmpMask.bmHeight;
+		bmi_.bmiHeader.biPlanes = bmpMask.bmPlanes;
+        bmi_.bmiHeader.biBitCount = bmpMask.bmBitsPixel;
+		// bmi_.bmiHeader.biSizeImage = (bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biHeight * bmi_.bmiHeader.biBitCount) >> 3; // must >> 3 after MUL because "biBitCount" could be equal to 1 ((1 >> 3) == 0)
+		GetDIBits(hDC, info.hbmColor, 0, bmi_.bmiHeader.biHeight, NULL, (LPBITMAPINFO)&bmi_, DIB_RGB_COLORS);
+		if ((dataMaskPtr = (byte*)_Utils::MemAlloc(bmi_.bmiHeader.biSizeImage * sizeof(byte)))) {
+			if (GetDIBits(hDC, info.hbmMask, 0, bmi_.bmiHeader.biHeight, dataMaskPtr, (LPBITMAPINFO)&bmi_, DIB_RGB_COLORS)) {
+				dataMaskSize = bmi_.bmiHeader.biSizeImage;
+			}
+		}
+		bmi_.bmiHeader.biSize = sizeof(bmi_.bmiHeader);
+        bmi_.bmiHeader.biWidth = bmpColor.bmWidth;
+        bmi_.bmiHeader.biHeight = bmpColor.bmHeight;
+		bmi_.bmiHeader.biPlanes = bmpColor.bmPlanes;
+        bmi_.bmiHeader.biBitCount = bmpColor.bmBitsPixel;
+		// bmi_.bmiHeader.biSizeImage = (bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biHeight * bmi_.bmiHeader.biBitCount) >> 3;
+		GetDIBits(hDC, info.hbmColor, 0, bmi_.bmiHeader.biHeight, NULL, (LPBITMAPINFO)&bmi_, DIB_RGB_COLORS);
+		if ((dataColorPtr = (byte*)_Utils::MemAlloc(bmi_.bmiHeader.biSizeImage * sizeof(byte)))) {
+			if (GetDIBits(hDC, info.hbmColor, 0, bmi_.bmiHeader.biHeight, dataColorPtr, (LPBITMAPINFO)&bmi_, DIB_RGB_COLORS)) {
+				dataColorSize = bmi_.bmiHeader.biSizeImage;
+			}
+		}
+ 
+		ICONDIR dir = 
+		{ 
+			0, // idReserved
+			1, // idType
+			1 // idCount
+		};
+		ICONDIRENTRY direntry = 
+		{ 
+			(BYTE)bmi_.bmiHeader.biWidth, //	bWidth;
+			(BYTE)bmi_.bmiHeader.biHeight, //	bHeight;
+			(BYTE)(((bmi_.bmiHeader.biPlanes * bmpColor.bmBitsPixel) >= 8) ?  0 : (1 << (bmi_.bmiHeader.biPlanes * bmpColor.bmBitsPixel))), //	bColorCount;
+			(BYTE)0, //	bReserved;
+			bmi_.bmiHeader.biPlanes, //	wPlanes;
+			bmpColor.bmBitsPixel, //	wBitCount;
+			sizeof(BITMAPINFOHEADER) + (dataColorSize +  dataMaskSize),//	dwBytesInRes;
+			sizeof(ICONDIR) + sizeof(ICONDIRENTRY) //	dwImageOffset;
+		};
+
+		bmi_.bmiHeader.biSize = sizeof(bmi_.bmiHeader);
+        bmi_.bmiHeader.biWidth = bmpColor.bmWidth;
+        bmi_.bmiHeader.biHeight = bmpColor.bmHeight + bmpMask.bmHeight;
+        bmi_.bmiHeader.biPlanes = bmi_.bmiHeader.biPlanes;
+        bmi_.bmiHeader.biBitCount = bmpColor.bmBitsPixel;
+        bmi_.bmiHeader.biSizeImage = 0;
+
+		if(dataColorPtr && dataColorSize && dataMaskPtr && dataMaskSize) {
+			size_t size = sizeof(dir) + sizeof(direntry) + sizeof(bmi_.bmiHeader) + dataColorSize + dataMaskSize;
+			uint8_t *ptr = (uint8_t*)tsk_malloc(size), *_ptr;
+			if ((_ptr = ptr)) {
+				memcpy(_ptr, &dir, sizeof(dir)), _ptr += sizeof(dir);
+				memcpy(_ptr, &direntry, sizeof(direntry)), _ptr += sizeof(direntry);
+				memcpy(_ptr, &bmi_.bmiHeader, sizeof(bmi_.bmiHeader)), _ptr += sizeof(bmi_.bmiHeader);
+				memcpy(_ptr, dataColorPtr, dataColorSize), _ptr += dataColorSize;
+				memcpy(_ptr, dataMaskPtr, dataMaskSize);
+				ret = tsk_base64_encode(ptr, (tsk_size_t)size, (char**)bufferPtr);
+				TSK_FREE(ptr);
+			}
+		}
+		
+		if (hDC) {
+			ReleaseDC(hWnd, hDC);
+		}
+		
+		_Utils::MemFree((void**)&dataColorPtr);
+		_Utils::MemFree((void**)&dataMaskPtr);
+    }
+	else {
+		TSK_DEBUG_ERROR("Unexpected code called");
+	}
+
+	if(info.hbmColor) {
+		DeleteObject(info.hbmColor);
+	}
+	if(info.hbmMask) {
+		DeleteObject(info.hbmMask);
+	}
+
+	return ret;
+}
+
 static BOOL CALLBACK _UtilsEnumWindowsProc( __in  HWND hWnd, __in  LPARAM lParam) 
 {
 	if (!::_UtilsIsAltTabWindow(hWnd)/*!::IsIconic(hWnd) || !::IsWindowVisible(hWnd)*/) {
@@ -478,13 +613,8 @@ static BOOL CALLBACK _UtilsEnumWindowsProc( __in  HWND hWnd, __in  LPARAM lParam
 	int length;
 	HICON hIcon = NULL;
 	TCHAR* tmpBuffWindowText = NULL;
-	HGLOBAL hBuf = NULL;
 	IPicture* pPicture = NULL;
-	BOOL bRet = FALSE;
-	IStream* pStream = NULL;
-	LONG cbSize = 0;
 	void* base64dataPtr = NULL;
-	PICTDESC pictDesc = { sizeof(PICTDESC) };
 	HRESULT hr = S_OK;
 
 	length = ::GetWindowTextLength(hWnd);
@@ -497,7 +627,7 @@ static BOOL CALLBACK _UtilsEnumWindowsProc( __in  HWND hWnd, __in  LPARAM lParam
 	tmpBuffWindowText = (TCHAR*)_Utils::MemAlloc((length + 1) * sizeof(TCHAR));
 	if (!tmpBuffWindowText) {
 		TSK_DEBUG_ERROR("Failed to allocate buffer with size = %d", (length + 1) * sizeof(TCHAR));
-		goto bail;
+		return TRUE;
 	}
 	GetWindowText(hWnd, tmpBuffWindowText, length + 1);
 
@@ -517,40 +647,11 @@ static BOOL CALLBACK _UtilsEnumWindowsProc( __in  HWND hWnd, __in  LPARAM lParam
 	if (hIcon == NULL) {
 		hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	}
-	
-	pictDesc.picType = PICTYPE_ICON;
-	pictDesc.icon.hicon = hIcon;
-	
-	hr = OleCreatePictureIndirect(&pictDesc, IID_IPicture, FALSE, (void**)&pPicture);
-	if (FAILED(hr)) {
-		TSK_DEBUG_ERROR("OleCreatePictureIndirect failed");
-		return TRUE;
-	}
-		
-	hr = CreateStreamOnHGlobal(0, TRUE, &pStream);
-	if (FAILED(hr)) {
-		TSK_DEBUG_ERROR("CreateStreamOnHGlobal failed");
-		goto bail;
-	}
-	
-	hr = pPicture->SaveAsFile(pStream, TRUE, &cbSize);
-	if (FAILED(hr)) {
-		TSK_DEBUG_ERROR("SaveAsFile failed");
-		goto bail;
-	}
-	
-	hr = GetHGlobalFromStream(pStream, &hBuf);
-	if (FAILED(hr)) {
-		TSK_DEBUG_ERROR("GetHGlobalFromStream failed");
-		goto bail;
-	}
-	
-	{
-		void* lckBuffer = GlobalLock(hBuf);
+
+	tsk_size_t base64dataSize = _UtilsGetBase64Icon(hIcon, hWnd, &base64dataPtr);
+	if (base64dataSize && base64dataPtr) {
 		static const char __IconTypePtr[] = "image/x-icon;base64";
 		static size_t __IconTypeSize = sizeof(__IconTypePtr) - 1;
-		
-		tsk_size_t base64dataSize = tsk_base64_encode((const uint8_t*)lckBuffer, (tsk_size_t)GlobalSize(hBuf), (char**)&base64dataPtr);
 		char windowTextPtr[MAX_PATH];
 		size_t windowTextSize = wcstombs(windowTextPtr, tmpBuffWindowText, sizeof(windowTextPtr));
 		activeApps->AppendApp(
@@ -558,24 +659,12 @@ static BOOL CALLBACK _UtilsEnumWindowsProc( __in  HWND hWnd, __in  LPARAM lParam
 			windowTextPtr, windowTextSize,
 			base64dataPtr, (size_t)base64dataSize,
 			__IconTypePtr, __IconTypeSize);
-		
-		GlobalUnlock(lckBuffer);
 	}
 	
-	bRet = TRUE;
 	
-bail:
-	if (tmpBuffWindowText) {
-		_Utils::MemFree((void**)&tmpBuffWindowText);
-	}
-	if (pPicture) {
-		pPicture->Release();
-	}
-	if (pStream) {
-		pStream->Release();
-	}
-	TSK_FREE(base64dataPtr);
-	return bRet;
+	_Utils::MemFree((void**)&tmpBuffWindowText);
+	_Utils::MemFree((void**)&base64dataPtr);
+	return TRUE;
 }
 
 #endif /* W4A_UNDER_WINDOWS */

@@ -115,6 +115,8 @@ public:
 	virtual bool SetDisplayLocalScreencast(LONGLONG local);
 	virtual bool SetDisplaySrcScreencast(LONGLONG src);
 
+	virtual bool SetMute(bool bVideo, bool bMute);
+
 	virtual bool ProcessContent(const char* req_name, const char* content_type, const void* content_ptr, int content_size);
 
 	virtual bool SendDTMF(uint8_t digit);
@@ -161,9 +163,15 @@ protected:
 	LONGLONG mLocalScreencast;
 	LONGLONG mSrcScreencast;
 
+	bool mIceCandAudioSignaled;
+	bool mIceCandVideoSignaled;
+
 	bool mFullScreen;
 	bool mRemoteHaveIce;
 	bool mStartDelayedUntilIceDone;
+
+	bool mMuteAudio;
+	bool mMuteVideo;
 
 	BrowserType_t mBrowserType;
 #if W4A_UNDER_WINDOWS

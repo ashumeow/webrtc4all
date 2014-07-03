@@ -108,6 +108,10 @@ public:
 	STDMETHOD(get_version)(BSTR* pVal);
 	STDMETHOD(get_fullScreen)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_fullScreen)(VARIANT_BOOL newVal);
+	STDMETHOD(get_muteAudio)(VARIANT_BOOL* pVal);
+	STDMETHOD(put_muteAudio)(VARIANT_BOOL newVal);
+	STDMETHOD(get_muteVideo)(VARIANT_BOOL* pVal);
+	STDMETHOD(put_muteVideo)(VARIANT_BOOL newVal);
 	
 	STDMETHOD(Init)(BSTR configuration);
 	STDMETHOD(StartDebug)(void);

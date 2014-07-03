@@ -42,6 +42,8 @@ _PeerConnection::_PeerConnection(BrowserType_t browserType):
 	mLocalScreencast(0),
 	mReadyState(ReadyStateNew),
 	mIceState(IceStateClosed),
+	mIceCandAudioSignaled(false),
+	mIceCandVideoSignaled(false),
 	mSessionMgr(NULL),
 	mMediaType(tmedia_none),
 	mSdpLocal(NULL),
@@ -112,6 +114,8 @@ bool _PeerConnection::StartIce(int IceOptions)
 	}
 
 	int iRet;
+	mIceCandAudioSignaled = false;
+	mIceCandVideoSignaled = false;
 
 	if((mMediaType & tmedia_audio)){
 		if(mIceCtxAudio && (iRet = tnet_ice_ctx_start(mIceCtxAudio)) != 0){
@@ -327,6 +331,25 @@ bool _PeerConnection::SetDisplayLocalScreencast(LONGLONG local)
 bool _PeerConnection::SetDisplaySrcScreencast(LONGLONG src)
 {
 	return SetDisplays(mLocalVideo, mRemoteVideo, mLocalScreencast, src);
+}
+
+bool _PeerConnection::SetMute(bool bVideo, bool bMute)
+{
+	if (bVideo) {
+		mMuteVideo = bMute;
+	}
+	else {
+		mMuteAudio = bMute;
+	}
+
+	if (mSessionMgr) {
+		tmedia_type_t media = bVideo ? tmedia_video : tmedia_audio;
+		int32_t mute = bMute ? 1 : 0;
+		return (tmedia_session_mgr_set(mSessionMgr,
+			TMEDIA_SESSION_PRODUCER_SET_INT32(media, "mute", mute),
+			TMEDIA_SESSION_SET_NULL()) == 0);
+	}
+	return false;
 }
 
 bool _PeerConnection::ProcessContent(const char* req_name, const char* content_type, const void* content_ptr, int content_size)
@@ -547,6 +570,9 @@ bool _PeerConnection::SignalNoMoreIceCandidateToFollow()
 
 bool _PeerConnection::IceCreateCtx(tmedia_type_t _eMediaType)
 {
+	mIceCandAudioSignaled = false;
+	mIceCandVideoSignaled = false;
+
 	if(!mIceCtxAudio && (_eMediaType & tmedia_audio)){
 		mIceCtxAudio = tnet_ice_ctx_create(USE_ICE_JINGLE, USE_IPV6, USE_ICE_RTCP, FALSE/*audio*/, &_PeerConnection::IceCallback, this);
 		if(!mIceCtxAudio){
@@ -733,10 +759,19 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 					const char* ufragStr = tnet_ice_ctx_get_ufrag(e->ctx);
 					const char* pwdStr = tnet_ice_ctx_get_pwd(e->ctx);
 					bool bGotAllCandidates = This->IceGotLocalCandidates();
-					const char* mediaStr = (e->ctx == This->mIceCtxAudio) ? "audio" : "video";
+					const char* mediaStr;
+					if (e->ctx == This->mIceCtxAudio) {
+						mediaStr = "audio";
+						This->mIceCandAudioSignaled = true;
+					}
+					else {
+						mediaStr = "video";
+						This->mIceCandVideoSignaled = true;
+					}
 					const tsdp_header_M_t* M = tsdp_message_find_media(This->mSdpLocal, mediaStr);
 					tnet_ice_candidate_t* pc_candidate;
 					tsk_size_t nIceCandidatesCount = tnet_ice_ctx_count_local_candidates(e->ctx);
+					
 					for(unsigned short index = 0; index < nIceCandidatesCount; ++index){
 						candidateStr = tsk_strdup(tnet_ice_candidate_tostring((pc_candidate = ((tnet_ice_candidate_t*)tnet_ice_ctx_get_local_candidate_at(e->ctx, index)))));
 						if(M){
@@ -746,7 +781,12 @@ int _PeerConnection::IceCallback(const tnet_ice_event_t *e)
 							}
 						}
 						tsk_strcat_2(&candidateStr, " webrtc4ie-ufrag %s webrtc4ie-pwd %s", ufragStr, pwdStr);
-						bool bMoreToFollow = !(bGotAllCandidates && (index == (nIceCandidatesCount - 1)));
+						bool bMoreToFollow = !(
+							bGotAllCandidates 
+							&& (index == (nIceCandidatesCount - 1)) 
+							&& (!tnet_ice_ctx_is_active(This->mIceCtxAudio) || This->mIceCandAudioSignaled)
+							&& (!tnet_ice_ctx_is_active(This->mIceCtxVideo) || This->mIceCandVideoSignaled)
+							);
 						/*if (This->GetWindowHandle()) */{
 							PeerConnectionEvent* oEvent = new PeerConnectionEvent(mediaStr, candidateStr, bMoreToFollow);
 							if (!_Utils::PostMessage(This->GetWindowHandle(), WM_ICE_EVENT_CANDIDATE, This, (void**)&oEvent)) {

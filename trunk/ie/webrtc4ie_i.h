@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Tue Jun 03 05:50:37 2014
+/* at Wed Jul 02 09:55:16 2014
  */
 /* Compiler settings for .\webrtc4ie.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -436,6 +436,18 @@ EXTERN_C const IID IID_IPeerConnection;
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_fullScreen( 
             /* [in] */ VARIANT_BOOL newVal) = 0;
         
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_muteAudio( 
+            /* [retval][out] */ VARIANT_BOOL *pVal) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_muteAudio( 
+            /* [in] */ VARIANT_BOOL newVal) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_muteVideo( 
+            /* [retval][out] */ VARIANT_BOOL *pVal) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_muteVideo( 
+            /* [in] */ VARIANT_BOOL newVal) = 0;
+        
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Init( 
             /* [in] */ BSTR desc) = 0;
         
@@ -610,6 +622,22 @@ EXTERN_C const IID IID_IPeerConnection;
             IPeerConnection * This,
             /* [in] */ VARIANT_BOOL newVal);
         
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_muteAudio )( 
+            IPeerConnection * This,
+            /* [retval][out] */ VARIANT_BOOL *pVal);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_muteAudio )( 
+            IPeerConnection * This,
+            /* [in] */ VARIANT_BOOL newVal);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_muteVideo )( 
+            IPeerConnection * This,
+            /* [retval][out] */ VARIANT_BOOL *pVal);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_muteVideo )( 
+            IPeerConnection * This,
+            /* [in] */ VARIANT_BOOL newVal);
+        
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Init )( 
             IPeerConnection * This,
             /* [in] */ BSTR desc);
@@ -733,6 +761,18 @@ EXTERN_C const IID IID_IPeerConnection;
 
 #define IPeerConnection_put_fullScreen(This,newVal)	\
     ( (This)->lpVtbl -> put_fullScreen(This,newVal) ) 
+
+#define IPeerConnection_get_muteAudio(This,pVal)	\
+    ( (This)->lpVtbl -> get_muteAudio(This,pVal) ) 
+
+#define IPeerConnection_put_muteAudio(This,newVal)	\
+    ( (This)->lpVtbl -> put_muteAudio(This,newVal) ) 
+
+#define IPeerConnection_get_muteVideo(This,pVal)	\
+    ( (This)->lpVtbl -> get_muteVideo(This,pVal) ) 
+
+#define IPeerConnection_put_muteVideo(This,newVal)	\
+    ( (This)->lpVtbl -> put_muteVideo(This,newVal) ) 
 
 #define IPeerConnection_Init(This,desc)	\
     ( (This)->lpVtbl -> Init(This,desc) ) 
