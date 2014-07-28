@@ -470,6 +470,8 @@ static BOOL _UtilsIsAltTabWindow(HWND hwnd)
 }
 
 // http://msdn.microsoft.com/en-us/library/ms997538.aspx
+#pragma pack( push )
+#pragma pack( 2 )
 typedef struct
 {
 	BYTE	bWidth;               // Width of the image
@@ -491,6 +493,7 @@ typedef struct tagBITMAPINFO_ {
     BITMAPINFOHEADER    bmiHeader;
     RGBQUAD             bmiColors[256];
 } BITMAPINFO_, FAR *LPBITMAPINFO_, *PBITMAPINFO_;
+#pragma pack( pop )
 
 static tsk_size_t _UtilsGetBase64Icon(__in HICON hIcon, HWND hWnd, __out void** bufferPtr)
 {
@@ -635,16 +638,16 @@ static BOOL CALLBACK _UtilsEnumWindowsProc( __in  HWND hWnd, __in  LPARAM lParam
 	if (hIcon == NULL) {
 		hIcon = (HICON)SendMessage(hWnd, WM_GETICON, ICON_SMALL2, NULL);
 	}
-	else if (hIcon == NULL) {
+	if (hIcon == NULL) {
 		hIcon = (HICON)SendMessage(hWnd, WM_GETICON, ICON_SMALL, NULL);
 	}
-	else if (hIcon == NULL) {
+	if (hIcon == NULL) {
 		hIcon = (HICON)GetClassLong(hWnd, GCL_HICON); 
 	}
-	else if (hIcon == NULL) {
+	if (hIcon == NULL) {
 		hIcon = (HICON)GetClassLong(hWnd, GCL_HICONSM); 
 	}
-	else if (hIcon == NULL) {
+	if (hIcon == NULL) {
 		hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	}
 
