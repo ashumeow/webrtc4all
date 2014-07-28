@@ -500,7 +500,7 @@ bool _PeerConnection::CreateLo(bool has_audio, bool has_video, bool has_bfcpvide
 	tmedia_type_t eMediaType = tmedia_none;
 	if (has_audio) eMediaType = (tmedia_type_t)(eMediaType | tmedia_audio);
 	if (has_video) eMediaType = (tmedia_type_t)(eMediaType | tmedia_video);
-	if (has_bfcpvideo) eMediaType = (tmedia_type_t)(eMediaType | tmedia_bfcp_video);
+	if (has_bfcpvideo && (offerer || (mSessionMgr && mSessionMgr->type & tmedia_bfcp_video))) eMediaType = (tmedia_type_t)(eMediaType | tmedia_bfcp_video); // BFCP -> only if local peer already have it
 
 	*sdpStr = NULL;
 	*sdp_len = 0;

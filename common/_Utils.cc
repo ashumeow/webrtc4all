@@ -91,7 +91,7 @@ void _Utils::Initialize(void)
 #if METROPOLIS /* G2J.COM TelePresence client */
 		static tmedia_srtp_mode_t g_eSrtpMode = tmedia_srtp_mode_optional; // "TANDBERG/4120 (X7.2.2.2) returns SAVPF without crypto lines"
 		static tmedia_srtp_type_t g_eSrtpType = tmedia_srtp_type_sdes;
-		static tsk_bool_t g_bIceEnabled = tsk_false;
+		static tsk_bool_t g_bIceEnabled = tsk_true;
 		static tsk_bool_t g_bZeroartifactsEnabled = tsk_true;
 		static tmedia_mode_t g_eAvpfMode = tmedia_mode_optional;
 		// See issue 382: https://code.google.com/p/doubango/issues/detail?id=382
@@ -119,8 +119,8 @@ void _Utils::Initialize(void)
 				tdav_codec_id_speex_nb |
 				tdav_codec_id_speex_wb |
 				tdav_codec_id_speex_uwb |
-				tdav_codec_id_g722 |
 #if !METROPOLIS
+				tdav_codec_id_g722 | // robotic voice on Polycom TelePresence (701021) - looks like regression...to be checked
 				tdav_codec_id_h263 |
 				tdav_codec_id_h263p |
 				tdav_codec_id_h263pp |
