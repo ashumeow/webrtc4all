@@ -146,6 +146,9 @@ public:
 		HRESULT OnDraw(ATL_DRAWINFO& di)
 		{
 		RECT& rc = *(RECT*)di.prcBounds;
+#if METROPOLIS
+		FillRect(di.hdcDraw, &rc, (HBRUSH)GetStockObject(BLACK_BRUSH));
+#else
 		// Set Clip region to the rectangle specified by di.prcBounds
 		HRGN hRgnOld = NULL;
 		if (GetClipRgn(di.hdcDraw, hRgnOld) != 1)
@@ -181,6 +184,7 @@ public:
 
 		if (bSelectOldRgn)
 			SelectClipRgn(di.hdcDraw, hRgnOld);
+#endif
 
 		return S_OK;
 	}
