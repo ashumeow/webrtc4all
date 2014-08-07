@@ -655,15 +655,25 @@ static BOOL CALLBACK _UtilsEnumWindowsProc( __in  HWND hWnd, __in  LPARAM lParam
 	if (base64dataSize && base64dataPtr) {
 		static const char __IconTypePtr[] = "image/x-icon;base64";
 		static size_t __IconTypeSize = sizeof(__IconTypePtr) - 1;
+#if 0 // fails with _T("Outils d’administration")...why?
 		char windowTextPtr[MAX_PATH];
-		size_t windowTextSize = wcstombs(windowTextPtr, tmpBuffWindowText, sizeof(windowTextPtr));
-		activeApps->AppendApp(
-			reinterpret_cast<LONGLONG>(hWnd),
-			windowTextPtr, windowTextSize,
-			base64dataPtr, (size_t)base64dataSize,
-			__IconTypePtr, __IconTypeSize);
+		int32_t windowTextSize = (int32_t)wcstombs(windowTextPtr, tmpBuffWindowText, sizeof(windowTextPtr));
+#else
+		USES_CONVERSION;
+		const char* windowTextPtr = T2A(tmpBuffWindowText);
+		int32_t windowTextSize = (int32_t)tsk_strlen(windowTextPtr);
+#endif
+		if (windowTextSize <= 0) { // yep, this could really happens
+			TSK_DEBUG_ERROR("wcstombs failed");
+		}
+		else {
+			activeApps->AppendApp(
+				reinterpret_cast<LONGLONG>(hWnd),
+				windowTextPtr, windowTextSize,
+				base64dataPtr, (size_t)base64dataSize,
+				__IconTypePtr, __IconTypeSize);
+		}
 	}
-	
 	
 	_Utils::MemFree((void**)&tmpBuffWindowText);
 	TSK_FREE(base64dataPtr);
