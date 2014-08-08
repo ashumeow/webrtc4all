@@ -40,6 +40,8 @@ protected:
 	static bool SetMaxBandwidthUp(long maxBandwidthUp);
 	static long GetMaxBandwidthDown();
 	static bool SetMaxBandwidthDown(long maxBandwidthDown);
+	static bool GetZeroArtifacts();
+	static bool SetZeroArtifacts(bool zeroArtifacts);
 };
 
 #endif /* _WEBRTC4ALL__PLUGININSTANCE_H_ */

@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Fri Jul 25 09:22:42 2014
+/* at Fri Aug 08 15:33:15 2014
  */
 /* Compiler settings for .\webrtc4ie.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -1349,6 +1349,12 @@ EXTERN_C const IID IID_IPluginInstance;
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_maxBandwidthDown( 
             /* [in] */ LONG newVal) = 0;
         
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_zeroArtifacts( 
+            /* [retval][out] */ VARIANT_BOOL *pVal) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_zeroArtifacts( 
+            /* [in] */ VARIANT_BOOL newVal) = 0;
+        
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE createPeerConnection( 
             /* [retval][out] */ IDispatch **ppPeerConnection) = 0;
         
@@ -1462,6 +1468,14 @@ EXTERN_C const IID IID_IPluginInstance;
             IPluginInstance * This,
             /* [in] */ LONG newVal);
         
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_zeroArtifacts )( 
+            IPluginInstance * This,
+            /* [retval][out] */ VARIANT_BOOL *pVal);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_zeroArtifacts )( 
+            IPluginInstance * This,
+            /* [in] */ VARIANT_BOOL newVal);
+        
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *createPeerConnection )( 
             IPluginInstance * This,
             /* [retval][out] */ IDispatch **ppPeerConnection);
@@ -1552,6 +1566,12 @@ EXTERN_C const IID IID_IPluginInstance;
 
 #define IPluginInstance_put_maxBandwidthDown(This,newVal)	\
     ( (This)->lpVtbl -> put_maxBandwidthDown(This,newVal) ) 
+
+#define IPluginInstance_get_zeroArtifacts(This,pVal)	\
+    ( (This)->lpVtbl -> get_zeroArtifacts(This,pVal) ) 
+
+#define IPluginInstance_put_zeroArtifacts(This,newVal)	\
+    ( (This)->lpVtbl -> put_zeroArtifacts(This,newVal) ) 
 
 #define IPluginInstance_createPeerConnection(This,ppPeerConnection)	\
     ( (This)->lpVtbl -> createPeerConnection(This,ppPeerConnection) ) 

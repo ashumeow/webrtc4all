@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Fri Jul 25 09:22:42 2014
+/* at Fri Aug 08 15:33:15 2014
  */
 /* Compiler settings for .\webrtc4ie.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -50,7 +50,7 @@
 #include "webrtc4ie_i.h"
 
 #define TYPE_FORMAT_STRING_SIZE   91                                
-#define PROC_FORMAT_STRING_SIZE   2557                              
+#define PROC_FORMAT_STRING_SIZE   2593                              
 #define EXPR_FORMAT_STRING_SIZE   1                                 
 #define TRANSMIT_AS_TABLE_SIZE    0            
 #define WIRE_MARSHAL_TABLE_SIZE   1            
@@ -730,6 +730,9 @@ static const webrtc4ie_MIDL_PROC_FORMAT_STRING webrtc4ie__MIDL_ProcFormatString 
 /* 664 */	0x8,		/* FC_LONG */
 			0x0,		/* 0 */
 
+	/* Procedure get_zeroArtifacts */
+
+
 	/* Procedure get_readyState */
 
 /* 666 */	0x33,		/* FC_AUTO_HANDLE */
@@ -749,10 +752,16 @@ static const webrtc4ie_MIDL_PROC_FORMAT_STRING webrtc4ie__MIDL_ProcFormatString 
 
 	/* Parameter pVal */
 
+
+	/* Parameter pVal */
+
 /* 690 */	NdrFcShort( 0x2150 ),	/* Flags:  out, base type, simple ref, srv alloc size=8 */
 /* 692 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
 /* 694 */	0x6,		/* FC_SHORT */
 			0x0,		/* 0 */
+
+	/* Return value */
+
 
 	/* Return value */
 
@@ -2226,16 +2235,16 @@ static const webrtc4ie_MIDL_PROC_FORMAT_STRING webrtc4ie__MIDL_ProcFormatString 
 /* 2410 */	0x8,		/* FC_LONG */
 			0x0,		/* 0 */
 
-	/* Procedure createPeerConnection */
+	/* Procedure put_zeroArtifacts */
 
 /* 2412 */	0x33,		/* FC_AUTO_HANDLE */
 			0x6c,		/* Old Flags:  object, Oi2 */
 /* 2414 */	NdrFcLong( 0x0 ),	/* 0 */
-/* 2418 */	NdrFcShort( 0x14 ),	/* 20 */
+/* 2418 */	NdrFcShort( 0x15 ),	/* 21 */
 /* 2420 */	NdrFcShort( 0xc ),	/* x86 Stack size/offset = 12 */
-/* 2422 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 2422 */	NdrFcShort( 0x6 ),	/* 6 */
 /* 2424 */	NdrFcShort( 0x8 ),	/* 8 */
-/* 2426 */	0x45,		/* Oi2 Flags:  srv must size, has return, has ext, */
+/* 2426 */	0x44,		/* Oi2 Flags:  has return, has ext, */
 			0x2,		/* 2 */
 /* 2428 */	0x8,		/* 8 */
 			0x1,		/* Ext Flags:  new corr desc, */
@@ -2243,11 +2252,12 @@ static const webrtc4ie_MIDL_PROC_FORMAT_STRING webrtc4ie__MIDL_ProcFormatString 
 /* 2432 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 2434 */	NdrFcShort( 0x0 ),	/* 0 */
 
-	/* Parameter ppPeerConnection */
+	/* Parameter newVal */
 
-/* 2436 */	NdrFcShort( 0x13 ),	/* Flags:  must size, must free, out, */
+/* 2436 */	NdrFcShort( 0x48 ),	/* Flags:  in, base type, */
 /* 2438 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
-/* 2440 */	NdrFcShort( 0x44 ),	/* Type Offset=68 */
+/* 2440 */	0x6,		/* FC_SHORT */
+			0x0,		/* 0 */
 
 	/* Return value */
 
@@ -2256,12 +2266,12 @@ static const webrtc4ie_MIDL_PROC_FORMAT_STRING webrtc4ie__MIDL_ProcFormatString 
 /* 2446 */	0x8,		/* FC_LONG */
 			0x0,		/* 0 */
 
-	/* Procedure createSessionDescription */
+	/* Procedure createPeerConnection */
 
 /* 2448 */	0x33,		/* FC_AUTO_HANDLE */
 			0x6c,		/* Old Flags:  object, Oi2 */
 /* 2450 */	NdrFcLong( 0x0 ),	/* 0 */
-/* 2454 */	NdrFcShort( 0x15 ),	/* 21 */
+/* 2454 */	NdrFcShort( 0x16 ),	/* 22 */
 /* 2456 */	NdrFcShort( 0xc ),	/* x86 Stack size/offset = 12 */
 /* 2458 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 2460 */	NdrFcShort( 0x8 ),	/* 8 */
@@ -2273,7 +2283,7 @@ static const webrtc4ie_MIDL_PROC_FORMAT_STRING webrtc4ie__MIDL_ProcFormatString 
 /* 2468 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 2470 */	NdrFcShort( 0x0 ),	/* 0 */
 
-	/* Parameter ppSessionDescription */
+	/* Parameter ppPeerConnection */
 
 /* 2472 */	NdrFcShort( 0x13 ),	/* Flags:  must size, must free, out, */
 /* 2474 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
@@ -2286,12 +2296,12 @@ static const webrtc4ie_MIDL_PROC_FORMAT_STRING webrtc4ie__MIDL_ProcFormatString 
 /* 2482 */	0x8,		/* FC_LONG */
 			0x0,		/* 0 */
 
-	/* Procedure createNetTransport */
+	/* Procedure createSessionDescription */
 
 /* 2484 */	0x33,		/* FC_AUTO_HANDLE */
 			0x6c,		/* Old Flags:  object, Oi2 */
 /* 2486 */	NdrFcLong( 0x0 ),	/* 0 */
-/* 2490 */	NdrFcShort( 0x16 ),	/* 22 */
+/* 2490 */	NdrFcShort( 0x17 ),	/* 23 */
 /* 2492 */	NdrFcShort( 0xc ),	/* x86 Stack size/offset = 12 */
 /* 2494 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 2496 */	NdrFcShort( 0x8 ),	/* 8 */
@@ -2303,7 +2313,7 @@ static const webrtc4ie_MIDL_PROC_FORMAT_STRING webrtc4ie__MIDL_ProcFormatString 
 /* 2504 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 2506 */	NdrFcShort( 0x0 ),	/* 0 */
 
-	/* Parameter ppNetTransport */
+	/* Parameter ppSessionDescription */
 
 /* 2508 */	NdrFcShort( 0x13 ),	/* Flags:  must size, must free, out, */
 /* 2510 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
@@ -2316,34 +2326,64 @@ static const webrtc4ie_MIDL_PROC_FORMAT_STRING webrtc4ie__MIDL_ProcFormatString 
 /* 2518 */	0x8,		/* FC_LONG */
 			0x0,		/* 0 */
 
-	/* Procedure runningApps */
+	/* Procedure createNetTransport */
 
 /* 2520 */	0x33,		/* FC_AUTO_HANDLE */
 			0x6c,		/* Old Flags:  object, Oi2 */
 /* 2522 */	NdrFcLong( 0x0 ),	/* 0 */
-/* 2526 */	NdrFcShort( 0x17 ),	/* 23 */
+/* 2526 */	NdrFcShort( 0x18 ),	/* 24 */
 /* 2528 */	NdrFcShort( 0xc ),	/* x86 Stack size/offset = 12 */
 /* 2530 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 2532 */	NdrFcShort( 0x8 ),	/* 8 */
 /* 2534 */	0x45,		/* Oi2 Flags:  srv must size, has return, has ext, */
 			0x2,		/* 2 */
 /* 2536 */	0x8,		/* 8 */
-			0x3,		/* Ext Flags:  new corr desc, clt corr check, */
-/* 2538 */	NdrFcShort( 0x1 ),	/* 1 */
+			0x1,		/* Ext Flags:  new corr desc, */
+/* 2538 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 2540 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 2542 */	NdrFcShort( 0x0 ),	/* 0 */
 
-	/* Parameter pApps */
+	/* Parameter ppNetTransport */
 
-/* 2544 */	NdrFcShort( 0x2113 ),	/* Flags:  must size, must free, out, simple ref, srv alloc size=8 */
+/* 2544 */	NdrFcShort( 0x13 ),	/* Flags:  must size, must free, out, */
 /* 2546 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
-/* 2548 */	NdrFcShort( 0x20 ),	/* Type Offset=32 */
+/* 2548 */	NdrFcShort( 0x44 ),	/* Type Offset=68 */
 
 	/* Return value */
 
 /* 2550 */	NdrFcShort( 0x70 ),	/* Flags:  out, return, base type, */
 /* 2552 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
 /* 2554 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
+	/* Procedure runningApps */
+
+/* 2556 */	0x33,		/* FC_AUTO_HANDLE */
+			0x6c,		/* Old Flags:  object, Oi2 */
+/* 2558 */	NdrFcLong( 0x0 ),	/* 0 */
+/* 2562 */	NdrFcShort( 0x19 ),	/* 25 */
+/* 2564 */	NdrFcShort( 0xc ),	/* x86 Stack size/offset = 12 */
+/* 2566 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 2568 */	NdrFcShort( 0x8 ),	/* 8 */
+/* 2570 */	0x45,		/* Oi2 Flags:  srv must size, has return, has ext, */
+			0x2,		/* 2 */
+/* 2572 */	0x8,		/* 8 */
+			0x3,		/* Ext Flags:  new corr desc, clt corr check, */
+/* 2574 */	NdrFcShort( 0x1 ),	/* 1 */
+/* 2576 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 2578 */	NdrFcShort( 0x0 ),	/* 0 */
+
+	/* Parameter pApps */
+
+/* 2580 */	NdrFcShort( 0x2113 ),	/* Flags:  must size, must free, out, simple ref, srv alloc size=8 */
+/* 2582 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
+/* 2584 */	NdrFcShort( 0x20 ),	/* Type Offset=32 */
+
+	/* Return value */
+
+/* 2586 */	NdrFcShort( 0x70 ),	/* Flags:  out, return, base type, */
+/* 2588 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
+/* 2590 */	0x8,		/* FC_LONG */
 			0x0,		/* 0 */
 
 			0x0
@@ -2958,10 +2998,12 @@ static const unsigned short IPluginInstance_FormatStringOffsetTable[] =
     2304,
     2340,
     2376,
+    666,
     2412,
     2448,
     2484,
-    2520
+    2520,
+    2556
     };
 
 static const MIDL_STUBLESS_PROXY_INFO IPluginInstance_ProxyInfo =
@@ -2985,7 +3027,7 @@ static const MIDL_SERVER_INFO IPluginInstance_ServerInfo =
     0,
     0,
     0};
-CINTERFACE_PROXY_VTABLE(24) _IPluginInstanceProxyVtbl = 
+CINTERFACE_PROXY_VTABLE(26) _IPluginInstanceProxyVtbl = 
 {
     &IPluginInstance_ProxyInfo,
     &IID_IPluginInstance,
@@ -3009,6 +3051,8 @@ CINTERFACE_PROXY_VTABLE(24) _IPluginInstanceProxyVtbl =
     (void *) (INT_PTR) -1 /* IPluginInstance::put_maxBandwidthUp */ ,
     (void *) (INT_PTR) -1 /* IPluginInstance::get_maxBandwidthDown */ ,
     (void *) (INT_PTR) -1 /* IPluginInstance::put_maxBandwidthDown */ ,
+    (void *) (INT_PTR) -1 /* IPluginInstance::get_zeroArtifacts */ ,
+    (void *) (INT_PTR) -1 /* IPluginInstance::put_zeroArtifacts */ ,
     (void *) (INT_PTR) -1 /* IPluginInstance::createPeerConnection */ ,
     (void *) (INT_PTR) -1 /* IPluginInstance::createSessionDescription */ ,
     (void *) (INT_PTR) -1 /* IPluginInstance::createNetTransport */ ,
@@ -3038,6 +3082,8 @@ static const PRPC_STUB_FUNCTION IPluginInstance_table[] =
     NdrStubCall2,
     NdrStubCall2,
     NdrStubCall2,
+    NdrStubCall2,
+    NdrStubCall2,
     NdrStubCall2
 };
 
@@ -3045,7 +3091,7 @@ CInterfaceStubVtbl _IPluginInstanceStubVtbl =
 {
     &IID_IPluginInstance,
     &IPluginInstance_ServerInfo,
-    24,
+    26,
     &IPluginInstance_table[-3],
     CStdStubBuffer_DELEGATING_METHODS
 };
