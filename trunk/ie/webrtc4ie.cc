@@ -37,6 +37,8 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 // DllRegisterServer - Adds entries to the system registry
 STDAPI DllRegisterServer(void)
 {
+	ATL::AtlSetPerUserRegistration(true);
+
     // registers object, typelib and all interfaces in typelib
     HRESULT hr = _AtlModule.DllRegisterServer();
 	return hr;
@@ -46,6 +48,8 @@ STDAPI DllRegisterServer(void)
 // DllUnregisterServer - Removes entries from the system registry
 STDAPI DllUnregisterServer(void)
 {
+	ATL::AtlSetPerUserRegistration(true);
+
 	HRESULT hr = _AtlModule.DllUnregisterServer();
 	return hr;
 }
@@ -54,7 +58,10 @@ STDAPI DllUnregisterServer(void)
 //              per machine.	
 STDAPI DllInstall(BOOL bInstall, LPCWSTR pszCmdLine)
 {
+	ATL::AtlSetPerUserRegistration(true);
+
     HRESULT hr = E_FAIL;
+#if 0
     static const wchar_t szUserSwitch[] = _T("user");
 
     if (pszCmdLine != NULL)
@@ -64,6 +71,7 @@ STDAPI DllInstall(BOOL bInstall, LPCWSTR pszCmdLine)
     		AtlSetPerUserRegistration(true);
     	}
     }
+#endif
 
     if (bInstall)
     {	

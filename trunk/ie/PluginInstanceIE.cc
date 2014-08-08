@@ -100,6 +100,17 @@ STDMETHODIMP CPluginInstance::put_maxBandwidthDown(LONG pVal)
 	return _PluginInstance::SetMaxBandwidthDown(pVal) ? S_OK : E_FAIL;
 }
 
+STDMETHODIMP CPluginInstance::get_zeroArtifacts(VARIANT_BOOL* pVal)
+{
+	*pVal = _PluginInstance::GetZeroArtifacts() ? VARIANT_TRUE : VARIANT_FALSE;
+	return S_OK;
+}
+
+STDMETHODIMP CPluginInstance::put_zeroArtifacts(VARIANT_BOOL newVal)
+{
+	return _PluginInstance::SetZeroArtifacts(newVal == VARIANT_FALSE ? false : true) ? S_OK : E_FAIL;
+}
+
 STDMETHODIMP CPluginInstance::createPeerConnection(IDispatch** ppPeerConnection)
 {
 	CComObject<CPeerConnection>* pPeerConnection;

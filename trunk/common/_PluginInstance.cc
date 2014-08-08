@@ -122,3 +122,13 @@ bool _PluginInstance::SetMaxBandwidthDown(long maxBandwidthDown)
 {
 	return (tmedia_defaults_set_bandwidth_video_download_max((int32_t)maxBandwidthDown) == 0);
 }
+
+bool _PluginInstance::GetZeroArtifacts()
+{
+	return (tmedia_defaults_get_video_zeroartifacts_enabled() == tsk_true);
+}
+
+bool _PluginInstance::SetZeroArtifacts(bool zeroArtifacts)
+{
+	return (tmedia_defaults_set_video_zeroartifacts_enabled(zeroArtifacts ? tsk_true : tsk_false) == 0);
+}

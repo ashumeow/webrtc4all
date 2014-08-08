@@ -149,12 +149,14 @@ interface IPluginInstance : IDispatch{
 	[propput, id(8), helpstring("property maxBandwidthUp")] HRESULT maxBandwidthUp([in] LONG newVal);
 	[propget, id(9), helpstring("property maxBandwidthDown")] HRESULT maxBandwidthDown([out, retval] LONG* pVal);
 	[propput, id(9), helpstring("property maxBandwidthDown")] HRESULT maxBandwidthDown([in] LONG newVal);
+	[propget, id(10), helpstring("property zeroArtifacts")] HRESULT zeroArtifacts([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(10), helpstring("property zeroArtifacts")] HRESULT zeroArtifacts([in] VARIANT_BOOL newVal);
 
-	[id(10), helpstring("method createPeerConnection")] HRESULT createPeerConnection([out,retval] IDispatch** ppPeerConnection);
-	[id(11), helpstring("method createSessionDescription")] HRESULT createSessionDescription([out,retval] IDispatch** ppSessionDescription);
-	[id(12), helpstring("method createNetTransport")] HRESULT createNetTransport([out,retval] IDispatch** ppNetTransport);
+	[id(11), helpstring("method createPeerConnection")] HRESULT createPeerConnection([out,retval] IDispatch** ppPeerConnection);
+	[id(12), helpstring("method createSessionDescription")] HRESULT createSessionDescription([out,retval] IDispatch** ppSessionDescription);
+	[id(13), helpstring("method createNetTransport")] HRESULT createNetTransport([out,retval] IDispatch** ppNetTransport);
 
-	[id(13), helpstring("method runningApps")] HRESULT runningApps([out,retval] BSTR* pApps);
+	[id(14), helpstring("method runningApps")] HRESULT runningApps([out,retval] BSTR* pApps);
 };
 
 [

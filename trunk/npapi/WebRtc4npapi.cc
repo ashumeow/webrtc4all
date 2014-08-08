@@ -40,6 +40,7 @@
 #define kPropMaxVideoSize		"maxVideoSize"
 #define kPropMaxBandwidthUp		"maxBandwidthUp"
 #define kPropMaxBandwidthDown	"maxBandwidthDown"
+#define kPropZeroArtifacts		"zeroArtifacts"
 
 extern NPClass PeerConnectionClass;
 extern NPClass NetTransportClass;
@@ -202,7 +203,8 @@ bool WebRtc4npapi::HasProperty(NPObject* obj, NPIdentifier propertyName)
 			!strcmp(name, kPropFps) ||
 			!strcmp(name, kPropMaxVideoSize) ||
 			!strcmp(name, kPropMaxBandwidthUp) ||
-			!strcmp(name, kPropMaxBandwidthDown)
+			!strcmp(name, kPropMaxBandwidthDown) ||
+			!strcmp(name, kPropZeroArtifacts)
 			;
 	BrowserFuncs->memfree(name);
 	return ret_val;
@@ -259,6 +261,10 @@ bool WebRtc4npapi::GetProperty(NPObject* obj, NPIdentifier propertyName, NPVaria
 		DOUBLE_TO_NPVARIANT(_PluginInstance::GetMaxBandwidthDown(), *result);
 		ret_val = true;
 	}
+	else if (!strcmp(name, kPropZeroArtifacts)) {
+		BOOLEAN_TO_NPVARIANT(_PluginInstance::GetZeroArtifacts(), *result);
+		ret_val = true;
+	}
 
 	BrowserFuncs->memfree(name);
 	return ret_val;
@@ -288,6 +294,11 @@ bool WebRtc4npapi::SetProperty(NPObject *npobj, NPIdentifier propertyName, const
 	else if (!strcmp(name, kPropMaxBandwidthDown)) {
 		if ((NPVARIANT_IS_DOUBLE(*value) || NPVARIANT_IS_INT32(*value))) {
 			ret_val = _PluginInstance::SetMaxBandwidthDown((long)(NPVARIANT_IS_DOUBLE(*value) ? value->value.doubleValue : value->value.intValue));
+		}
+	}
+	else if (!strcmp(name, kPropZeroArtifacts)) {
+		if ((NPVARIANT_IS_BOOLEAN(*value))) {
+			ret_val = _PluginInstance::SetZeroArtifacts(value->value.boolValue);
 		}
 	}
 	else if (!strcmp(name, kPropHidden)) {

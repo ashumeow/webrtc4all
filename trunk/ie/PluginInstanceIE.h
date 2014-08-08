@@ -215,6 +215,8 @@ public:
 	STDMETHOD(put_maxBandwidthUp)(LONG pVal);
 	STDMETHOD(get_maxBandwidthDown)(LONG* pVal);
 	STDMETHOD(put_maxBandwidthDown)(LONG pVal);
+	STDMETHOD(get_zeroArtifacts)(VARIANT_BOOL* pVal);
+	STDMETHOD(put_zeroArtifacts)(VARIANT_BOOL newVal);
 	
 	STDMETHOD(createPeerConnection)(IDispatch** ppPeerConnection);
 	STDMETHOD(createSessionDescription)(IDispatch** ppSessionDescription);
