@@ -280,14 +280,16 @@ bool _PeerConnection::SetDisplays(LONGLONG localVideo, LONGLONG remoteVideo, LON
 			tmedia_session_mgr_set(mSessionMgr,
 				TMEDIA_SESSION_PRODUCER_SET_INT64(tmedia_video, "local-hwnd", mLocalVideo),
 				TMEDIA_SESSION_CONSUMER_SET_INT64(tmedia_video, "remote-hwnd", mRemoteVideo),
-				
+								
 				TMEDIA_SESSION_SET_NULL());
 		}
 		if ((mSessionMgr->type & tmedia_bfcp_video) == tmedia_bfcp_video) {
 			tmedia_session_mgr_set(mSessionMgr,
 				TMEDIA_SESSION_PRODUCER_SET_INT64(tmedia_bfcp_video, "local-hwnd", mLocalScreencast),
 				TMEDIA_SESSION_PRODUCER_SET_INT64(tmedia_bfcp_video, "src-hwnd", mSrcScreencast),
-				
+				// The BFCP session is not expected to receive any media but Radvision use it as receiver for the mixed stream.
+				TMEDIA_SESSION_CONSUMER_SET_INT64(tmedia_bfcp_video, "remote-hwnd", mRemoteVideo),
+
 				TMEDIA_SESSION_SET_NULL());
 		}	
 	}
