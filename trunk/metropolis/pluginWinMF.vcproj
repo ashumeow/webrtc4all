@@ -45,11 +45,11 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PLUGIN_WIN_MFP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;PLUGIN_MF_DISABLE_CODECS=1;PLUGIN_MF_DISABLE_MS_H264_ENCODER=1;METROPOLIS=1;TINYDAV_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				WarnAsError="true"
-				DebugInformationFormat="1"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -119,12 +119,12 @@
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyDAV\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PLUGIN_WIN_MFP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_WARN;PLUGIN_MF_DISABLE_CODECS=1;PLUGIN_MF_DISABLE_MS_H264_ENCODER=1;METROPOLIS=1;TINYDAV_EXPORTS"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				WarnAsError="true"
-				DebugInformationFormat="1"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

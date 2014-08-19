@@ -45,7 +45,7 @@
 				PreprocessorDefinitions="DEBUG_LEVEL=DEBUG_LEVEL_INFO;WIN32;_DEBUG;_WINDOWS;_USRDLL;TINYMSRP_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				WarnAsError="true"
@@ -120,12 +120,12 @@
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="&quot;..\thirdparties\source\doubango\thirdparties\win32\include&quot;;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyMSRP\include;..\thirdparties\source\doubango\tinyHTTP\include;..\thirdparties\source\doubango\tinySDP\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;TINYMSRP_EXPORTS"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				WarnAsError="true"
-				DebugInformationFormat="0"
+				DebugInformationFormat="3"
 				CompileAs="1"
 			/>
 			<Tool

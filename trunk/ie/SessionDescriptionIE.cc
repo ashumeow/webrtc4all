@@ -76,10 +76,9 @@ STDMETHODIMP CSessionDescription::Init(BSTR sdp)
 		TSK_DEBUG_ERROR("Invalid argument");
 		return E_INVALIDARG;
 	}
-
 	char* sdpStr = _com_util::ConvertBSTRToString(sdp);
 	bool ret = _SessionDescription::Init(sdpStr, tsk_strlen(sdpStr));
-	TSK_FREE(sdpStr);
+	if (sdpStr) delete[] sdpStr;
 
 	return (ret ? S_OK : E_FAIL);
 }
@@ -97,8 +96,8 @@ STDMETHODIMP CSessionDescription::addCandidate(BSTR media, BSTR candidate)
 
 	bool ret = _SessionDescription::AddCandidate(mediaStr, candidateStr);
 	
-	TSK_FREE(candidateStr);
-	TSK_FREE(mediaStr);
+	if (candidateStr) delete[] candidateStr;
+	if (mediaStr) delete[] mediaStr;
 
 	return (ret ? S_OK : E_FAIL);
 }

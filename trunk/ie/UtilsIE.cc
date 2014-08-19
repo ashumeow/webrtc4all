@@ -50,8 +50,7 @@ _bstr_t Utils::ToBSTR(const char* notNullTerminated, UINT size)
 BSTR Utils::SysAllocStringBytes(LPCSTR psz)
 {
 	if (psz) {
-		_bstr_t b(psz);
-		return b.copy();
+		return _bstr_t(psz).Detach();
 	}
 	return NULL;
 }
