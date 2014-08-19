@@ -45,12 +45,12 @@
 				PreprocessorDefinitions="HAVE_IPSEC=0;WIN32;_WIN32_WINNT=0x0501;_DEBUG;_WINDOWS;_USRDLL;TINYIPSEC_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				WarnAsError="true"
 				Detect64BitPortabilityProblems="false"
-				DebugInformationFormat="1"
+				DebugInformationFormat="4"
 				CompileAs="1"
 			/>
 			<Tool
@@ -123,13 +123,13 @@
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinySAK\src"
 				PreprocessorDefinitions="HAVE_IPSEC=0;WIN32;_WIN32_WINNT=0x0501;NDEBUG;_WINDOWS;_USRDLL;TINYIPSEC_EXPORTS"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				WarnAsError="true"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="0"
+				DebugInformationFormat="3"
 				CompileAs="1"
 			/>
 			<Tool

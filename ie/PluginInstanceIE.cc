@@ -22,7 +22,6 @@
 #include "SessionDescriptionIE.h"
 #include "UtilsIE.h"
 
-
 STDMETHODIMP CPluginInstance::get_version(BSTR* pVal)
 {
 	*pVal = Utils::SysAllocStringBytes(_PluginInstance::GetVersion());
@@ -74,7 +73,7 @@ STDMETHODIMP CPluginInstance::put_maxVideoSize(BSTR pVal)
 {
 	char* _maxSize = _com_util::ConvertBSTRToString(pVal);
 	HRESULT hr = _PluginInstance::SetMaxVideoSize(_maxSize) ? S_OK : E_FAIL;
-	TSK_FREE(_maxSize);
+	if (_maxSize) delete[] _maxSize;
 	return hr;
 }
 

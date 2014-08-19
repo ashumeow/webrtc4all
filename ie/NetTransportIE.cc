@@ -60,7 +60,7 @@ STDMETHODIMP CNetTransport::SetDomain(BSTR domain)
 
 	char* domainStr = _com_util::ConvertBSTRToString(domain);
 	bool ret = _NetTransport::_SetDomain(domainStr);
-	TSK_FREE(domainStr);
+	if (domainStr) delete[] domainStr;
 
 	return (ret ? S_OK : E_FAIL);
 }
@@ -94,8 +94,8 @@ STDMETHODIMP CNetTransport::SendTo(BSTR msg, BSTR addr, USHORT port)
 	char* addrStr = _com_util::ConvertBSTRToString(addr);
 	char* msgStr = _com_util::ConvertBSTRToString(msg);
 	bool ret = _NetTransport::_SendTo(msgStr, tsk_strlen(msgStr), addrStr, (int) port);	
-	TSK_FREE(addrStr);
-	TSK_FREE(msgStr);
+	if (addrStr) delete[] addrStr;
+	if (msgStr) delete[] msgStr;
 
 	return (ret ? S_OK : E_FAIL);
 }

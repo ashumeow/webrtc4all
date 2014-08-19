@@ -112,7 +112,7 @@ STDMETHODIMP CPeerConnection::setLocalDescription(USHORT action, BSTR desc)
 	_SessionDescription sdpObj;
 	bool ret = sdpObj.Init(sdpStr, tsk_strlen(sdpStr));
 	ret &= _PeerConnection::SetLocalDescription(action, &sdpObj);
-	TSK_FREE(sdpStr);
+	if (sdpStr) delete[] sdpStr;
 	return (ret ? S_OK : E_FAIL);
 }
 
@@ -122,7 +122,7 @@ STDMETHODIMP CPeerConnection::setRemoteDescription(USHORT action, BSTR desc)
 	_SessionDescription sdpObj;
 	bool ret = sdpObj.Init(sdpStr, tsk_strlen(sdpStr));
 	ret &= _PeerConnection::SetRemoteDescription(action, &sdpObj);
-	TSK_FREE(sdpStr);
+	if (sdpStr) delete[] sdpStr;
 	return (ret ? S_OK : E_FAIL);
 }
 
@@ -132,9 +132,9 @@ STDMETHODIMP CPeerConnection::processContent(BSTR req_name, BSTR content_type, B
 	char* _content_type = _com_util::ConvertBSTRToString(content_type);
 	char* _content_ptr = _com_util::ConvertBSTRToString(content_ptr);
 	bool ret = _PeerConnection::ProcessContent(_req_name, _content_type, _content_ptr, (int)content_size);
-	TSK_FREE(_req_name);
-	TSK_FREE(_content_type);
-	TSK_FREE(_content_ptr);
+	if (_req_name) delete[] _req_name;
+	if (_content_type) delete[] _content_type;
+	if (_content_ptr) delete[] _content_ptr;
 	return (ret ? S_OK : E_FAIL);
 }
 
@@ -281,7 +281,7 @@ STDMETHODIMP CPeerConnection::Init(BSTR configuration)
 	if(configuration){ // e.g. STUN 'stun.l.google.com:19302'
 		char* confStr = _com_util::ConvertBSTRToString(configuration);
 		bool ret = _PeerConnection::_Init(confStr, tsk_strlen(confStr));
-		TSK_FREE(confStr);
+		if (confStr) delete[] confStr;
 		return (ret ? S_OK : E_FAIL);
 	}
 	return S_OK;

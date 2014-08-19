@@ -30,6 +30,7 @@
 #if W4A_UNDER_WINDOWS
 #include <OleCtl.h>
 #include <Shlwapi.h>
+#include <AtlConv.h>
 #endif
 
 #include "tsk_base64.h"
