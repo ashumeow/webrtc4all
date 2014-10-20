@@ -162,3 +162,13 @@ STDMETHODIMP CPluginInstance::runningApps(BSTR* pApps)
 	
 	return S_OK;
 }
+
+STDMETHODIMP CPluginInstance::startDebug(void)
+{
+	return _Utils::StartDebug() ? S_OK : E_FAIL;
+}
+
+STDMETHODIMP CPluginInstance::stopDebug(void)
+{
+	return _Utils::StopDebug() ? S_OK : E_FAIL;
+}

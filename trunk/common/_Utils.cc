@@ -37,6 +37,8 @@
 
 static bool g_bInitialized = false;
 static bool g_bHasDebugConsole = false;
+static FILE *g_pDebugFile = NULL;
+static const char g_cLogFileName[] = "webrtc4all.log";
 /*static*/ char* g_sNullTerminated = NULL;
 /*static*/ unsigned g_iNullTerminated = 0;
 static signed g_nEchoTail = 100;
@@ -79,7 +81,7 @@ void _Utils::Initialize(void)
 #if W4A_UNDER_WINDOWS
 		InitializeCriticalSection(&g_CS);
 #endif
-    
+
 #if W4A_UNDER_MAC
         extern const tmedia_producer_plugin_def_t *w4a_producer_video_qt_plugin_def_t;
         extern const tmedia_producer_plugin_def_t *w4a_producer_screencast_osx_plugin_def_t;
@@ -181,25 +183,46 @@ void _Utils::Initialize(void)
 
 bool _Utils::StartDebug(void)
 {
+	tsk_debug_set_level(DEBUG_LEVEL_INFO);
+
 #if W4A_UNDER_WINDOWS
+#if 0
 	if (AllocConsole()){
 		freopen("CONIN$", "r", stdin); 
 		freopen("CONOUT$", "w", stdout); 
 		freopen("CONOUT$", "w", stderr);
 		SetConsoleTitleA("WebRTC extension for Safari, Opera, FireFox and IE");
-		return TRUE;
+		return true;
+	}
+#else
+	if (!g_pDebugFile) {
+		char cTempFolder[MAX_PATH + 1];
+		DWORD dwRetVal = GetTempPathA(MAX_PATH, cTempFolder);
+		if (dwRetVal < MAX_PATH && dwRetVal > 0) {
+			char cLogFilePath[MAX_PATH + sizeof(g_cLogFileName)];
+			sprintf_s(cLogFilePath, sizeof(cLogFilePath) - 1, "%s%s", cTempFolder, g_cLogFileName);
+			g_pDebugFile = freopen(cLogFilePath, "w", stderr);
+		}
 	}
 #endif
-	return false;
+#endif /* W4A_UNDER_WINDOWS */
+	return (g_pDebugFile != NULL);
 }
 
 bool _Utils::StopDebug(void)
 {
-#if W4A_UNDER_WINDOWS
+	tsk_debug_set_level(DEBUG_LEVEL_ERROR);
+
+#if W4A_UNDER_WINDOWS && 0
 	return (FreeConsole() == TRUE);
 #else
-    return false;
+	if (g_pDebugFile) {
+		fclose(g_pDebugFile);
+		g_pDebugFile = NULL;
+	}
 #endif
+
+	return true;
 }
 
 const char* _Utils::GetCurrentDirectoryPath()

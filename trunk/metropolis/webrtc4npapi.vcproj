@@ -61,9 +61,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(OutDir)\tinySAK.lib $(OutDir)\tinyNET.lib $(OutDir)\tinyDAV.lib $(OutDir)\tinyMEDIA.lib $(OutDir)\tinyHTTP.lib $(OutDir)\tinyMSRP.lib $(OutDir)\tinySDP.lib &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libxml2\libxml2_a.lib&quot;"
+				AdditionalDependencies="Shlwapi.lib $(OutDir)\tinySAK.lib $(OutDir)\tinyNET.lib $(OutDir)\tinyDAV.lib $(OutDir)\tinyMEDIA.lib $(OutDir)\tinyHTTP.lib $(OutDir)\tinyMSRP.lib $(OutDir)\tinySDP.lib &quot;..\thirdparties\source\doubango\thirdparties\win32\lib\libxml2\libxml2_a.lib&quot;"
 				OutputFile="$(OutDir)\np$(ProjectName).dll"
 				LinkIncremental="2"
+				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="..\npapi\webrtc4npapi.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"

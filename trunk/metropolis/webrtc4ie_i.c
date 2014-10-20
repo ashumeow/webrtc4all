@@ -5,11 +5,11 @@
 /* link this file in with the server and any clients */
 
 
- /* File created by MIDL compiler version 8.00.0595 */
-/* at Tue Aug 19 07:12:10 2014
+ /* File created by MIDL compiler version 7.00.0555 */
+/* at Mon Oct 20 18:46:59 2014
  */
 /* Compiler settings for ..\ie\webrtc4ie.idl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0595 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 7.00.0555 
     protocol : dce , ms_ext, c_ext, robust
     error checks: stub_data 
     VC __declspec() decoration level: 

@@ -29,6 +29,8 @@
 #define kFuncCreateSessionDescription "createSessionDescription"
 #define kFuncCreateNetTransport "createNetTransport"
 #define kFuncRunningApps "runningApps"
+#define kFuncStartDebug "startDebug"
+#define kFuncStopDebug "stopDebug"
 
 #define kPropSupportsPeerConnection "supportsPeerConnection"
 #define kPropSupportsSessionDescription "supportsSessionDescription"
@@ -109,7 +111,9 @@ bool WebRtc4npapi::HasMethod(NPObject* obj, NPIdentifier methodName)
 	bool ret_val = !strcmp(name, kFuncCreatePeerConnection) ||
 		!strcmp(name, kFuncCreateNetTransport) ||
 		!strcmp(name, kFuncCreateSessionDescription) ||
-		!strcmp(name, kFuncRunningApps)
+		!strcmp(name, kFuncRunningApps) ||
+		!strcmp(name, kFuncStartDebug) ||
+		!strcmp(name, kFuncStopDebug)		
 		;
 	BrowserFuncs->memfree(name);
 	return ret_val;
@@ -182,6 +186,14 @@ bool WebRtc4npapi::Invoke(NPObject* obj, NPIdentifier methodName,
 		if (activeApps) {
 			delete activeApps;
 		}
+	}
+	else if (!strcmp(name, kFuncStartDebug)) {
+		VOID_TO_NPVARIANT(*result);
+		ret_val = _Utils::StartDebug();
+	}
+	else if (!strcmp(name, kFuncStopDebug)) {
+		VOID_TO_NPVARIANT(*result);
+		ret_val = _Utils::StopDebug();
 	}
 	else {
 		// BrowserFuncs->setexception(obj, "Unknown method");
