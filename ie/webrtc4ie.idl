@@ -157,6 +157,9 @@ interface IPluginInstance : IDispatch{
 	[id(13), helpstring("method createNetTransport")] HRESULT createNetTransport([out,retval] IDispatch** ppNetTransport);
 
 	[id(14), helpstring("method runningApps")] HRESULT runningApps([out,retval] BSTR* pApps);
+
+	[id(20), helpstring("method startDebug")] HRESULT startDebug(void);
+	[id(21), helpstring("method stopDebug")] HRESULT stopDebug(void);
 };
 
 [

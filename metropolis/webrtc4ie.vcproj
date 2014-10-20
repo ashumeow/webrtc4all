@@ -54,7 +54,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../thirdparties/source/doubango/thirdparties/win32/include;../thirdparties/source/doubango/thirdparties/common/include/libxml2;../thirdparties/source/doubango/tinySAK/src;../thirdparties/source/doubango/tinyNET/src;../thirdparties/source/doubango/tinyHTTP/include;../thirdparties/source/doubango/tinyDAV/include;../thirdparties/source/doubango/tinySDP/include;../thirdparties/source/doubango/tinyMEDIA/include;../thirdparties/source/doubango/tinyMSRP/include"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;DEBUG_LEVEL=DEBUG_LEVEL_INFO;W4A_IE=1;METROPOLIS=1;HAVE_LIBXML2=0"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;DEBUG_LEVEL=DEBUG_LEVEL_INFO;W4A_IE=1;METROPOLIS=1;HAVE_LIBXML2=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"

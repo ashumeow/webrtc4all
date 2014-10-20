@@ -892,6 +892,10 @@
 					Name="gdi"
 					>
 					<File
+						RelativePath="..\thirdparties\source\doubango\tinyDAV\src\video\gdi\tdav_consumer_video_gdi.c"
+						>
+					</File>
+					<File
 						RelativePath="..\thirdparties\source\doubango\tinyDAV\src\video\gdi\tdav_producer_screencast_gdi.c"
 						>
 					</File>

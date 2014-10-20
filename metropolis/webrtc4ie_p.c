@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the proxy stub code */
 
 
- /* File created by MIDL compiler version 8.00.0595 */
-/* at Tue Aug 19 07:12:10 2014
+ /* File created by MIDL compiler version 7.00.0555 */
+/* at Mon Oct 20 18:46:59 2014
  */
 /* Compiler settings for ..\ie\webrtc4ie.idl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0595 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 7.00.0555 
     protocol : dce , ms_ext, c_ext, robust
     error checks: stub_data 
     VC __declspec() decoration level: 
@@ -16,7 +16,7 @@
 */
 /* @@MIDL_FILE_HEADING(  ) */
 
-#if !defined(_M_IA64) && !defined(_M_AMD64) && !defined(_ARM_)
+#if !defined(_M_IA64) && !defined(_M_AMD64)
 
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
@@ -50,7 +50,7 @@
 #include "webrtc4ie_i.h"
 
 #define TYPE_FORMAT_STRING_SIZE   91                                
-#define PROC_FORMAT_STRING_SIZE   2485                              
+#define PROC_FORMAT_STRING_SIZE   2545                              
 #define EXPR_FORMAT_STRING_SIZE   1                                 
 #define TRANSMIT_AS_TABLE_SIZE    0            
 #define WIRE_MARSHAL_TABLE_SIZE   1            
@@ -2323,6 +2323,54 @@ static const webrtc4ie_MIDL_PROC_FORMAT_STRING webrtc4ie__MIDL_ProcFormatString 
 /* 2482 */	0x8,		/* FC_LONG */
 			0x0,		/* 0 */
 
+	/* Procedure startDebug */
+
+/* 2484 */	0x33,		/* FC_AUTO_HANDLE */
+			0x6c,		/* Old Flags:  object, Oi2 */
+/* 2486 */	NdrFcLong( 0x0 ),	/* 0 */
+/* 2490 */	NdrFcShort( 0x1a ),	/* 26 */
+/* 2492 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
+/* 2494 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 2496 */	NdrFcShort( 0x8 ),	/* 8 */
+/* 2498 */	0x44,		/* Oi2 Flags:  has return, has ext, */
+			0x1,		/* 1 */
+/* 2500 */	0x8,		/* 8 */
+			0x1,		/* Ext Flags:  new corr desc, */
+/* 2502 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 2504 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 2506 */	NdrFcShort( 0x0 ),	/* 0 */
+
+	/* Return value */
+
+/* 2508 */	NdrFcShort( 0x70 ),	/* Flags:  out, return, base type, */
+/* 2510 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
+/* 2512 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
+	/* Procedure stopDebug */
+
+/* 2514 */	0x33,		/* FC_AUTO_HANDLE */
+			0x6c,		/* Old Flags:  object, Oi2 */
+/* 2516 */	NdrFcLong( 0x0 ),	/* 0 */
+/* 2520 */	NdrFcShort( 0x1b ),	/* 27 */
+/* 2522 */	NdrFcShort( 0x8 ),	/* x86 Stack size/offset = 8 */
+/* 2524 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 2526 */	NdrFcShort( 0x8 ),	/* 8 */
+/* 2528 */	0x44,		/* Oi2 Flags:  has return, has ext, */
+			0x1,		/* 1 */
+/* 2530 */	0x8,		/* 8 */
+			0x1,		/* Ext Flags:  new corr desc, */
+/* 2532 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 2534 */	NdrFcShort( 0x0 ),	/* 0 */
+/* 2536 */	NdrFcShort( 0x0 ),	/* 0 */
+
+	/* Return value */
+
+/* 2538 */	NdrFcShort( 0x70 ),	/* Flags:  out, return, base type, */
+/* 2540 */	NdrFcShort( 0x4 ),	/* x86 Stack size/offset = 4 */
+/* 2542 */	0x8,		/* FC_LONG */
+			0x0,		/* 0 */
+
 			0x0
         }
     };
@@ -2940,7 +2988,9 @@ static const unsigned short IPluginInstance_FormatStringOffsetTable[] =
     2340,
     2376,
     2412,
-    2448
+    2448,
+    2484,
+    2514
     };
 
 static const MIDL_STUBLESS_PROXY_INFO IPluginInstance_ProxyInfo =
@@ -2964,7 +3014,7 @@ static const MIDL_SERVER_INFO IPluginInstance_ServerInfo =
     0,
     0,
     0};
-CINTERFACE_PROXY_VTABLE(26) _IPluginInstanceProxyVtbl = 
+CINTERFACE_PROXY_VTABLE(28) _IPluginInstanceProxyVtbl = 
 {
     &IPluginInstance_ProxyInfo,
     &IID_IPluginInstance,
@@ -2993,7 +3043,9 @@ CINTERFACE_PROXY_VTABLE(26) _IPluginInstanceProxyVtbl =
     (void *) (INT_PTR) -1 /* IPluginInstance::createPeerConnection */ ,
     (void *) (INT_PTR) -1 /* IPluginInstance::createSessionDescription */ ,
     (void *) (INT_PTR) -1 /* IPluginInstance::createNetTransport */ ,
-    (void *) (INT_PTR) -1 /* IPluginInstance::runningApps */
+    (void *) (INT_PTR) -1 /* IPluginInstance::runningApps */ ,
+    (void *) (INT_PTR) -1 /* IPluginInstance::startDebug */ ,
+    (void *) (INT_PTR) -1 /* IPluginInstance::stopDebug */
 };
 
 
@@ -3021,6 +3073,8 @@ static const PRPC_STUB_FUNCTION IPluginInstance_table[] =
     NdrStubCall2,
     NdrStubCall2,
     NdrStubCall2,
+    NdrStubCall2,
+    NdrStubCall2,
     NdrStubCall2
 };
 
@@ -3028,7 +3082,7 @@ CInterfaceStubVtbl _IPluginInstanceStubVtbl =
 {
     &IID_IPluginInstance,
     &IPluginInstance_ServerInfo,
-    26,
+    28,
     &IPluginInstance_table[-3],
     CStdStubBuffer_DELEGATING_METHODS
 };
@@ -3047,7 +3101,7 @@ static const MIDL_STUB_DESC Object_StubDesc =
     0, /* -error bounds_check flag */
     0x50002, /* Ndr library version */
     0,
-    0x8000253, /* MIDL Version 8.0.595 */
+    0x700022b, /* MIDL Version 7.0.555 */
     0,
     UserMarshalRoutines,
     0,  /* notify & notify_flag routine table */
@@ -3135,5 +3189,5 @@ const ExtendedProxyFileInfo webrtc4ie_ProxyFileInfo =
 #endif
 
 
-#endif /* !defined(_M_IA64) && !defined(_M_AMD64) && !defined(_ARM_) */
+#endif /* !defined(_M_IA64) && !defined(_M_AMD64)*/
 

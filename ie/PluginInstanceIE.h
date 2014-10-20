@@ -223,6 +223,8 @@ public:
 	STDMETHOD(createNetTransport)(IDispatch** ppNetTransport);
 
 	STDMETHOD(runningApps)(BSTR* pApps);
+	STDMETHOD(startDebug)(void);
+	STDMETHOD(stopDebug)(void);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(pluginInstance), CPluginInstance)

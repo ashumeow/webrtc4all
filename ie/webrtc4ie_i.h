@@ -3,18 +3,18 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 7.00.0500 */
-/* at Fri Aug 08 15:33:15 2014
+ /* File created by MIDL compiler version 7.00.0555 */
+/* at Fri Oct 17 12:31:14 2014
  */
 /* Compiler settings for .\webrtc4ie.idl:
-    Oicf, W1, Zp8, env=Win32 (32b run)
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 7.00.0555 
     protocol : dce , ms_ext, c_ext, robust
     error checks: stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
-//@@MIDL_FILE_HEADING(  )
+/* @@MIDL_FILE_HEADING(  ) */
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
 
@@ -222,7 +222,7 @@ EXTERN_C const IID IID_ISessionDescription;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             ISessionDescription * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
+            /* [annotation][iid_is][out] */ 
             __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
@@ -466,7 +466,7 @@ EXTERN_C const IID IID_IPeerConnection;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IPeerConnection * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
+            /* [annotation][iid_is][out] */ 
             __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
@@ -835,7 +835,7 @@ EXTERN_C const IID IID_IVideoDisplay;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IVideoDisplay * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
+            /* [annotation][iid_is][out] */ 
             __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
@@ -1013,7 +1013,7 @@ EXTERN_C const IID IID_INetTransport;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             INetTransport * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
+            /* [annotation][iid_is][out] */ 
             __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
@@ -1203,7 +1203,7 @@ EXTERN_C const IID IID_ILooper;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             ILooper * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
+            /* [annotation][iid_is][out] */ 
             __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
@@ -1367,6 +1367,10 @@ EXTERN_C const IID IID_IPluginInstance;
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE runningApps( 
             /* [retval][out] */ BSTR *pApps) = 0;
         
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE startDebug( void) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE stopDebug( void) = 0;
+        
     };
     
 #else 	/* C style interface */
@@ -1378,7 +1382,7 @@ EXTERN_C const IID IID_IPluginInstance;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IPluginInstance * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
+            /* [annotation][iid_is][out] */ 
             __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
@@ -1492,6 +1496,12 @@ EXTERN_C const IID IID_IPluginInstance;
             IPluginInstance * This,
             /* [retval][out] */ BSTR *pApps);
         
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *startDebug )( 
+            IPluginInstance * This);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *stopDebug )( 
+            IPluginInstance * This);
+        
         END_INTERFACE
     } IPluginInstanceVtbl;
 
@@ -1585,6 +1595,12 @@ EXTERN_C const IID IID_IPluginInstance;
 #define IPluginInstance_runningApps(This,pApps)	\
     ( (This)->lpVtbl -> runningApps(This,pApps) ) 
 
+#define IPluginInstance_startDebug(This)	\
+    ( (This)->lpVtbl -> startDebug(This) ) 
+
+#define IPluginInstance_stopDebug(This)	\
+    ( (This)->lpVtbl -> stopDebug(This) ) 
+
 #endif /* COBJMACROS */
 
 
@@ -1639,7 +1655,7 @@ EXTERN_C const IID DIID__IPeerConnectionEvents;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             _IPeerConnectionEvents * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
+            /* [annotation][iid_is][out] */ 
             __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
@@ -1754,7 +1770,7 @@ EXTERN_C const IID DIID__IVideoDisplayEvents;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             _IVideoDisplayEvents * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
+            /* [annotation][iid_is][out] */ 
             __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
@@ -1869,7 +1885,7 @@ EXTERN_C const IID DIID__INetTransportEvents;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             _INetTransportEvents * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
+            /* [annotation][iid_is][out] */ 
             __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
@@ -1984,7 +2000,7 @@ EXTERN_C const IID DIID__ILooperEvents;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             _ILooperEvents * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
+            /* [annotation][iid_is][out] */ 
             __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
