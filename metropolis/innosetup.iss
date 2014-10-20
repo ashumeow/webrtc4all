@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "webrtc4all"
-#define MyAppVersion "1.71.1128"
+#define MyAppVersion "1.74.1156"
 #define MyAppPublisher "Doubango Telecom"
 #define MyAppURL "http://www.doubango.org/"
 
