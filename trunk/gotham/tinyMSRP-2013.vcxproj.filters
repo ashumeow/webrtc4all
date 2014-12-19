@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include%28%2a.h%29">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="include%28%2a.h%29\headers">
+      <UniqueIdentifier>{24d20038-629c-46ac-8b26-3e4e46cf58c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29\parsers">
+      <UniqueIdentifier>{10a7260c-4a9b-494d-9c5e-1551264b6590}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29\session">
+      <UniqueIdentifier>{bdde1c7d-88c9-40dc-a27f-b314993c7bb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\headers">
+      <UniqueIdentifier>{4f610ea9-fa48-4673-bfc5-4743b27b8970}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\parsers">
+      <UniqueIdentifier>{89e4820e-d35b-4900-b19b-dcf6107ea996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\session">
+      <UniqueIdentifier>{59e29d81-b50b-4354-baa0-f576f7948acc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ragel%28%2a.rl%29">
+      <UniqueIdentifier>{8268227c-73c6-44e3-bb2c-a4ed5db0ceed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="abnf%28%2a.abnf%29">
+      <UniqueIdentifier>{95aa90cd-ed80-4d23-b66d-1a49d39d8b17}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinymsrp.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinymsrp_config.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tmsrp.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinymsrp\tmsrp_event.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\tmsrp_message.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\tmsrp_uri.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_Authentication-Info.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_Authorization.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_Byte-Range.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_Content-Type.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_Dummy.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_Expires.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_Failure-Report.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_From-Path.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_Max-Expires.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_Message-ID.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_Min-Expires.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_Status.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_Success-Report.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_To-Path.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_Use-Path.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\headers\tmsrp_header_WWW-Authenticate.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\parsers\tmsrp_parser_header.h">
+      <Filter>include%28%2a.h%29\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\parsers\tmsrp_parser_message.h">
+      <Filter>include%28%2a.h%29\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\parsers\tmsrp_parser_uri.h">
+      <Filter>include%28%2a.h%29\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\session\tmsrp_config.h">
+      <Filter>include%28%2a.h%29\session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\session\tmsrp_data.h">
+      <Filter>include%28%2a.h%29\session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\session\tmsrp_media.h">
+      <Filter>include%28%2a.h%29\session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMSRP\include\tinyMSRP\session\tmsrp_receiver.h">
+      <Filter>include%28%2a.h%29\session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\thirdparties\source\doubango\branches\2.0\Doubango\tinyMSRP\include\tinyMSRP\session\tmsrp_sender.h">
+      <Filter>include%28%2a.h%29\session</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\tmsrp.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\tmsrp_event.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\tmsrp_message.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\tmsrp_uri.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_Authentication-Info.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_Authorization.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_Byte-Range.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_Content-Type.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_Dummy.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_Expires.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_Failure-Report.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_From-Path.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_Max-Expires.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_Message-ID.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_Min-Expires.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_Status.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_Success-Report.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_To-Path.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_Use-Path.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\headers\tmsrp_header_WWW-Authenticate.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\parsers\tmsrp_parser_message.c">
+      <Filter>source%28%2a.c%29\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\parsers\tmsrp_parser_uri.c">
+      <Filter>source%28%2a.c%29\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\session\tmsrp_config.c">
+      <Filter>source%28%2a.c%29\session</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\session\tmsrp_data.c">
+      <Filter>source%28%2a.c%29\session</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\session\tmsrp_receiver.c">
+      <Filter>source%28%2a.c%29\session</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMSRP\src\session\tmsrp_sender.c">
+      <Filter>source%28%2a.c%29\session</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_machine_utils.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_Authentication-Info.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_Authorization.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_Byte-Range.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_Content-Type.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_Dummy.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_Expires.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_Failure-Report.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_From-Path.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_Max-Expires.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_Message-ID.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_Min-Expires.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_Status.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_Success-Report.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_To-Path.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_header_Use-Path.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_message.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMSRP\ragel\tmsrp_parser_uri.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+  </ItemGroup>
+</Project>

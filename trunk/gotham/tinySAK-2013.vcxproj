@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6BC9B796-10C6-4CF7-A6E4-E2DACCDA84DA}</ProjectGuid>
+    <RootNamespace>tinySAK</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>tinySAK</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYSAK_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYSAK_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYSAK_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>MSVCRTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYSAK_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>MSVCRTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tinysak_config.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_base64.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_binaryutils.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_buffer.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_common.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_condwait.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_debug.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_errno.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_fsm.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_hmac.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_list.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_md5.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_memory.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_mutex.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_object.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_options.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_params.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_plugin.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_ppfcs16.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_ppfcs32.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_ragel_state.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_runnable.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_safeobj.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_semaphore.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_sha1.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_string.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_thread.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_time.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_timer.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_url.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_uuid.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySAK\src\tsk_xml.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_base64.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_binaryutils.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_buffer.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_condwait.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_debug.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_fsm.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_hmac.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_list.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_md5.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_memory.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_mutex.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_object.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_options.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_params.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_plugin.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_ppfcs16.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_ppfcs32.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_ragel_state.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_runnable.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_safeobj.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_semaphore.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_sha1.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_string.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_thread.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_time.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_timer.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_url.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_uuid.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySAK\src\tsk_xml.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

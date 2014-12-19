@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7522A458-92F4-4259-B906-E84C2A65D9F1}</ProjectGuid>
+    <RootNamespace>tinyNET</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <SccProjectName>SAK</SccProjectName>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.51106.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\doubango\tinyNET\src;..\..\doubango\thirdparties\win32\include;..\..\doubango\tinySAK\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>HAVE_OPENSSL=1;WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYNET_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;ws2_32.lib;IPHLPAPI.lib;libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);..\..\doubango\thirdparties\win32\lib\openssl;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\doubango\tinyNET\src;..\..\doubango\thirdparties\win32\include;..\..\doubango\tinySAK\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>HAVE_OPENSSL=1;WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYNET_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;ws2_32.lib;IPHLPAPI.lib;libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);..\..\doubango\thirdparties\win32\lib\openssl;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\doubango\tinyNET\src\dhcp6\tnet_dhcp6.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dhcp6\tnet_dhcp6_duid.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dhcp6\tnet_dhcp6_message.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dhcp6\tnet_dhcp6_option.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dhcp\tnet_dhcp.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dhcp\tnet_dhcp_message.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dhcp\tnet_dhcp_option.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dhcp\tnet_dhcp_option_sip.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_a.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_aaaa.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_cname.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_message.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_mx.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_naptr.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_ns.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_opt.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_ptr.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_regexp.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_resolvconf.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_rr.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_soa.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_srv.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\dns\tnet_dns_txt.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\ice\tnet_ice.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\ice\tnet_ice_candidate.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\ice\tnet_ice_ctx.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\ice\tnet_ice_event.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\ice\tnet_ice_pair.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\ice\tnet_ice_utils.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\stun\tnet_stun.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\stun\tnet_stun_attr.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\stun\tnet_stun_attribute.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\stun\tnet_stun_binding.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\stun\tnet_stun_message.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\stun\tnet_stun_pkt.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\stun\tnet_stun_utils.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\tls\tnet_dtls.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\tls\tnet_tls.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\tnet.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\tnet_auth.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\tnet_endianness.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\tnet_nat.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\tnet_poll.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\tnet_socket.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\tnet_transport.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\tnet_transport_cfsocket.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\tnet_transport_poll.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\tnet_transport_win32.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\tnet_utils.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\turn\tnet_turn.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\turn\tnet_turn_attr.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\turn\tnet_turn_attribute.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\turn\tnet_turn_message.c" />
+    <ClCompile Include="..\..\doubango\tinyNET\src\turn\tnet_turn_session.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\doubango\tinyNET\src\dhcp6\tnet_dhcp6.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dhcp6\tnet_dhcp6_duid.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dhcp6\tnet_dhcp6_message.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dhcp6\tnet_dhcp6_option.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dhcp\tnet_dhcp.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dhcp\tnet_dhcp_message.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dhcp\tnet_dhcp_option.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dhcp\tnet_dhcp_option_sip.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_a.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_aaaa.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_cname.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_message.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_mx.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_naptr.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_ns.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_opt.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_ptr.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_regexp.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_resolvconf.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_rr.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_soa.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_srv.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\dns\tnet_dns_txt.h" />
+   <ClInclude Include="..\..\doubango\tinyNET\src\ice\tnet_ice.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\ice\tnet_ice_candidate.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\ice\tnet_ice_ctx.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\ice\tnet_ice_event.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\ice\tnet_ice_pair.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\ice\tnet_ice_utils.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\stun\tnet_stun.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\stun\tnet_stun_attr.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\stun\tnet_stun_attribute.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\stun\tnet_stun_binding.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\stun\tnet_stun_message.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\stun\tnet_stun_pkt.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\stun\tnet_stun_types.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\stun\tnet_stun_utils.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tinynet.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tinynet_config.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tls\tnet_dtls.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tls\tnet_tls.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tnet.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tnet_auth.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tnet_endianness.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tnet_hardwares.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tnet_nat.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tnet_poll.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tnet_proto.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tnet_socket.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tnet_transport.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tnet_types.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\tnet_utils.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\turn\tnet_turn.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\turn\tnet_turn_attr.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\turn\tnet_turn_attribute.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\turn\tnet_turn_message.h" />
+    <ClInclude Include="..\..\doubango\tinyNET\src\turn\tnet_turn_session.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\doubango\tinyNET\ragel\tnet_dns_regexp.rl" />
+    <None Include="..\..\doubango\tinyNET\ragel\tnet_dns_resolvconf.rl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="tinySAK.vcxproj">
+      <Project>{6bc9b796-10c6-4cf7-a6e4-e2daccda84da}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

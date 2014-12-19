@@ -1,0 +1,636 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="headers%28%2a.h%29">
+      <UniqueIdentifier>{9a118b5e-b97c-472e-a3db-1bf2a9d49f7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs">
+      <UniqueIdentifier>{15efc867-512a-47ed-b2b4-43ec1769880d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\amr">
+      <UniqueIdentifier>{2986b81e-cd05-4a01-b6df-5d46f3e5149a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\g711">
+      <UniqueIdentifier>{f21b519e-2717-402c-bfcf-d2db7a06c033}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\g722">
+      <UniqueIdentifier>{a6c2edb8-9fad-40b8-9d39-bf714d1c1e2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\gsm">
+      <UniqueIdentifier>{5244459e-51f1-477b-958d-2d22d618f31c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\h261">
+      <UniqueIdentifier>{6e8f0ae0-050f-45a7-8412-606a64d2e021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\h263">
+      <UniqueIdentifier>{2b8ed2f4-78d2-45be-a2e6-5770b92a488c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\h264">
+      <UniqueIdentifier>{dfb1019f-5bf5-4a4d-8aad-f8274dbf0056}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\ilbc">
+      <UniqueIdentifier>{a687e0c6-c32c-49e3-888a-762e55040d8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\theora">
+      <UniqueIdentifier>{e663bb6b-b61f-4bef-be57-62cb8fd66e1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\speex">
+      <UniqueIdentifier>{ab98fa3b-9872-427e-99ed-b2c468596ebc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\silk">
+      <UniqueIdentifier>{9d202e76-0851-41c9-9c6f-6d1d7ee24722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\msrp">
+      <UniqueIdentifier>{6c2fc3db-ceb3-48f9-9670-eb4a2931fdc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\dtmf">
+      <UniqueIdentifier>{c48ee527-d768-4e36-ab57-13eb9a355fba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\bv">
+      <UniqueIdentifier>{3d7b580d-0871-4134-92b4-fee6c272258a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\g729">
+      <UniqueIdentifier>{c3c298e8-4fb6-447b-a794-d4c0a6ceafb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\mp4ves">
+      <UniqueIdentifier>{e236e5bc-da13-407d-926a-3063cd403b56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\vpx">
+      <UniqueIdentifier>{db7957ee-b7f5-4097-8aef-e1df16046606}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\fec">
+      <UniqueIdentifier>{45d79987-2a0d-42b3-b9fb-0aaf8affa727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\audio">
+      <UniqueIdentifier>{eaa0dc9f-b661-4c3c-8f41-5d512da88863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\audio\android">
+      <UniqueIdentifier>{87c1ef08-65fb-4a05-ad67-6881f9f0ee10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\audio\directsound">
+      <UniqueIdentifier>{d2ab6f0f-4764-4daf-b891-8d0510bf3e41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\audio\oss">
+      <UniqueIdentifier>{6fd0c828-3241-4a17-854a-ef0b881b0da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\audio\waveapi">
+      <UniqueIdentifier>{043e38bd-c5c3-4249-ab32-16543fb39db9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\audio\coreaudio">
+      <UniqueIdentifier>{5f520c46-6a06-42db-ad8b-454e4a6c6957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\video">
+      <UniqueIdentifier>{a3968d76-f1e7-4234-ae10-f630a57502c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\video\android">
+      <UniqueIdentifier>{86de1ccb-103e-4e15-8481-626452ae78b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\video\v4linux">
+      <UniqueIdentifier>{a35d8f3c-ca3c-433d-896d-baa29b9b13af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\video\jb">
+      <UniqueIdentifier>{c411562b-6b38-40a1-b83f-397bd9756f8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\video\winm">
+      <UniqueIdentifier>{7a4228cd-468b-4096-8221-1388179bcdc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\video\mf">
+      <UniqueIdentifier>{72c81067-3925-41b6-8107-81ef815030d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\msrp">
+      <UniqueIdentifier>{0b6752f5-065e-47e7-96df-1861f97ee154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\t140">
+      <UniqueIdentifier>{658ca621-c533-4b8a-aac6-9576167aa689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29">
+      <UniqueIdentifier>{a1f9be72-b21e-4f89-a342-7248b6f31df8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs">
+      <UniqueIdentifier>{2c9e95ac-52ca-47c9-8ef6-a770b0483311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\amr">
+      <UniqueIdentifier>{6720e0a1-a239-48f6-8a3d-b295ee0138ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\g711">
+      <UniqueIdentifier>{7d536723-a389-4dd7-8132-bb5705ec2c96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\g722">
+      <UniqueIdentifier>{3f0f75bb-42c6-4c0e-90ce-3a4a58ce728e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\gsm">
+      <UniqueIdentifier>{fde3370e-7fdf-40cb-8404-71ac858aa14a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\h261">
+      <UniqueIdentifier>{071d6de7-c27e-48b9-83a9-f7d9a680aea6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\h263">
+      <UniqueIdentifier>{fdbe799e-2412-4763-b977-ad91b5f525fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\h264">
+      <UniqueIdentifier>{bfd332c5-5a62-4cf3-8802-0999d96a8eb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\ilbc">
+      <UniqueIdentifier>{66808438-8fcf-4684-8813-264bfe5587a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\silk">
+      <UniqueIdentifier>{1600190e-23bc-4520-b393-59c715c04469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\speex">
+      <UniqueIdentifier>{6640e1dd-8bd8-4eef-ae59-7811fcf3894b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\theora">
+      <UniqueIdentifier>{a0a375ff-017b-45fa-96f4-f295988765c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\msrp">
+      <UniqueIdentifier>{8a088f06-14d6-438a-b2c8-9e41893a82f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\dtmf">
+      <UniqueIdentifier>{dc19a67d-5c53-4ec9-826b-7270d4bf3159}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\bv">
+      <UniqueIdentifier>{133c0a0f-8076-4971-b567-3ae80e115ee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\g729">
+      <UniqueIdentifier>{a03d69a5-4d81-41ff-b51c-e10c4b466aa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\mp4ves">
+      <UniqueIdentifier>{d21c7d2e-db84-4359-a35c-fadbc9af0695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\vpx">
+      <UniqueIdentifier>{b7b4b32b-1fc1-4f9c-b09f-a48d3b3944b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\fec">
+      <UniqueIdentifier>{98d31b56-cbd0-4351-ae55-b86c9869460b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\t140">
+      <UniqueIdentifier>{3f50a5ec-135b-4b29-96bb-83ae7a9d774a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\opus">
+      <UniqueIdentifier>{39547071-b4c1-4134-ac73-3ab71828df90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\codecs\bfcp">
+      <UniqueIdentifier>{46079bf9-4d44-4513-812c-7bb0a9df4c4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\audio">
+      <UniqueIdentifier>{02b5b9d6-4192-4684-8b2c-d81fa4ddc349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\audio\android">
+      <UniqueIdentifier>{6719904c-2ea5-4d53-b30f-18322e6fe10f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\audio\directsound">
+      <UniqueIdentifier>{618a1c10-890a-4914-874b-733530ecc976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\audio\oss">
+      <UniqueIdentifier>{c59aa98f-52d5-4096-9450-d27bd49afee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\audio\waveapi">
+      <UniqueIdentifier>{e7f0e46d-b4ba-4ccc-a17b-137a674292bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\audio\coreaudio">
+      <UniqueIdentifier>{aab5aabb-4740-4dbd-945a-50f088ae68b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\video">
+      <UniqueIdentifier>{5f4c967c-048e-4eba-b03a-3831de21a692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\video\android">
+      <UniqueIdentifier>{3c4d1957-cf75-4d34-a1d1-fcfd54e2c938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\video\gdi">
+      <UniqueIdentifier>{32b3b3e6-9e30-4f74-9f80-f57a014fa0f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\video\v4linux">
+      <UniqueIdentifier>{9293be22-a6a7-4c3d-a95c-315b279b7477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\video\jb">
+      <UniqueIdentifier>{357545e3-afa3-4875-9c8f-0e1032301167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\video\winm">
+      <UniqueIdentifier>{e8335935-9159-4160-8ecb-47f3552b04bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\video\mf">
+      <UniqueIdentifier>{ec133726-cba5-4e2b-9cda-2b154c7d8d8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\msrp">
+      <UniqueIdentifier>{fd8e20f2-1102-44f6-b7ca-c074d9d939c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\t140">
+      <UniqueIdentifier>{9ed3608c-3c6d-4176-a5db-cacee23ef378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\bfcp">
+      <UniqueIdentifier>{b4efab92-dfe5-4931-9cf0-87ef2e0ea90d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\video\gdi">
+      <UniqueIdentifier>{c44674cc-4205-4d31-8de2-f8d2de2c029a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\codecs\bfcp">
+      <UniqueIdentifier>{671e9b82-a9c6-4a57-b66c-faba721c7480}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\bfcp">
+      <UniqueIdentifier>{ecb35314-d2ab-45aa-8faf-c22651d16877}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\tdav.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\tdav_apple.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\tdav_session_av.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\tdav_win32.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav_config.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\amr\tdav_codec_amr.h">
+      <Filter>headers%28%2a.h%29\codecs\amr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\g711\g711.h">
+      <Filter>headers%28%2a.h%29\codecs\g711</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\g711\tdav_codec_g711.h">
+      <Filter>headers%28%2a.h%29\codecs\g711</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\g722\g722_enc_dec.h">
+      <Filter>headers%28%2a.h%29\codecs\g722</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\g722\tdav_codec_g722.h">
+      <Filter>headers%28%2a.h%29\codecs\g722</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\gsm\tdav_codec_gsm.h">
+      <Filter>headers%28%2a.h%29\codecs\gsm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h261\tdav_codec_h261.h">
+      <Filter>headers%28%2a.h%29\codecs\h261</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h263\tdav_codec_h263.h">
+      <Filter>headers%28%2a.h%29\codecs\h263</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h264\tdav_codec_h264.h">
+      <Filter>headers%28%2a.h%29\codecs\h264</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h264\tdav_codec_h264_common.h">
+      <Filter>headers%28%2a.h%29\codecs\h264</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h264\tdav_codec_h264_cuda.h">
+      <Filter>headers%28%2a.h%29\codecs\h264</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h264\tdav_codec_h264_rtp.h">
+      <Filter>headers%28%2a.h%29\codecs\h264</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\ilbc\tdav_codec_ilbc.h">
+      <Filter>headers%28%2a.h%29\codecs\ilbc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\theora\tdav_codec_theora.h">
+      <Filter>headers%28%2a.h%29\codecs\theora</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\speex\tdav_codec_speex.h">
+      <Filter>headers%28%2a.h%29\codecs\speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\msrp\tdav_codec_msrp.h">
+      <Filter>headers%28%2a.h%29\codecs\msrp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\dtmf\tdav_codec_dtmf.h">
+      <Filter>headers%28%2a.h%29\codecs\dtmf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\bv\tdav_codec_bv16.h">
+      <Filter>headers%28%2a.h%29\codecs\bv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\bv\tdav_codec_bv32.h">
+      <Filter>headers%28%2a.h%29\codecs\bv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\g729\tdav_codec_g729.h">
+      <Filter>headers%28%2a.h%29\codecs\g729</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\mp4ves\tdav_codec_mp4ves.h">
+      <Filter>headers%28%2a.h%29\codecs\mp4ves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\vpx\tdav_codec_vp8.h">
+      <Filter>headers%28%2a.h%29\codecs\vpx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\fec\tdav_codec_red.h">
+      <Filter>headers%28%2a.h%29\codecs\fec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\fec\tdav_codec_ulpfec.h">
+      <Filter>headers%28%2a.h%29\codecs\fec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_consumer_audio.h">
+      <Filter>headers%28%2a.h%29\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_jitterbuffer.h">
+      <Filter>headers%28%2a.h%29\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_producer_audio.h">
+      <Filter>headers%28%2a.h%29\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_session_audio.h">
+      <Filter>headers%28%2a.h%29\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_speakup_jitterbuffer.h">
+      <Filter>headers%28%2a.h%29\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_speex_denoise.h">
+      <Filter>headers%28%2a.h%29\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_speex_jitterbuffer.h">
+      <Filter>headers%28%2a.h%29\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_speex_resampler.h">
+      <Filter>headers%28%2a.h%29\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\directsound\tdav_consumer_dsound.h">
+      <Filter>headers%28%2a.h%29\audio\directsound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\directsound\tdav_producer_dsound.h">
+      <Filter>headers%28%2a.h%29\audio\directsound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\waveapi\tdav_consumer_waveapi.h">
+      <Filter>headers%28%2a.h%29\audio\waveapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\waveapi\tdav_producer_waveapi.h">
+      <Filter>headers%28%2a.h%29\audio\waveapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\coreaudio\tdav_consumer_coreaudio.h">
+      <Filter>headers%28%2a.h%29\audio\coreaudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\tdav_consumer_video.h">
+      <Filter>headers%28%2a.h%29\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\tdav_converter_video.h">
+      <Filter>headers%28%2a.h%29\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\tdav_runnable_video.h">
+      <Filter>headers%28%2a.h%29\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\tdav_session_video.h">
+      <Filter>headers%28%2a.h%29\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\jb\tdav_video_frame.h">
+      <Filter>headers%28%2a.h%29\video\jb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\jb\tdav_video_jb.h">
+      <Filter>headers%28%2a.h%29\video\jb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\winm\tdav_consumer_winm.h">
+      <Filter>headers%28%2a.h%29\video\winm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\winm\tdav_producer_winm.h">
+      <Filter>headers%28%2a.h%29\video\winm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\mf\tdav_consumer_video_mf.h">
+      <Filter>headers%28%2a.h%29\video\mf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\mf\tdav_producer_video_mf.h">
+      <Filter>headers%28%2a.h%29\video\mf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\msrp\tdav_consumer_msrp.h">
+      <Filter>headers%28%2a.h%29\msrp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\msrp\tdav_producer_msrp.h">
+      <Filter>headers%28%2a.h%29\msrp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\msrp\tdav_session_msrp.h">
+      <Filter>headers%28%2a.h%29\msrp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\t140\tdav_consumer_t140.h">
+      <Filter>headers%28%2a.h%29\t140</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\t140\tdav_producer_t140.h">
+      <Filter>headers%28%2a.h%29\t140</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\t140\tdav_session_t140.h">
+      <Filter>headers%28%2a.h%29\t140</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\gdi\tdav_consumer_video_gdi.h">
+      <Filter>headers%28%2a.h%29\video\gdi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\gdi\tdav_producer_screencast_gdi.h">
+      <Filter>headers%28%2a.h%29\video\gdi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\bfcp\tdav_codec_bfcp.h">
+      <Filter>headers%28%2a.h%29\codecs\bfcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_webrtc_denoise.h">
+      <Filter>headers%28%2a.h%29\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\bfcp\tdav_session_bfcp.h">
+      <Filter>headers%28%2a.h%29\bfcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h264\tdav_codec_h264_cisco.h">
+      <Filter>headers%28%2a.h%29\codecs\h264</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\tdav.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\tdav_session_av.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\tdav_win32.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\amr\tdav_codec_amr.c">
+      <Filter>source%28%2a.c%29\codecs\amr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\g711\g711.c">
+      <Filter>source%28%2a.c%29\codecs\g711</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\g711\tdav_codec_g711.c">
+      <Filter>source%28%2a.c%29\codecs\g711</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\g722\g722_decode.c">
+      <Filter>source%28%2a.c%29\codecs\g722</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\g722\g722_encode.c">
+      <Filter>source%28%2a.c%29\codecs\g722</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\g722\tdav_codec_g722.c">
+      <Filter>source%28%2a.c%29\codecs\g722</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\gsm\tdav_codec_gsm.c">
+      <Filter>source%28%2a.c%29\codecs\gsm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h261\tdav_codec_h261.c">
+      <Filter>source%28%2a.c%29\codecs\h261</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h263\tdav_codec_h263.c">
+      <Filter>source%28%2a.c%29\codecs\h263</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h264\tdav_codec_h264.c">
+      <Filter>source%28%2a.c%29\codecs\h264</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h264\tdav_codec_h264_cuda.cxx">
+      <Filter>source%28%2a.c%29\codecs\h264</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h264\tdav_codec_h264_rtp.c">
+      <Filter>source%28%2a.c%29\codecs\h264</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\ilbc\tdav_codec_ilbc.c">
+      <Filter>source%28%2a.c%29\codecs\ilbc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\speex\tdav_codec_speex.c">
+      <Filter>source%28%2a.c%29\codecs\speex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\theora\tdav_codec_theora.c">
+      <Filter>source%28%2a.c%29\codecs\theora</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\msrp\tdav_codec_msrp.c">
+      <Filter>source%28%2a.c%29\codecs\msrp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\dtmf\tdav_codec_dtmf.c">
+      <Filter>source%28%2a.c%29\codecs\dtmf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\bv\tdav_codec_bv16.c">
+      <Filter>source%28%2a.c%29\codecs\bv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\bv\tdav_codec_bv32.c">
+      <Filter>source%28%2a.c%29\codecs\bv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\g729\tdav_codec_g729.c">
+      <Filter>source%28%2a.c%29\codecs\g729</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\mp4ves\tdav_codec_mp4ves.c">
+      <Filter>source%28%2a.c%29\codecs\mp4ves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\vpx\tdav_codec_vp8.c">
+      <Filter>source%28%2a.c%29\codecs\vpx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\fec\tdav_codec_red.c">
+      <Filter>source%28%2a.c%29\codecs\fec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\fec\tdav_codec_ulpfec.c">
+      <Filter>source%28%2a.c%29\codecs\fec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\t140\tdav_codec_t140.c">
+      <Filter>source%28%2a.c%29\codecs\t140</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\opus\tdav_codec_opus.c">
+      <Filter>source%28%2a.c%29\codecs\opus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\bfcp\tdav_codec_bfcp.c">
+      <Filter>source%28%2a.c%29\codecs\bfcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_consumer_audio.c">
+      <Filter>source%28%2a.c%29\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_jitterbuffer.c">
+      <Filter>source%28%2a.c%29\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_producer_audio.c">
+      <Filter>source%28%2a.c%29\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_session_audio.c">
+      <Filter>source%28%2a.c%29\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_speakup_jitterbuffer.c">
+      <Filter>source%28%2a.c%29\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_speex_denoise.c">
+      <Filter>source%28%2a.c%29\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_speex_jitterbuffer.c">
+      <Filter>source%28%2a.c%29\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_speex_resampler.c">
+      <Filter>source%28%2a.c%29\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_webrtc_denoise.c">
+      <Filter>source%28%2a.c%29\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\directsound\tdav_consumer_dsound.c">
+      <Filter>source%28%2a.c%29\audio\directsound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\directsound\tdav_producer_dsound.c">
+      <Filter>source%28%2a.c%29\audio\directsound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\waveapi\tdav_consumer_waveapi.c">
+      <Filter>source%28%2a.c%29\audio\waveapi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\waveapi\tdav_producer_waveapi.c">
+      <Filter>source%28%2a.c%29\audio\waveapi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\coreaudio\tdav_audiounit.c">
+      <Filter>source%28%2a.c%29\audio\coreaudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\coreaudio\tdav_consumer_audioqueue.c">
+      <Filter>source%28%2a.c%29\audio\coreaudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\coreaudio\tdav_consumer_audiounit.c">
+      <Filter>source%28%2a.c%29\audio\coreaudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\coreaudio\tdav_producer_audioqueue.c">
+      <Filter>source%28%2a.c%29\audio\coreaudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\coreaudio\tdav_producer_audiounit.c">
+      <Filter>source%28%2a.c%29\audio\coreaudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\tdav_consumer_video.c">
+      <Filter>source%28%2a.c%29\video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\tdav_converter_video.cxx">
+      <Filter>source%28%2a.c%29\video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\tdav_runnable_video.c">
+      <Filter>source%28%2a.c%29\video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\tdav_session_video.c">
+      <Filter>source%28%2a.c%29\video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\gdi\tdav_producer_screencast_gdi.c">
+      <Filter>source%28%2a.c%29\video\gdi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\jb\tdav_video_frame.c">
+      <Filter>source%28%2a.c%29\video\jb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\jb\tdav_video_jb.c">
+      <Filter>source%28%2a.c%29\video\jb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\winm\tdav_consumer_winm.cxx">
+      <Filter>source%28%2a.c%29\video\winm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\winm\tdav_producer_winm.cxx">
+      <Filter>source%28%2a.c%29\video\winm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\mf\tdav_consumer_video_mf.cxx">
+      <Filter>source%28%2a.c%29\video\mf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\mf\tdav_producer_video_mf.cxx">
+      <Filter>source%28%2a.c%29\video\mf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\msrp\tdav_consumer_msrp.c">
+      <Filter>source%28%2a.c%29\msrp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\msrp\tdav_producer_msrp.c">
+      <Filter>source%28%2a.c%29\msrp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\msrp\tdav_session_msrp.c">
+      <Filter>source%28%2a.c%29\msrp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\t140\tdav_consumer_t140.c">
+      <Filter>source%28%2a.c%29\t140</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\t140\tdav_producer_t140.c">
+      <Filter>source%28%2a.c%29\t140</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\t140\tdav_session_t140.c">
+      <Filter>source%28%2a.c%29\t140</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\bfcp\tdav_session_bfcp.c">
+      <Filter>source%28%2a.c%29\bfcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\gdi\tdav_consumer_video_gdi.c">
+      <Filter>source%28%2a.c%29\video\gdi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h264\tdav_codec_h264_cisco.cxx">
+      <Filter>source%28%2a.c%29\codecs\h264</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B3E45009-C7C3-4090-837C-2D30C9058443}</ProjectGuid>
+    <RootNamespace>tinyHTTP</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>tinyHTTP</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyHTTP\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyNET\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYHTTP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;tinyNET.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyHTTP\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyNET\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYHTTP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;tinyNET.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyHTTP\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyNET\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYHTTP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;tinyNET.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyHTTP\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyNET\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYHTTP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;tinyNET.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\auth\thttp_auth.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\auth\thttp_challenge.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Authorization.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Content_Length.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Content_Type.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Dummy.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_ETag.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Sec_WebSocket_Accept.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Sec_WebSocket_Key.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Sec_WebSocket_Protocol.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Sec_WebSocket_Version.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Transfer_Encoding.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_WWW_Authenticate.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\parsers\thttp_parser_header.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\parsers\thttp_parser_message.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\parsers\thttp_parser_url.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp_action.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp_dialog.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp_event.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp_message.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp_session.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp_url.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\thttp_event.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\thttp.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyhttp.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\auth\thttp_auth.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\auth\thttp_challenge.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_Authorization.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_Content_Length.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_Content_Type.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_Dummy.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_ETag.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyhttp\headers\thttp_header_Sec_WebSocket_Accept.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyhttp\headers\thttp_header_Sec_WebSocket_Key.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyhttp\headers\thttp_header_Sec_WebSocket_Protocol.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyhttp\headers\thttp_header_Sec_WebSocket_Version.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_Transfer_Encoding.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_WWW_Authenticate.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\parsers\thttp_parser_header.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\parsers\thttp_parser_message.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\parsers\thttp_parser_url.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\thttp_action.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\thttp_dialog.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\thttp_message.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\thttp_session.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\thttp_url.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyhttp_config.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\abnf\http.abnf" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\abnf\httpauth.abnf" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\abnf\uri.abnf" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_machine_header.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_machine_message.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_machine_utils.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_machine_ws.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Authorization.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Content_Length.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Content_Type.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Dummy.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_ETag.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Sec_WebSocket_Accept.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Sec_WebSocket_Key.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Sec_WebSocket_Protocol.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Sec_WebSocket_Version.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Transfer_Encoding.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_WWW_Authenticate.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_message.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_url.rl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="tinyNET-2013.vcxproj">
+      <Project>{7522a458-92f4-4259-b906-e84c2a65d9f1}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tinySAK-2013.vcxproj">
+      <Project>{6bc9b796-10c6-4cf7-a6e4-e2daccda84da}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

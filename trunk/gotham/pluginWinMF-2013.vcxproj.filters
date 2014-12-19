@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\internals">
+      <UniqueIdentifier>{6e4b3abb-2c05-4e26-9a96-1c185f0a8cbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\internals">
+      <UniqueIdentifier>{840b6111-ad15-468d-84ca-2f57d5da6c93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="tdav">
+      <UniqueIdentifier>{c767cb46-9d1f-4c5b-b1dd-ee06d22c1353}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\dllmain_mf.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_codec_h264.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_consumer_audio.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_consumer_video.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_converter_video.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_producer_audio.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_producer_video.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_codec.cxx">
+      <Filter>Source Files\internals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_custom_src.cxx">
+      <Filter>Source Files\internals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_devices.cxx">
+      <Filter>Source Files\internals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_display_watcher.cxx">
+      <Filter>Source Files\internals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_sample_grabber.cxx">
+      <Filter>Source Files\internals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_sample_queue.cxx">
+      <Filter>Source Files\internals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_utils.cxx">
+      <Filter>Source Files\internals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_tdav.cxx">
+      <Filter>tdav</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\thirdparties\source\doubango\plugins\pluginWinMF\plugin_win_mf_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_codec.h">
+      <Filter>Header Files\internals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_custom_src.h">
+      <Filter>Header Files\internals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_devices.h">
+      <Filter>Header Files\internals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_display_watcher.h">
+      <Filter>Header Files\internals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_sample_grabber.h">
+      <Filter>Header Files\internals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_sample_queue.h">
+      <Filter>Header Files\internals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\plugins\pluginWinMF\internals\mf_utils.h">
+      <Filter>Header Files\internals</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\thirdparties\source\doubango\plugins\pluginWinMF\version.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

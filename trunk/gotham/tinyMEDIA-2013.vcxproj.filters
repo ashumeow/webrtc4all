@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="headers%28%2a.h%29">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="headers%28%2a.h%29\content">
+      <UniqueIdentifier>{24a9f5d9-a8ab-41cb-9a26-192249bc4e7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\content">
+      <UniqueIdentifier>{f7ad87a7-f904-4ab4-bbd0-d069639558d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ragel">
+      <UniqueIdentifier>{c521b6ec-4e4f-4924-84fa-6ac155c58711}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia_config.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_codec.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_codec_dummy.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_common.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_consumer.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_converter_video.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_defaults.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_denoise.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_imageattr.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_jitterbuffer.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_params.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_producer.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_qos.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_resampler.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_session.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_session_dummy.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_session_ghost.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_vad.h">
+      <Filter>headers%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\content\tmedia_content.h">
+      <Filter>headers%28%2a.h%29\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\content\tmedia_content_cpim.h">
+      <Filter>headers%28%2a.h%29\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\content\tmedia_content_multipart.h">
+      <Filter>headers%28%2a.h%29\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\content\tmedia_content_sip_frag.h">
+      <Filter>headers%28%2a.h%29\content</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_codec.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_codec_dummy.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_common.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_consumer.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_converter_video.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_defaults.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_denoise.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_imageattr.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_jitterbuffer.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_params.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_producer.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_qos.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_resampler.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_session.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_session_dummy.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_session_ghost.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_vad.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\content\tmedia_content.c">
+      <Filter>source%28%2a.c%29\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\content\tmedia_content_cpim.c">
+      <Filter>source%28%2a.c%29\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\content\tmedia_content_multipart.c">
+      <Filter>source%28%2a.c%29\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\content\tmedia_content_sip_frag.c">
+      <Filter>source%28%2a.c%29\content</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\thirdparties\source\doubango\tinyMEDIA\ragel\tmedia_content_cpim.rl">
+      <Filter>ragel</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMEDIA\ragel\tmedia_machine_utils.rl">
+      <Filter>ragel</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyMEDIA\ragel\tmedia_imageattr.rl">
+      <Filter>ragel</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{99B7D02F-8C70-4B45-AF3C-92313C3CEE15}</ProjectGuid>
+    <RootNamespace>tinyRTP</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>tinyRTP</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyMEDIA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>HAVE_SRTP=1;WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYRTP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;libsrtp.a;tinySAK.lib;tinyNET.lib;tinyMEDIA.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);..\thirdparties\source\doubango\thirdparties\win32\lib;..\thirdparties\source\doubango\thirdparties\win32\lib\srtp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyMEDIA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>HAVE_SRTP=1;WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYRTP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;libsrtp64.a;tinySAK.lib;tinyNET.lib;tinyMEDIA.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);..\thirdparties\source\doubango\thirdparties\win32\lib;..\thirdparties\source\doubango\thirdparties\win32\lib\srtp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyMEDIA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>HAVE_SRTP=1;WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYRTP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;libsrtp.a;tinySAK.lib;tinyNET.lib;tinyMEDIA.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);..\thirdparties\source\doubango\thirdparties\win32\lib;..\thirdparties\source\doubango\thirdparties\win32\lib\srtp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyMEDIA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>HAVE_SRTP=1;WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYRTP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>ws2_32.lib;libsrtp64.a;tinySAK.lib;tinyNET.lib;tinyMEDIA.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);..\thirdparties\source\doubango\thirdparties\win32\lib;..\thirdparties\source\doubango\thirdparties\win32\lib\srtp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtcp\trtp_rtcp_header.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtcp\trtp_rtcp_packet.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtcp\trtp_rtcp_rblock.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtcp\trtp_rtcp_report.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtcp\trtp_rtcp_report_bye.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtcp\trtp_rtcp_report_fb.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtcp\trtp_rtcp_report_rr.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtcp\trtp_rtcp_report_sdes.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtcp\trtp_rtcp_report_sr.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtcp\trtp_rtcp_report_xr.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtcp\trtp_rtcp_sdes_chunck.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtcp\trtp_rtcp_sdes_item.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtcp\trtp_rtcp_session.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtp\trtp_rtp_header.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtp\trtp_rtp_packet.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\rtp\trtp_rtp_session.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\trtp.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\trtp_manager.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyRTP\src\trtp_srtp.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtcp\trtp_rtcp_header.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtcp\trtp_rtcp_packet.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtcp\trtp_rtcp_rblock.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtcp\trtp_rtcp_report.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtcp\trtp_rtcp_report_bye.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtcp\trtp_rtcp_report_fb.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtcp\trtp_rtcp_report_rr.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtcp\trtp_rtcp_report_sdes.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtcp\trtp_rtcp_report_sr.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtcp\trtp_rtcp_report_xr.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtcp\trtp_rtcp_sdes_chunck.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtcp\trtp_rtcp_sdes_item.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtcp\trtp_rtcp_session.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtp\trtp_rtp_header.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtp\trtp_rtp_packet.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\rtp\trtp_rtp_session.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\trtp.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp\trtp_manager.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyRTP\include\tinyrtp_config.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="tinyMEDIA-2013.vcxproj">
+      <Project>{52814b0d-7dca-45b8-9a16-8b147040d619}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tinyNET-2013.vcxproj">
+      <Project>{7522a458-92f4-4259-b906-e84c2a65d9f1}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tinySAK-2013.vcxproj">
+      <Project>{6bc9b796-10c6-4cf7-a6e4-e2daccda84da}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
