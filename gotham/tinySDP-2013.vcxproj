@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E45DB518-6562-4033-80E8-60030F0B169F}</ProjectGuid>
+    <RootNamespace>tinySDP</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>tinySDP</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinySDP\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYSDP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinySDP\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYSDP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinySDP\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYSDP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinySDP\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYSDP_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_A.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_B.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_C.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_Dummy.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_E.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_I.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_K.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_M.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_O.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_P.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_R.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_S.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_T.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_U.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_V.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\headers\tsdp_header_Z.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\parsers\tsdp_parser_message.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\tsdp.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinySDP\src\tsdp_message.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\thirdparties\source\doubango\branches\2.0\Doubango\tinySDP\include\tinysdp.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_A.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_B.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_C.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_Dummy.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_E.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_I.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_K.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_M.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_O.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_P.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_R.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_S.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_T.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_U.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_V.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\headers\tsdp_header_Z.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\parsers\tsdp_parser_header.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\parsers\tsdp_parser_message.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinySDP\tsdp_message.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tinysdp_config.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinySDP\include\tsdp.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\thirdparties\source\doubango\tinySDP\abnf\sdp.abnf" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_machine_utils.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_A.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_B.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_C.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_Dummy.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_E.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_I.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_K.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_M.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_O.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_P.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_R.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_S.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_T.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_U.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_V.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_header_Z.rl" />
+    <None Include="..\thirdparties\source\doubango\tinySDP\ragel\tsdp_parser_message.rl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="tinySAK-2013.vcxproj">
+      <Project>{6bc9b796-10c6-4cf7-a6e4-e2daccda84da}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

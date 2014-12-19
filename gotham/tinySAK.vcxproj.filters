@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include%28%2a.h%29">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="source%28%2a.c%29">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tinysak_config.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_base64.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_binaryutils.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_buffer.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_common.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_condwait.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_debug.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_errno.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_fsm.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_hmac.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_list.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_md5.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_memory.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_mutex.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_object.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_options.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_params.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_plugin.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_ppfcs16.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_ppfcs32.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_ragel_state.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_runnable.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_safeobj.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_semaphore.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_sha1.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_string.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_thread.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_time.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_timer.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_url.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_uuid.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\doubango\tinySAK\src\tsk_xml.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_base64.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_binaryutils.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_buffer.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_condwait.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_debug.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_fsm.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_hmac.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_list.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_md5.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_memory.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_mutex.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_object.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_options.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_params.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_plugin.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_ppfcs16.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_ppfcs32.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_ragel_state.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_runnable.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_safeobj.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_semaphore.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_sha1.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_string.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_thread.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_time.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_timer.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_url.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_uuid.c" />
+    <ClCompile Include="..\..\doubango\tinySAK\src\tsk_xml.c" />
+  </ItemGroup>
+</Project>

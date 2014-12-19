@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source%28%2a.c%29">
+      <UniqueIdentifier>{f3a09c6e-2585-427c-b3d2-ebafc17ba0cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\stun">
+      <UniqueIdentifier>{78e197ee-d9da-4147-ab08-e6d114de7d16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\turn">
+      <UniqueIdentifier>{ccf99728-4e27-4bf1-8f72-213907e8d756}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\ice">
+      <UniqueIdentifier>{77d0f4eb-1f03-45ae-aaa6-a4265f4ffcf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\dns">
+      <UniqueIdentifier>{fce24cc2-6f9c-4b33-94d2-32702239a7a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\dhcp4">
+      <UniqueIdentifier>{3a91721e-63f8-4815-989a-f014d9d40532}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\dhcp6">
+      <UniqueIdentifier>{615d7b08-3829-4835-8a32-8263e1f8086e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\tls">
+      <UniqueIdentifier>{f9465bc7-4dac-4688-a1ad-a78a631b56f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29">
+      <UniqueIdentifier>{c1ec66ab-63de-4c9c-bc85-89e14b9e368c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29\stun">
+      <UniqueIdentifier>{f6498499-09f4-4e08-92d2-809ae08e44da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29\turn">
+      <UniqueIdentifier>{9140d072-9229-4264-99e0-f26fefac678c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29\ice">
+      <UniqueIdentifier>{601618d7-d5ac-4d19-b2f0-02b9e7fc124e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29\dns">
+      <UniqueIdentifier>{c312d273-7d2d-45c4-9222-e42f888cb620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29\dhcp">
+      <UniqueIdentifier>{641d5b47-7347-43a8-a015-6caf5a244744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29\dhcp6">
+      <UniqueIdentifier>{01f1dda8-1546-413c-8bde-d97fc7f228a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29\tls">
+      <UniqueIdentifier>{a633aff2-d91b-44e1-adab-2d61ca41ce2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ragel%28.rl%29">
+      <UniqueIdentifier>{3ea31dc0-ad07-4ca4-9a7e-f79f15f0165a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\tnet.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\tnet_auth.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\tnet_endianness.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\tnet_nat.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\tnet_poll.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\tnet_socket.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\tnet_transport.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\tnet_transport_cfsocket.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\tnet_transport_poll.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\tnet_transport_win32.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\tnet_utils.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun.c">
+      <Filter>source%28%2a.c%29\stun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun_attr.c">
+      <Filter>source%28%2a.c%29\stun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun_attribute.c">
+      <Filter>source%28%2a.c%29\stun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun_binding.c">
+      <Filter>source%28%2a.c%29\stun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun_message.c">
+      <Filter>source%28%2a.c%29\stun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun_pkt.c">
+      <Filter>source%28%2a.c%29\stun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun_utils.c">
+      <Filter>source%28%2a.c%29\stun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\turn\tnet_turn.c">
+      <Filter>source%28%2a.c%29\turn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\turn\tnet_turn_attribute.c">
+      <Filter>source%28%2a.c%29\turn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\turn\tnet_turn_message.c">
+      <Filter>source%28%2a.c%29\turn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\turn\tnet_turn_session.c">
+      <Filter>source%28%2a.c%29\turn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\ice\tnet_ice.c">
+      <Filter>source%28%2a.c%29\ice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\ice\tnet_ice_candidate.c">
+      <Filter>source%28%2a.c%29\ice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\ice\tnet_ice_ctx.c">
+      <Filter>source%28%2a.c%29\ice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\ice\tnet_ice_event.c">
+      <Filter>source%28%2a.c%29\ice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\ice\tnet_ice_pair.c">
+      <Filter>source%28%2a.c%29\ice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\ice\tnet_ice_utils.c">
+      <Filter>source%28%2a.c%29\ice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_a.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_aaaa.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_cname.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_message.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_mx.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_naptr.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_ns.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_opt.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_ptr.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_regexp.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_resolvconf.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_rr.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_soa.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_srv.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_txt.c">
+      <Filter>source%28%2a.c%29\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dhcp\tnet_dhcp.c">
+      <Filter>source%28%2a.c%29\dhcp4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dhcp\tnet_dhcp_message.c">
+      <Filter>source%28%2a.c%29\dhcp4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dhcp\tnet_dhcp_option.c">
+      <Filter>source%28%2a.c%29\dhcp4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dhcp\tnet_dhcp_option_sip.c">
+      <Filter>source%28%2a.c%29\dhcp4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dhcp6\tnet_dhcp6.c">
+      <Filter>source%28%2a.c%29\dhcp6</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dhcp6\tnet_dhcp6_duid.c">
+      <Filter>source%28%2a.c%29\dhcp6</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dhcp6\tnet_dhcp6_message.c">
+      <Filter>source%28%2a.c%29\dhcp6</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\dhcp6\tnet_dhcp6_option.c">
+      <Filter>source%28%2a.c%29\dhcp6</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\tls\tnet_dtls.c">
+      <Filter>source%28%2a.c%29\tls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\tls\tnet_tls.c">
+      <Filter>source%28%2a.c%29\tls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyNET\src\turn\tnet_turn_attr.c">
+      <Filter>source%28%2a.c%29\turn</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tinynet.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tinynet_config.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tnet.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tnet_auth.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tnet_endianness.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tnet_hardwares.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tnet_nat.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tnet_poll.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tnet_proto.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tnet_socket.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tnet_transport.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tnet_types.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tnet_utils.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun.h">
+      <Filter>include%28%2a.h%29\stun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun_attribute.h">
+      <Filter>include%28%2a.h%29\stun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun_message.h">
+      <Filter>include%28%2a.h%29\stun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\turn\tnet_turn.h">
+      <Filter>include%28%2a.h%29\turn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\turn\tnet_turn_attribute.h">
+      <Filter>include%28%2a.h%29\turn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\turn\tnet_turn_message.h">
+      <Filter>include%28%2a.h%29\turn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\ice\tnet_ice.h">
+      <Filter>include%28%2a.h%29\ice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\ice\tnet_ice_candidate.h">
+      <Filter>include%28%2a.h%29\ice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\ice\tnet_ice_ctx.h">
+      <Filter>include%28%2a.h%29\ice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\ice\tnet_ice_event.h">
+      <Filter>include%28%2a.h%29\ice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\ice\tnet_ice_pair.h">
+      <Filter>include%28%2a.h%29\ice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\ice\tnet_ice_utils.h">
+      <Filter>include%28%2a.h%29\ice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_a.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_aaaa.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_cname.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_message.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_mx.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_naptr.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_ns.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_opt.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_ptr.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_regexp.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_resolvconf.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_rr.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_soa.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_srv.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dns\tnet_dns_txt.h">
+      <Filter>include%28%2a.h%29\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dhcp\tnet_dhcp.h">
+      <Filter>include%28%2a.h%29\dhcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dhcp\tnet_dhcp_message.h">
+      <Filter>include%28%2a.h%29\dhcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dhcp\tnet_dhcp_option.h">
+      <Filter>include%28%2a.h%29\dhcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dhcp\tnet_dhcp_option_sip.h">
+      <Filter>include%28%2a.h%29\dhcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dhcp6\tnet_dhcp6.h">
+      <Filter>include%28%2a.h%29\dhcp6</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dhcp6\tnet_dhcp6_duid.h">
+      <Filter>include%28%2a.h%29\dhcp6</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dhcp6\tnet_dhcp6_message.h">
+      <Filter>include%28%2a.h%29\dhcp6</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\dhcp6\tnet_dhcp6_option.h">
+      <Filter>include%28%2a.h%29\dhcp6</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tls\tnet_dtls.h">
+      <Filter>include%28%2a.h%29\tls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\tls\tnet_tls.h">
+      <Filter>include%28%2a.h%29\tls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun_attr.h">
+      <Filter>include%28%2a.h%29\stun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun_binding.h">
+      <Filter>include%28%2a.h%29\stun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun_pkt.h">
+      <Filter>include%28%2a.h%29\stun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun_types.h">
+      <Filter>include%28%2a.h%29\stun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\stun\tnet_stun_utils.h">
+      <Filter>include%28%2a.h%29\stun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\turn\tnet_turn_attr.h">
+      <Filter>include%28%2a.h%29\turn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyNET\src\turn\tnet_turn_session.h">
+      <Filter>include%28%2a.h%29\turn</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\thirdparties\source\doubango\tinyNET\ragel\tnet_dns_regexp.rl">
+      <Filter>ragel%28.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyNET\ragel\tnet_dns_resolvconf.rl">
+      <Filter>ragel%28.rl%29</Filter>
+    </None>
+  </ItemGroup>
+</Project>

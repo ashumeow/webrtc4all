@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8E2F0B2E-2596-4010-BF4A-2F688975B5C1}</ProjectGuid>
+    <RootNamespace>tinyDAV</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>tinyDAV</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyDAV\include;..\thirdparties\source\doubango\tinyMSRP\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinySDP\include;..\thirdparties\source\doubango\tinyBFCP\include;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyDSHOW\include;..\thirdparties\source\doubango\tinyIPSec\src;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bvcommon;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bv16;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>TELEPRESENCE=0;HAVE_SRTP=1;HAVE_G729=0;HAVE_BV16=0;HAVE_LIBOPUS=0;HAVE_OPENCORE_AMR=0;HAVE_ILBC=0;HAVE_LIBGSM=0;HAVE_TINYDSHOW=0;HAVE_DSOUND_H=1;HAVE_MF=0;HAVE_WAVE_API=1;HAVE_FFMPEG=0;HAVE_SWSSCALE=0;HAVE_LIBVPX=1;HAVE_LIBYUV=1;HAVE_SPEEX_DSP=1;HAVE_SPEEX_JB=1;HAVE_LIB_SPEEX=0;HAVE_WEBRTC=1;FLIP_ENCODED_PICT=0;FLIP_DECODED_PICT=0;G192BITSTREAM=0;WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYDAV_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);..\thirdparties\source\doubango\thirdparties\win32\lib;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg;..\thirdparties\source\doubango\thirdparties\win32\lib\libyuv;..\thirdparties\source\doubango\thirdparties\win32\lib\opus;..\thirdparties\source\doubango\thirdparties\win32\lib\speex;..\thirdparties\source\doubango\thirdparties\win32\lib\vpx;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Winmm.lib;Shlwapi.lib;tinySAK.lib;tinyNET.lib;tinyRTP.lib;tinyMSRP.lib;tinySDP.lib;tinyBFCP.lib;tinyMEDIA.lib;tinyIPSec.lib;libyuv.lib;libspeex.a;libspeexdsp.a;vpxmt.lib;audio_processing.lib;common_audio.lib;system_wrappers.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyDAV\include;..\thirdparties\source\doubango\tinyMSRP\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinySDP\include;..\thirdparties\source\doubango\tinyBFCP\include;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyDSHOW\include;..\thirdparties\source\doubango\tinyIPSec\src;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bvcommon;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bv16;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>TELEPRESENCE=0;HAVE_SRTP=1;HAVE_G729=0;HAVE_BV16=0;HAVE_LIBOPUS=0;HAVE_OPENCORE_AMR=0;HAVE_ILBC=0;HAVE_LIBGSM=0;HAVE_TINYDSHOW=0;HAVE_DSOUND_H=1;HAVE_MF=0;HAVE_WAVE_API=1;HAVE_FFMPEG=0;HAVE_SWSSCALE=0;HAVE_LIBVPX=1;HAVE_LIBYUV=1;HAVE_SPEEX_DSP=1;HAVE_SPEEX_JB=1;HAVE_LIB_SPEEX=0;HAVE_WEBRTC=1;FLIP_ENCODED_PICT=0;FLIP_DECODED_PICT=0;G192BITSTREAM=0;WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYDAV_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);..\thirdparties\source\doubango\thirdparties\win32\lib;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg;..\thirdparties\source\doubango\thirdparties\win32\lib\libyuv;..\thirdparties\source\doubango\thirdparties\win32\lib\opus;..\thirdparties\source\doubango\thirdparties\win32\lib\speex;..\thirdparties\source\doubango\thirdparties\win32\lib\vpx;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Winmm.lib;Shlwapi.lib;tinySAK.lib;tinyNET.lib;tinyRTP.lib;tinyMSRP.lib;tinySDP.lib;tinyBFCP.lib;tinyMEDIA.lib;tinyIPSec.lib;vpxmt64.lib;libyuv64.lib;libspeex64.a;libspeexdsp64.a;audio_processing64.lib;common_audio64.lib;system_wrappers64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyDAV\include;..\thirdparties\source\doubango\tinyMSRP\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinySDP\include;..\thirdparties\source\doubango\tinyBFCP\include;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyDSHOW\include;..\thirdparties\source\doubango\tinyIPSec\src;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bvcommon;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bv16;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>TELEPRESENCE=0;HAVE_SRTP=1;HAVE_G729=0;HAVE_BV16=0;HAVE_LIBOPUS=0;HAVE_OPENCORE_AMR=0;HAVE_ILBC=0;HAVE_LIBGSM=0;HAVE_TINYDSHOW=0;HAVE_DSOUND_H=0;HAVE_MF=0;HAVE_WAVE_API=1;HAVE_FFMPEG=0;HAVE_SWSSCALE=0;HAVE_LIBVPX=1;HAVE_LIBYUV=1;HAVE_SPEEX_DSP=1;HAVE_SPEEX_JB=1;HAVE_LIB_SPEEX=0;HAVE_WEBRTC=1;FLIP_ENCODED_PICT=0;FLIP_DECODED_PICT=0;G192BITSTREAM=0;WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYDAV_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);..\thirdparties\source\doubango\thirdparties\win32\lib;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg;..\thirdparties\source\doubango\thirdparties\win32\lib\libyuv;..\thirdparties\source\doubango\thirdparties\win32\lib\opus;..\thirdparties\source\doubango\thirdparties\win32\lib\speex;..\thirdparties\source\doubango\thirdparties\win32\lib\vpx;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Winmm.lib;Shlwapi.lib;tinySAK.lib;tinyNET.lib;tinyRTP.lib;tinyMSRP.lib;tinySDP.lib;tinyBFCP.lib;tinyMEDIA.lib;tinyIPSec.lib;libyuv.lib;libspeex.a;libspeexdsp.a;vpxmt.lib;audio_processing.lib;common_audio.lib;system_wrappers.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\common\include;..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyDAV\include;..\thirdparties\source\doubango\tinyMSRP\include;..\thirdparties\source\doubango\tinyRTP\include;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinySDP\include;..\thirdparties\source\doubango\tinyBFCP\include;..\thirdparties\source\doubango\tinyNET\src;..\thirdparties\source\doubango\tinyDSHOW\include;..\thirdparties\source\doubango\tinyIPSec\src;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bvcommon;..\thirdparties\source\doubango\thirdparties\win32\include\BroadVoice16\bv16;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>TELEPRESENCE=0;HAVE_SRTP=1;HAVE_G729=0;HAVE_BV16=0;HAVE_LIBOPUS=0;HAVE_OPENCORE_AMR=0;HAVE_ILBC=0;HAVE_LIBGSM=0;HAVE_TINYDSHOW=0;HAVE_DSOUND_H=1;HAVE_MF=0;HAVE_WAVE_API=1;HAVE_FFMPEG=0;HAVE_SWSSCALE=0;HAVE_LIBVPX=1;HAVE_LIBYUV=1;HAVE_SPEEX_DSP=1;HAVE_SPEEX_JB=1;HAVE_LIB_SPEEX=0;HAVE_WEBRTC=1;FLIP_ENCODED_PICT=0;FLIP_DECODED_PICT=0;G192BITSTREAM=0;WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYDAV_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);..\thirdparties\source\doubango\thirdparties\win32\lib;..\thirdparties\source\doubango\thirdparties\win32\lib\ffmpeg;..\thirdparties\source\doubango\thirdparties\win32\lib\libyuv;..\thirdparties\source\doubango\thirdparties\win32\lib\opus;..\thirdparties\source\doubango\thirdparties\win32\lib\speex;..\thirdparties\source\doubango\thirdparties\win32\lib\vpx;..\thirdparties\source\doubango\thirdparties\win32\lib\webrtc;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Winmm.lib;Shlwapi.lib;tinySAK.lib;tinyNET.lib;tinyRTP.lib;tinyMSRP.lib;tinySDP.lib;tinyBFCP.lib;tinyMEDIA.lib;tinyIPSec.lib;libyuv64.lib;vpxmt64.lib;libspeex64.a;libspeexdsp64.a;audio_processing64.lib;common_audio64.lib;system_wrappers64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\coreaudio\tdav_consumer_coreaudio.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\directsound\tdav_consumer_dsound.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\directsound\tdav_producer_dsound.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_consumer_audio.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_jitterbuffer.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_producer_audio.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_session_audio.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_speakup_jitterbuffer.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_speex_denoise.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_speex_jitterbuffer.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_speex_resampler.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\tdav_webrtc_denoise.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\waveapi\tdav_consumer_waveapi.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\audio\waveapi\tdav_producer_waveapi.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\bfcp\tdav_session_bfcp.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\amr\tdav_codec_amr.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\bfcp\tdav_codec_bfcp.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\bv\tdav_codec_bv16.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\bv\tdav_codec_bv32.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\dtmf\tdav_codec_dtmf.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\fec\tdav_codec_red.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\fec\tdav_codec_ulpfec.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\g711\g711.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\g711\tdav_codec_g711.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\g722\g722_enc_dec.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\g722\tdav_codec_g722.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\g729\tdav_codec_g729.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\gsm\tdav_codec_gsm.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h261\tdav_codec_h261.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h263\tdav_codec_h263.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h264\tdav_codec_h264.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h264\tdav_codec_h264_cisco.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h264\tdav_codec_h264_common.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h264\tdav_codec_h264_cuda.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h264\tdav_codec_h264_rtp.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\ilbc\tdav_codec_ilbc.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\mp4ves\tdav_codec_mp4ves.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\msrp\tdav_codec_msrp.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\speex\tdav_codec_speex.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\theora\tdav_codec_theora.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\vpx\tdav_codec_vp8.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\msrp\tdav_consumer_msrp.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\msrp\tdav_producer_msrp.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\msrp\tdav_session_msrp.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\t140\tdav_consumer_t140.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\t140\tdav_producer_t140.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\t140\tdav_session_t140.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\tdav.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\tdav_apple.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\tdav_session_av.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\tdav_win32.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\gdi\tdav_consumer_video_gdi.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\gdi\tdav_producer_screencast_gdi.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\jb\tdav_video_frame.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\jb\tdav_video_jb.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\mf\tdav_consumer_video_mf.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\mf\tdav_producer_video_mf.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\tdav_consumer_video.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\tdav_converter_video.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\tdav_runnable_video.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\tdav_session_video.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\winm\tdav_consumer_winm.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\video\winm\tdav_producer_winm.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav_config.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\coreaudio\tdav_audiounit.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\coreaudio\tdav_consumer_audioqueue.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\coreaudio\tdav_consumer_audiounit.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\coreaudio\tdav_producer_audioqueue.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\coreaudio\tdav_producer_audiounit.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\directsound\tdav_consumer_dsound.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\directsound\tdav_producer_dsound.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_consumer_audio.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_jitterbuffer.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_producer_audio.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_session_audio.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_speakup_jitterbuffer.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_speex_denoise.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_speex_jitterbuffer.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_speex_resampler.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\tdav_webrtc_denoise.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\waveapi\tdav_consumer_waveapi.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\audio\waveapi\tdav_producer_waveapi.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\bfcp\tdav_session_bfcp.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\amr\tdav_codec_amr.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\bfcp\tdav_codec_bfcp.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\bv\tdav_codec_bv16.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\bv\tdav_codec_bv32.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\dtmf\tdav_codec_dtmf.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\fec\tdav_codec_red.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\fec\tdav_codec_ulpfec.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\g711\g711.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\g711\tdav_codec_g711.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\g722\g722_decode.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\g722\g722_encode.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\g722\tdav_codec_g722.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\g729\tdav_codec_g729.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\gsm\tdav_codec_gsm.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h261\tdav_codec_h261.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h263\tdav_codec_h263.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h264\tdav_codec_h264.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h264\tdav_codec_h264_cisco.cxx" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h264\tdav_codec_h264_cuda.cxx" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h264\tdav_codec_h264_rtp.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\ilbc\tdav_codec_ilbc.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\mp4ves\tdav_codec_mp4ves.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\msrp\tdav_codec_msrp.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\opus\tdav_codec_opus.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\speex\tdav_codec_speex.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\t140\tdav_codec_t140.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\theora\tdav_codec_theora.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\vpx\tdav_codec_vp8.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\msrp\tdav_consumer_msrp.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\msrp\tdav_producer_msrp.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\msrp\tdav_session_msrp.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\t140\tdav_consumer_t140.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\t140\tdav_producer_t140.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\t140\tdav_session_t140.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\tdav.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\tdav_session_av.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\tdav_win32.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\gdi\tdav_consumer_video_gdi.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\gdi\tdav_producer_screencast_gdi.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\jb\tdav_video_frame.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\jb\tdav_video_jb.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\mf\tdav_consumer_video_mf.cxx" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\mf\tdav_producer_video_mf.cxx" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\tdav_consumer_video.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\tdav_converter_video.cxx" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\tdav_runnable_video.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\tdav_session_video.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\winm\tdav_consumer_winm.cxx" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\video\winm\tdav_producer_winm.cxx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="tinyBFCP-2013.vcxproj">
+      <Project>{78605d89-4d51-41ac-afe2-061b4cab81f1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="tinyIPSec-2013.vcxproj">
+      <Project>{002ff064-588f-402e-a096-c8d033f49f40}</Project>
+    </ProjectReference>
+    <ProjectReference Include="tinyMEDIA-2013.vcxproj">
+      <Project>{52814b0d-7dca-45b8-9a16-8b147040d619}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tinyMSRP-2013.vcxproj">
+      <Project>{aa46af16-9678-4054-8e48-98dc21ecec82}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tinyNET-2013.vcxproj">
+      <Project>{7522a458-92f4-4259-b906-e84c2a65d9f1}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tinyRTP-2013.vcxproj">
+      <Project>{99b7d02f-8c70-4b45-af3c-92313c3cee15}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tinySAK-2013.vcxproj">
+      <Project>{6bc9b796-10c6-4cf7-a6e4-e2daccda84da}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tinySDP-2013.vcxproj">
+      <Project>{e45db518-6562-4033-80e8-60030f0b169f}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

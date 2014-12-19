@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source%28%2a.c%29">
+      <UniqueIdentifier>{66dd1628-dd91-47dc-bce9-bdb9899aacaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\auth">
+      <UniqueIdentifier>{0b8fd586-b87b-4249-b279-ed152ae7c130}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\headers">
+      <UniqueIdentifier>{c71b67d2-29cf-453c-a092-e591e56c9a9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source%28%2a.c%29\parsers">
+      <UniqueIdentifier>{386b3e92-4cdb-40d6-bf3b-c2f9920f6fe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29">
+      <UniqueIdentifier>{a2f45f4c-e22d-463d-999f-6167925c8693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29\auth">
+      <UniqueIdentifier>{397fea12-8e34-42ad-a90e-fded6a3e8f84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29\headers">
+      <UniqueIdentifier>{19aae631-2870-42e8-b853-382ee50b264d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29\parsers">
+      <UniqueIdentifier>{4baee55d-436c-47c8-aa7e-6b3e9a8a8c0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="abnf%28%2a.abnf%29">
+      <UniqueIdentifier>{e4e676ac-35e2-4d19-998b-398ab1e9770e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ragel%28%2a.rl%29">
+      <UniqueIdentifier>{4986e6e0-dd41-4024-a13c-cdaaec3be52e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp_action.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp_dialog.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp_event.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp_message.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp_session.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\thttp_url.c">
+      <Filter>source%28%2a.c%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\auth\thttp_auth.c">
+      <Filter>source%28%2a.c%29\auth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\auth\thttp_challenge.c">
+      <Filter>source%28%2a.c%29\auth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Authorization.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Content_Length.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Content_Type.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Dummy.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_ETag.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Sec_WebSocket_Accept.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Sec_WebSocket_Key.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Sec_WebSocket_Protocol.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Sec_WebSocket_Version.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_Transfer_Encoding.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\headers\thttp_header_WWW_Authenticate.c">
+      <Filter>source%28%2a.c%29\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\parsers\thttp_parser_header.c">
+      <Filter>source%28%2a.c%29\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\parsers\thttp_parser_message.c">
+      <Filter>source%28%2a.c%29\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyHTTP\src\parsers\thttp_parser_url.c">
+      <Filter>source%28%2a.c%29\parsers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\thttp.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\thttp_action.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\thttp_dialog.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\thttp_message.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\thttp_session.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\thttp_url.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyhttp.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyhttp_config.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\auth\thttp_auth.h">
+      <Filter>include%28%2a.h%29\auth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\auth\thttp_challenge.h">
+      <Filter>include%28%2a.h%29\auth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_Authorization.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_Content_Length.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_Content_Type.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_Dummy.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_ETag.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyhttp\headers\thttp_header_Sec_WebSocket_Accept.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyhttp\headers\thttp_header_Sec_WebSocket_Key.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyhttp\headers\thttp_header_Sec_WebSocket_Protocol.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyhttp\headers\thttp_header_Sec_WebSocket_Version.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_Transfer_Encoding.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\headers\thttp_header_WWW_Authenticate.h">
+      <Filter>include%28%2a.h%29\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\parsers\thttp_parser_header.h">
+      <Filter>include%28%2a.h%29\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\parsers\thttp_parser_message.h">
+      <Filter>include%28%2a.h%29\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\parsers\thttp_parser_url.h">
+      <Filter>include%28%2a.h%29\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyHTTP\include\tinyHTTP\thttp_event.h">
+      <Filter>include%28%2a.h%29</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\abnf\http.abnf">
+      <Filter>abnf%28%2a.abnf%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\abnf\httpauth.abnf">
+      <Filter>abnf%28%2a.abnf%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\abnf\uri.abnf">
+      <Filter>abnf%28%2a.abnf%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_machine_header.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_machine_message.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_machine_utils.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_machine_ws.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Authorization.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Content_Length.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Content_Type.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Dummy.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_ETag.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Sec_WebSocket_Accept.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Sec_WebSocket_Key.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Sec_WebSocket_Version.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Transfer_Encoding.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_WWW_Authenticate.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_message.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_url.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+    <None Include="..\thirdparties\source\doubango\tinyHTTP\ragel\thttp_parser_header_Sec_WebSocket_Protocol.rl">
+      <Filter>ragel%28%2a.rl%29</Filter>
+    </None>
+  </ItemGroup>
+</Project>

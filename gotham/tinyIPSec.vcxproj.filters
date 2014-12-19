@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source%28%2a.c%29">
+      <UniqueIdentifier>{37f879e4-9c7e-4b51-882e-46cd075aab68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include%28%2a.h%29">
+      <UniqueIdentifier>{b6fefa8e-e8b6-41bb-b042-cc2056129df3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources%28%2a.rc%29">
+      <UniqueIdentifier>{9145cf9f-1a70-47de-b3c5-2ac5f70eb48d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\doubango\tinyIPSec\src\tipsec.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\doubango\tinyIPSec\src\tinyipsec_config.h" />
+    <ClInclude Include="..\..\doubango\tinyIPSec\src\tipsec.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\doubango\tinyIPSec\version.rc" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\common">
+      <UniqueIdentifier>{50153f88-8b4b-4e2a-828b-9108bd043725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\common">
+      <UniqueIdentifier>{9222035b-b37b-4c9c-aa9a-9c08dae5f55c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{80c54ca6-233e-4d82-b7cf-c193b5b06d4e}</UniqueIdentifier>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DisplayIE.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmainIE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LooperIE.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NetTransportIE.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PeerConnectionIE.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PluginInstanceIE.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SessionDescriptionIE.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilsIE.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="webrtc4ie.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\_NetTransport.cc">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\_PeerConnection.cc">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\_PluginInstance.cc">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\_SessionDescription.cc">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\_Utils.cc">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="webrtc4ie_i.c">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="webrtc4ie.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="webrtc4ieps.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Looper.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="NetTransport.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="PeerConnection.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="PluginInstance.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="SessionDescription.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="VideoDisplay.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="webrtc4ie.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="webrtc4ie.idl">
+      <Filter>Source Files</Filter>
+    </Midl>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="_ILooperEvents_CP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_INetTransportEvents_CP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_IPeerConnectionEvents_CP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_IVideoDisplayEvents_CP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DisplayIE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dllmainIE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LooperIE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NetTransportIE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PeerConnectionIE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PluginInstanceIE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SessionDescriptionIE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilsIE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\_Config.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\_NetTransport.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\_PeerConnection.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\_PluginInstance.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\_SessionDescription.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\_Utils.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="webrtc4ie_i.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Looper.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pluginInstance.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="VideoDisplay.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="webrtc4ie.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

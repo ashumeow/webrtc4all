@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6A69773C-0C70-4BD4-8362-C274CAFD58F2}</ProjectGuid>
+    <RootNamespace>pluginDirectShow</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <SccProjectName>SAK</SccProjectName>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.51106.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\doubango\plugins\pluginDirectShow;..\..\doubango\thirdparties\win32\include;..\..\doubango\thirdparties\win32\include\directshow;..\..\doubango\tinySAK\src;..\..\doubango\tinyMEDIA\include;..\..\doubango\tinySDP\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;PLUGIN_DSHOW_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalDependencies>tinySAK.lib;tinyMEDIA.lib;dmoguids.lib;strmiids.lib;uuid.lib;Winmm.lib;strmbasd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);..\..\doubango\thirdparties\win32\lib\directshow;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\doubango\plugins\pluginDirectShow;..\..\doubango\thirdparties\win32\include;..\..\doubango\thirdparties\win32\include\directshow;..\..\doubango\tinySAK\src;..\..\doubango\tinyMEDIA\include;..\..\doubango\tinySDP\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;PLUGIN_DSHOW_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>MaxSpeed</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalDependencies>tinySAK.lib;tinyMEDIA.lib;dmoguids.lib;strmiids.lib;uuid.lib;Winmm.lib;strmbase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);..\..\doubango\thirdparties\win32\lib\directshow;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\dllmain_dshow.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSCaptureFormat.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSCaptureGraph.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSCaptureUtils.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSDibHelper.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSDisplay.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSDisplayGraph.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSDisplayOverlay.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSDisplayOverlay.VMR.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSDisplayOverlay.VMR9.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSFrameRateFilter.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSGrabber.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSOutputFilter.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSOutputStream.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSPushSourceDesktop.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSScreenCastGraph.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\DSUtils.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\Resizer.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\VideoDisplayName.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\internals\VideoGrabberName.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\plugin_screencast_dshow_producer.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\plugin_video_dshow_consumer.cxx" />
+    <ClCompile Include="..\..\doubango\plugins\pluginDirectShow\plugin_video_dshow_producer.cxx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSBaseCaptureGraph.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSBufferWriter.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSCaptureFormat.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSCaptureGraph.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSCaptureUtils.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSDibHelper.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSDisplay.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSDisplayGraph.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSDisplayOverlay.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSFrameRateFilter.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSGrabber.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSOutputFilter.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSOutputStream.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSPushSource.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSScreenCastGraph.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\DSUtils.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\Resizer.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\VideoDisplayName.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\VideoFrame.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\internals\VideoGrabberName.h" />
+    <ClInclude Include="..\..\doubango\plugins\pluginDirectShow\plugin_dshow_config.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="tinyMEDIA.vcxproj">
+      <Project>{52814b0d-7dca-45b8-9a16-8b147040d619}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="tinySAK.vcxproj">
+      <Project>{6bc9b796-10c6-4cf7-a6e4-e2daccda84da}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\doubango\plugins\pluginDirectShow\version.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

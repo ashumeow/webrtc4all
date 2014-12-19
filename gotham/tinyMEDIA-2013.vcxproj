@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{52814B0D-7DCA-45B8-9A16-8B147040D619}</ProjectGuid>
+    <RootNamespace>tinyMEDIA</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>tinyMEDIA</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinySDP\include;..\thirdparties\source\doubango\tinyNET\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYMEDIA_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;tinySDP.lib;tinyNET.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinySDP\include;..\thirdparties\source\doubango\tinyNET\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYMEDIA_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;tinySDP.lib;tinyNET.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinySDP\include;..\thirdparties\source\doubango\tinyNET\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYMEDIA_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;tinySDP.lib;tinyNET.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\thirdparties\source\doubango\thirdparties\win32\include;..\thirdparties\source\doubango\tinyMEDIA\include;..\thirdparties\source\doubango\tinySAK\src;..\thirdparties\source\doubango\tinySDP\include;..\thirdparties\source\doubango\tinyNET\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0501;_WINDOWS;_USRDLL;TINYMEDIA_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>tinySAK.lib;tinySDP.lib;tinyNET.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\content\tmedia_content.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\content\tmedia_content_cpim.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\content\tmedia_content_multipart.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\content\tmedia_content_sip_frag.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_codec.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_codec_dummy.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_common.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_consumer.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_converter_video.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_defaults.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_denoise.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_imageattr.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_jitterbuffer.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_params.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_producer.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_qos.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_resampler.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_session.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_session_dummy.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_session_ghost.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia\tmedia_vad.h" />
+    <ClInclude Include="..\thirdparties\source\doubango\tinyMEDIA\include\tinymedia_config.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\content\tmedia_content.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\content\tmedia_content_cpim.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\content\tmedia_content_multipart.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\content\tmedia_content_sip_frag.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_codec.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_codec_dummy.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_common.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_consumer.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_converter_video.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_defaults.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_denoise.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_imageattr.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_jitterbuffer.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_params.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_producer.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_qos.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_resampler.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_session.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_session_dummy.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_session_ghost.c" />
+    <ClCompile Include="..\thirdparties\source\doubango\tinyMEDIA\src\tmedia_vad.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\thirdparties\source\doubango\tinyMEDIA\ragel\tmedia_content_cpim.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyMEDIA\ragel\tmedia_imageattr.rl" />
+    <None Include="..\thirdparties\source\doubango\tinyMEDIA\ragel\tmedia_machine_utils.rl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="tinyNET-2013.vcxproj">
+      <Project>{7522a458-92f4-4259-b906-e84c2a65d9f1}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tinySAK-2013.vcxproj">
+      <Project>{6bc9b796-10c6-4cf7-a6e4-e2daccda84da}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tinySDP-2013.vcxproj">
+      <Project>{e45db518-6562-4033-80e8-60030f0b169f}</Project>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
