@@ -1,0 +1,8 @@
+EXPORTS
+    DllCanUnloadNow     PRIVATE
+    DllRegisterServer   PRIVATE
+    DllUnregisterServer PRIVATE
+    DllGetClassObject   PRIVATE
+
+	CreateGmSink
+	CGmSink_CreateInstance

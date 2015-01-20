@@ -426,6 +426,9 @@
     <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h264\tdav_codec_h264_cisco.h">
       <Filter>headers%28%2a.h%29\codecs\h264</Filter>
     </ClInclude>
+    <ClInclude Include="..\thirdparties\source\doubango\tinyDAV\include\tinydav\codecs\h264\tdav_codec_h264_intel.h">
+      <Filter>headers%28%2a.h%29\codecs\h264</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\tdav.c">
@@ -630,6 +633,9 @@
       <Filter>source%28%2a.c%29\video\gdi</Filter>
     </ClCompile>
     <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h264\tdav_codec_h264_cisco.cxx">
+      <Filter>source%28%2a.c%29\codecs\h264</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparties\source\doubango\tinyDAV\src\codecs\h264\tdav_codec_h264_intel.cxx">
       <Filter>source%28%2a.c%29\codecs\h264</Filter>
     </ClCompile>
   </ItemGroup>

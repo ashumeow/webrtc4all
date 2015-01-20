@@ -4,12 +4,16 @@
 #include "tinydav.h"
 #include "httpforsdp.h"
 
-#define DEFAULT_CODECS						(tmedia_codec_id_h264_mp | tmedia_codec_id_h264_bp | tmedia_codec_id_vp8 | tmedia_codec_id_pcma | tmedia_codec_id_pcmu) // use "tmedia_codec_id_all" to enable all codecs
-#define DEFAULT_VIDEO_SIZE					tmedia_pref_video_size_vga
-#define DEFAULT_VIDEO_FPS					30 // up to 120
-#define DEFAULT_VIDEO_REMOTE_WINDOW_NAME	L"Remote video window (Decoded RTP)" // Remote window is where the decoded video frames are displayed
-#define DEFAULT_VIDEO_LOCAL_WINDOW_NAME		L"Local video window (Preview)" // Local window is where the encoded video frames are displayed before sending (preview, PIP mode).
-#define HTTP_FOR_SDP_PORT                   1080
+#define DEFAULT_CODECS							(tmedia_codec_id_h264_mp | tmedia_codec_id_h264_bp | tmedia_codec_id_vp8 | tmedia_codec_id_pcma | tmedia_codec_id_pcmu | tmedia_codec_id_opus) // use "tmedia_codec_id_all" to enable all codecs
+#define DEFAULT_VIDEO_SIZE						tmedia_pref_video_size_vga
+#define DEFAULT_VIDEO_FPS						25 // up to 120
+#define DEFAULT_VIDEO_BANDWIDTH_UP				-1 // Kbps
+#define DEFAULT_VIDEO_BANDWIDTH_DOWN			-1 // Kbps
+#define DEFAULT_VIDEO_MR						1 // Motion rank (1, 2 or 4)
+#define DEFAULT_VIDEO_ZERO_ARTIFACTS_ENABLED	tsk_true
+#define DEFAULT_VIDEO_REMOTE_WINDOW_NAME		L"Remote video window (Decoded RTP)" // Remote window is where the decoded video frames are displayed
+#define DEFAULT_VIDEO_LOCAL_WINDOW_NAME			L"Local video window (Preview)" // Local window is where the encoded video frames are displayed before sending (preview, PIP mode).
+#define HTTP_FOR_SDP_PORT						1080
 
 // redefine _ASSERT here to allow executing the expression in release builds (just without the condition check & debug break)
 // the predefined _ASSERT/assert would completely omit the expression (which would break how this code uses it for maximum readability - since this is demo code)
@@ -768,9 +772,12 @@ int _tmain(int argc, _TCHAR* argv[], _TCHAR* envp[])
     _ASSERT((ret = tnet_startup()) == 0);
     _ASSERT((ret = tdav_init()) == 0);
 
-	_ASSERT((ret = tmedia_defaults_set_video_zeroartifacts_enabled(tsk_false)) == 0);
+	_ASSERT((ret = tmedia_defaults_set_video_zeroartifacts_enabled(DEFAULT_VIDEO_ZERO_ARTIFACTS_ENABLED)) == 0);
     _ASSERT((ret = tmedia_defaults_set_pref_video_size(DEFAULT_VIDEO_SIZE)) == 0);
     _ASSERT((ret = tmedia_defaults_set_video_fps(DEFAULT_VIDEO_FPS)) == 0);
+	_ASSERT((ret = tmedia_defaults_set_video_motion_rank(DEFAULT_VIDEO_MR)) == 0);
+	_ASSERT((ret = tmedia_defaults_set_bandwidth_video_download_max(DEFAULT_VIDEO_BANDWIDTH_DOWN)) == 0);
+	_ASSERT((ret = tmedia_defaults_set_bandwidth_video_upload_max(DEFAULT_VIDEO_BANDWIDTH_UP)) == 0);
 
 	_ASSERT((ret = tmedia_defaults_set_agc_enabled(tsk_true)) == 0);
 	_ASSERT((ret = tmedia_defaults_set_echo_supp_enabled(tsk_true)) == 0);
@@ -780,6 +787,7 @@ int _tmain(int argc, _TCHAR* argv[], _TCHAR* envp[])
     _ASSERT((ret = tdav_set_codecs((tdav_codec_id_t)DEFAULT_CODECS)) == 0);
     _ASSERT((ret = tdav_codec_set_priority((tdav_codec_id_t)tmedia_codec_id_h264_mp, 0)) == 0);
     _ASSERT((ret = tdav_codec_set_priority((tdav_codec_id_t)tmedia_codec_id_h264_bp, 1)) == 0);
+	_ASSERT((ret = tdav_codec_set_priority((tdav_codec_id_t)tmedia_codec_id_vp8, 1)) == 0);
 
 
     // video camera friendly strings for testing
@@ -788,8 +796,9 @@ int _tmain(int argc, _TCHAR* argv[], _TCHAR* envp[])
     // 2: "Integrated Camera - Lenovo ThinkPad"
     // 3: "Rocketfish HD Webcam Pro"
     // 4: "FaceTime HD Camera (Built-in) - iMAC 2003"
+	// 5: "Logitech HD Pro Webcam C920"
     // If none is connected then the default device will be selected
-    _ASSERT((ret = tmedia_producer_set_friendly_name(tmedia_video, "Logitech Webcam C930e")) == 0);
+    _ASSERT((ret = tmedia_producer_set_friendly_name(tmedia_video, "Logitech HD Pro Webcam C920")) == 0);
 
     startRtpSession(sCallIP, sListenIP);
 
