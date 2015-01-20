@@ -97,7 +97,7 @@
       <WarningLevel>Level3</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;PLUGIN_WIN_MFP_EXPORTS;TINYDAV_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;PLUGIN_WIN_MFP_EXPORTS;TINYDAV_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;PLUGIN_MF_DISABLE_MS_H264_ENCODER=1;PLUGIN_MF_DISABLE_CODECS=1;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>tinySAK.lib;tinyMEDIA.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -119,7 +119,7 @@
       <WarningLevel>Level3</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;PLUGIN_WIN_MFP_EXPORTS;TINYDAV_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;PLUGIN_WIN_MFP_EXPORTS;TINYDAV_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_INFO;PLUGIN_MF_DISABLE_MS_H264_ENCODER=1;PLUGIN_MF_DISABLE_CODECS=1;PLUGIN_MF_ENABLE_VIDEO_CONVERTER=1;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>tinySAK.lib;tinyMEDIA.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -140,7 +140,7 @@
       <WarningLevel>Level3</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;PLUGIN_WIN_MFP_EXPORTS;TINYDAV_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;PLUGIN_WIN_MFP_EXPORTS;TINYDAV_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;PLUGIN_MF_DISABLE_MS_H264_ENCODER=1;PLUGIN_MF_DISABLE_CODECS=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>tinySAK.lib;tinyMEDIA.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -165,7 +165,7 @@
       <WarningLevel>Level3</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;PLUGIN_WIN_MFP_EXPORTS;TINYDAV_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;PLUGIN_WIN_MFP_EXPORTS;TINYDAV_EXPORTS;DEBUG_LEVEL=DEBUG_LEVEL_ERROR;PLUGIN_MF_DISABLE_MS_H264_ENCODER=1;PLUGIN_MF_DISABLE_CODECS=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>tinySAK.lib;tinyMEDIA.lib;%(AdditionalDependencies)</AdditionalDependencies>
