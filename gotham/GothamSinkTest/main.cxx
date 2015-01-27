@@ -25,6 +25,15 @@ static const UINT32 VIDEO_BIT_RATE = 800000;
 static const UINT32 VIDEO_LOCAL_PORT = 0; // binds to any available port
 static const UINT32 VIDEO_FRAMES_COUNT = 10; // number of frames to send for testing
 
+static const BOOL PARAM_ICE_ENABLED = FALSE;
+static const BOOL PARAM_ICE_STUN_ENABLED = TRUE;
+static const BOOL PARAM_ICE_TURN_ENABLED = FALSE;
+
+static const BOOL PARAM_RTCP_ENABLED = TRUE;
+static const BOOL PARAM_RTCPMUX_ENABLED = TRUE;
+
+static const UINT32 PARAM_AVPF_MODE = GMT_MODE_OPTIONAL;
+
 extern HRESULT CGmSink_CreateInstance(REFIID iid, void **ppMFT);
 extern HRESULT CreateGmSink(IMFMediaSink **ppSink);
 
@@ -42,10 +51,6 @@ extern HRESULT CreateGmSink(IMFMediaSink **ppSink);
         *ppT = NULL; \
 		    } \
 }
-
-#if !defined(GMT_WANT_TO_TALK_TO_BROWSER) // Generate SDP compatible with WebRTC (Chrome, FF, Safari, IE...)
-#	define GMT_WANT_TO_TALK_TO_BROWSER		0
-#endif
 
 #if !defined(GMT_LOOPBACK)
 #	define GMT_LOOPBACK		0 
@@ -77,30 +82,6 @@ extern HRESULT CreateGmSink(IMFMediaSink **ppSink);
 	_T("a=ssrc:82176777 cname:38e8cc681dd07cff0753f07bcb73b2d4\r\n") \
 	_T("a=ssrc:82176777 mslabel:6994f7d1-6ce9-4fbd-acfd-84e5131ca2e2\r\n") \
 	_T("a=ssrc:82176777 label:doubango@video\r\n")
-
-
-#if GMT_WANT_TO_TALK_TO_BROWSER // Remote party = Chrome, FF, IE, Safari or Opera
-	/* YOU MUST NOT CHANGE NEXT VALUES UNLESS YOU NOW WHAT YOUR'RE DOING */
-	static const BOOL PARAM_ICE_ENABLED = TRUE;
-	static const BOOL PARAM_ICE_STUN_ENABLED = TRUE;
-	static const BOOL PARAM_ICE_TURN_ENABLED = FALSE;
-
-	static const BOOL PARAM_RTCP_ENABLED = TRUE;
-	static const BOOL PARAM_RTCPMUX_ENABLED = TRUE;
-
-	static const UINT32 PARAM_AVPF_MODE = GMT_MODE_MANDATORY;
-#else
-	/* YOU CAN CHANGE NEXT VALUES FOR TESTING */
-	static const BOOL PARAM_ICE_ENABLED = FALSE;
-	static const BOOL PARAM_ICE_STUN_ENABLED = TRUE;
-	static const BOOL PARAM_ICE_TURN_ENABLED = FALSE;
-
-	static const BOOL PARAM_RTCP_ENABLED = TRUE;
-	static const BOOL PARAM_RTCPMUX_ENABLED = TRUE;
-
-	static const UINT32 PARAM_AVPF_MODE = GMT_MODE_OPTIONAL;
-#endif /* GMT_WANT_TO_TALK_TO_BROWSER */
-
 
 int _tmain(int argc, _TCHAR* argv[], _TCHAR* envp[])
 {
@@ -179,9 +160,9 @@ int _tmain(int argc, _TCHAR* argv[], _TCHAR* envp[])
 
 	// Set remote SDP received from the remote party. Must be done after configuration.
 #if GMT_LOOPBACK
-	GMT_CHECK_HR(hr = pAttributes->SetString(GM_PARAM_REMOTE_SDP, szLocalSDP_));
+	GMT_CHECK_HR(hr = pAttributes->SetString(GM_PARAM_REMOTE_SDP_ANSWER, szLocalSDP_));
 #else
-	GMT_CHECK_HR(hr = pAttributes->SetString(GM_PARAM_REMOTE_SDP, GMT_REMOTE_SDP));
+	GMT_CHECK_HR(hr = pAttributes->SetString(GM_PARAM_REMOTE_SDP_ANSWER, GMT_REMOTE_SDP));
 #endif /* GMT_LOOPBACK */
 
 	//

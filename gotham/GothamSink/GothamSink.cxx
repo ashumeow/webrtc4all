@@ -657,8 +657,22 @@ STDMETHODIMP CGmSink::SetUINT32(REFGUID guidKey, UINT32 unValue)
 	{
 		GM_CHECK_HR(hr = m_objCall->SetAVPFMode((GmMode_t)unValue));
 	}
-
-	hr = CGmAttributes::SetUINT32(guidKey, unValue);
+	else if (guidKey == GM_PARAM_WEBRTC_PROFILE_ENABLED)
+	{
+		GM_CHECK_HR(hr = m_objCall->SetRTCWebProfileEnabled(unValue == TRUE));
+	}
+	else if (guidKey == GM_PARAM_SRTP_MODE)
+	{
+		GM_CHECK_HR(hr = m_objCall->SetSRTPMode((GmMode_t)unValue));
+	}
+	else if (guidKey == GM_PARAM_SRTP_TYPE)
+	{
+		GM_CHECK_HR(hr = m_objCall->SetSRTPType(unValue));
+	}
+	else
+	{
+		hr = CGmAttributes::SetUINT32(guidKey, unValue);
+	}
 
 bail:
 	return hr;
@@ -677,20 +691,29 @@ STDMETHODIMP CGmSink::GetString(REFGUID guidKey, LPWSTR pwszValue, UINT32 cchBuf
 		{
 			GM_CHECK_HR(hr = E_INVALIDARG);
 		}
+		
+		// apply new settings before requesting local SDP
+		GM_CHECK_HR(hr = m_pStream->ApplyMediaParams());
 
-		GM_CHECK_HR(hr = m_objCall->GetLocalSDP(strSDP));
+		hr = m_objCall->GetLocalSDP(strSDP);
+		if (hr == E_PENDING)
+		{
+			goto bail;
+		}
+		GM_CHECK_HR(hr);
 		GM_CHECK_HR(hr = GmSinkUtils::ConvertStringWString(strSDP, wstrSDP));
 		*pcchLength = (UINT32) (TSK_MIN(cchBufSize - 1, wstrSDP.length()));
 		_tcsncpy(pwszValue, wstrSDP.c_str(), *pcchLength);
 		pwszValue[*pcchLength] = 0;
-		goto bail;
 	}
 	else if (guidKey == GM_PARAM_REMOTE_SDP)
 	{
 		GM_CHECK_HR(hr = E_NOTIMPL); // Doesn't make sense asking for remote SDP
 	}
-
-	hr = CGmAttributes::GetString(guidKey, pwszValue, cchBufSize, pcchLength);
+	else
+	{
+		hr = CGmAttributes::GetString(guidKey, pwszValue, cchBufSize, pcchLength);
+	}
 
 bail:
 	return hr;
@@ -704,7 +727,7 @@ STDMETHODIMP CGmSink::SetString(REFGUID guidKey, LPCWSTR wszValue)
 	{
 		GM_CHECK_HR(hr = E_NOTIMPL); // Doesn't make sense setting local SDP
 	}
-	else if (guidKey == GM_PARAM_REMOTE_SDP)
+	else if (guidKey == GM_PARAM_REMOTE_SDP || guidKey == GM_PARAM_REMOTE_SDP_OFFER || guidKey == GM_PARAM_REMOTE_SDP_ANSWER || guidKey == GM_PARAM_REMOTE_SDP_PRANSWER)
 	{
 		std::string strSDP;
 		if (!wszValue || _tcsclen(wszValue) == 0)
@@ -712,11 +735,55 @@ STDMETHODIMP CGmSink::SetString(REFGUID guidKey, LPCWSTR wszValue)
 			GM_CHECK_HR(hr = E_INVALIDARG);
 		}
 		GM_CHECK_HR(hr = GmSinkUtils::ConvertWStringString(wszValue, strSDP));
-		GM_CHECK_HR(hr = m_objCall->SetRemoteSDP(strSDP));
-		goto bail;
+
+		// apply new settings before setting new remote SDP
+		GM_CHECK_HR(hr = m_pStream->ApplyMediaParams());
+
+		GM_CHECK_HR(hr = m_objCall->SetRemoteSDP(strSDP, 
+			guidKey == GM_PARAM_REMOTE_SDP_OFFER ? GmRoType_Offer : (guidKey == GM_PARAM_REMOTE_SDP_ANSWER ? GmRoType_Answer : (guidKey == GM_PARAM_REMOTE_SDP_PRANSWER ? GmRoType_PrAnswer : GmRoType_Unknown))));
 	}
-	
-	hr = CGmAttributes::SetString(guidKey, wszValue);
+	else if (guidKey == GM_PARAM_SSL_PATH_PUBLIC || guidKey == GM_PARAM_SSL_PATH_PRIVATE || guidKey == GM_PARAM_SSL_PATH_CA)
+	{ 
+		std::string strPath;
+		if (!wszValue || _tcsclen(wszValue) == 0)
+		{
+			GM_CHECK_HR(hr = E_INVALIDARG);
+		}
+		GM_CHECK_HR(hr = GmSinkUtils::ConvertWStringString(wszValue, strPath));
+		GM_CHECK_HR(hr = (guidKey == GM_PARAM_SSL_PATH_PUBLIC) ? m_objCall->SetSSLPublic(strPath) : (guidKey == GM_PARAM_SSL_PATH_PRIVATE ? m_objCall->SetSSLPrivate(strPath) : m_objCall->SetSSLCA(strPath)));
+	}
+	else if (guidKey == GM_PARAM_ICE_SERVER)
+	{
+		GM_CHECK_HR(hr = m_objCall->AddIceServer(wszValue));
+	}
+	else
+	{
+		hr = CGmAttributes::SetString(guidKey, wszValue);
+	}
+
+bail:
+	return hr;
+}
+
+STDMETHODIMP CGmSink::SetUnknown(REFGUID guidKey, IUnknown* pUnknown)
+{
+	HRESULT hr = S_OK;
+
+	if (guidKey == GM_PARAM_ICE_CALLBACK)
+	{
+		IGmIceCallback* pCallBack = NULL;
+		if (pUnknown)
+		{
+			GM_CHECK_HR(hr = pUnknown->QueryInterface(&pCallBack));
+		}
+		hr = m_objCall->SetIceCallback(pCallBack);
+		GmSafeRelease(&pCallBack);
+		GM_CHECK_HR(hr);
+	}
+	else
+	{
+		hr = CGmAttributes::SetUnknown(guidKey, pUnknown);
+	}
 
 bail:
 	return hr;
@@ -1466,6 +1533,37 @@ bail:
 	return hr;
 }
 
+HRESULT	CGmStreamSink::ApplyMediaParams()
+{
+	HRESULT hr = S_OK;
+	GUID guidNegMajorType;
+
+	EnterCriticalSection(&m_critSec);
+
+	GM_CHECK_HR(hr = m_pCurrentType->GetGUID(MF_MT_MAJOR_TYPE, &guidNegMajorType));
+	if (guidNegMajorType == MFMediaType_Video)
+	{
+		GUID guidNegSubType;
+		UINT32 uNegWidth, uNegHeight;
+		UINT32 uNumFPS = 25, uDenFPS = 1;
+		UINT32 uBitRateKbps = 0;
+
+		GM_CHECK_HR(hr = m_pCurrentType->GetGUID(MF_MT_SUBTYPE, &guidNegSubType));
+		GM_CHECK_HR(hr = MFGetAttributeSize(m_pCurrentType, MF_MT_FRAME_SIZE, &uNegWidth, &uNegHeight));
+		GM_CHECK_HR(hr = MFGetAttributeRatio(m_pCurrentType, MF_MT_FRAME_RATE, &uNumFPS, &uDenFPS));
+		hr = m_pCurrentType->GetUINT32(MF_MT_AVG_BITRATE, &uBitRateKbps);
+		uBitRateKbps /= 1024; // bps -> kbps
+
+		GM_CHECK_HR(hr = m_pSink->m_objCall->SetInputSize(uNegWidth, uNegHeight));
+		GM_CHECK_HR(hr = m_pSink->m_objCall->SetInputFormat(guidNegSubType));
+		GM_CHECK_HR(hr = m_pSink->m_objCall->SetInputFPS(uNumFPS / uDenFPS));
+		GM_CHECK_HR(hr = m_pSink->m_objCall->SetInputBitrate(uBitRateKbps));
+	}
+
+bail:
+	LeaveCriticalSection(&m_critSec);
+	return hr;
+}
 
 //-------------------------------------------------------------------
 // Name: Start
@@ -1478,24 +1576,12 @@ bail:
 HRESULT CGmStreamSink::Start(MFTIME start)
 {
 	HRESULT hr = S_OK;
-	GUID guidNegMajorType;
 
 	EnterCriticalSection(&m_critSec);
 
 	GM_CHECK_HR(hr = ValidateOperation(OpStart));
 
-	GM_CHECK_HR(hr = m_pCurrentType->GetGUID(MF_MT_MAJOR_TYPE, &guidNegMajorType));
-	if (guidNegMajorType == MFMediaType_Video)
-	{
-		GUID guidNegSubType;
-		UINT32 uNegWidth, uNegHeight;
-
-		GM_CHECK_HR(hr = m_pCurrentType->GetGUID(MF_MT_SUBTYPE, &guidNegSubType));
-		GM_CHECK_HR(hr = MFGetAttributeSize(m_pCurrentType, MF_MT_FRAME_SIZE, &uNegWidth, &uNegHeight));
-
-		GM_CHECK_HR(m_pSink->m_objCall->SetInputSize(uNegWidth, uNegHeight));
-		GM_CHECK_HR(m_pSink->m_objCall->SetInputFormat(guidNegSubType));
-	}
+	GM_CHECK_HR(hr = ApplyMediaParams());
 	
 	if (start != PRESENTATION_CURRENT_POSITION)
 	{
@@ -1796,24 +1882,26 @@ bail:
 
 HRESULT CGmStreamSink::DispatchProcessSample(CGmAsyncOperation* pOp)
 {
-	HRESULT hr = S_OK;
+	HRESULT hr = S_OK, _hr;
 
 	if (pOp == NULL)
 	{
 		GM_CHECK_HR(hr = E_POINTER);
 	}
 
-	GM_CHECK_HR(hr = ProcessSamplesFromQueue(WriteSamples));
-
+	_hr = ProcessSamplesFromQueue(WriteSamples);
+	
 	// Ask for another sample
 	if (pOp->m_op == OpProcessSample)
 	{
 		GM_CHECK_HR(hr = QueueEvent(MEStreamSinkRequestSample, GUID_NULL, S_OK, NULL));
 	}
 
+	GM_CHECK_HR(hr = _hr);
+
 bail:
 	// We are in the middle of an asynchronous operation, so if something failed, send an error.
-	if (FAILED(hr))
+	if (FAILED(hr) && hr != GM_ERR_PRODUCER_NOT_STARTED) // Do not break the writer if the error is because of producer wrong state
 	{
 		hr = QueueEvent(MEError, GUID_NULL, hr, NULL);
 	}

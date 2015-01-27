@@ -40,10 +40,10 @@ IGmMarker : public IUnknown
 	virtual STDMETHODIMP GetContext(PROPVARIANT *pvar) = 0;
 };
 
-class CGmSink 
+class CGmSink
 	: public IMFFinalizableMediaSink
 	, public IMFClockStateSink
-	, public CGmAttributes<>
+	, public CGmAttributes < >
 	, public IGmSessionWebRTC
 {
 
@@ -90,6 +90,7 @@ public:
 	STDMETHODIMP SetUINT32(REFGUID guidKey, UINT32 unValue);
 	STDMETHODIMP GetString(REFGUID guidKey, LPWSTR pwszValue, UINT32 cchBufSize, UINT32* pcchLength);
 	STDMETHODIMP SetString(REFGUID guidKey, LPCWSTR wszValue);
+	STDMETHODIMP SetUnknown(REFGUID guidKey, IUnknown* pUnknown);
 
 	// IGmSessionWebRTC methods
 	STDMETHODIMP Test();
@@ -100,7 +101,7 @@ private:
 	virtual ~CGmSink();
 
 	HRESULT Initialize();
-	
+
 	HRESULT CheckShutdown() const
 	{
 		if (m_IsShutdown)
@@ -204,11 +205,11 @@ public:
 	InvokeFn m_pInvokeFn;
 };
 
-class CGmStreamSink 
+class CGmStreamSink
 	: public IMFStreamSink
 	, public IMFMediaTypeHandler
 	, public IGmStreamWebRTC
-	, public CGmAttributes<>
+	, public CGmAttributes < >
 {
 	friend class CGmSink;
 
@@ -328,6 +329,7 @@ private:
 	}
 
 
+	HRESULT		ApplyMediaParams();
 	HRESULT     Start(MFTIME start);
 	HRESULT     Restart();
 	HRESULT     Stop();

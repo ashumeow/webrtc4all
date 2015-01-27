@@ -51,15 +51,22 @@ GmSessionCall::GmSessionCall()
 	, m_bNattIceTurnEnabled(tmedia_defaults_get_iceturn_enabled() == tsk_true)
 	, m_bRTCPEnabled(tmedia_defaults_get_rtcp_enabled() == tsk_true)
 	, m_bRTCPMuxEnabled(tmedia_defaults_get_rtcpmux_enabled() == tsk_true)
-	, m_eAVPFMode((tmedia_defaults_get_profile() == tmedia_profile_rtcweb) ? GmMode_Mandatory : (GmMode_t)tmedia_defaults_get_avpf_mode())
+	, m_eAVPFMode((tmedia_defaults_get_profile() == tmedia_profile_rtcweb) ? GmMode_Mandatory : (GmMode_t)tmedia_defaults_get_avpf_mode()) 
+	, m_eSRTPMode((tmedia_defaults_get_profile() == tmedia_profile_rtcweb) ? GmMode_Mandatory : (GmMode_t)tmedia_defaults_get_srtp_mode())
+	, m_SRTPType((tmedia_defaults_get_profile() == tmedia_profile_rtcweb) ? (UINT32)tmedia_srtp_type_dtls : (UINT32)tmedia_defaults_get_srtp_type())
+	, m_bRTCWebProfileEnabled(tmedia_defaults_get_profile() == tmedia_profile_rtcweb)
 	, m_VideoDisplayLocal(NULL)
 	, m_VideoDisplayRemote(NULL)
 	, m_ScreenCastDisplayLocal(NULL)
 	, m_ScreenCastDisplayRemote(NULL)
 	, m_pProducer(NULL)
 	, m_guidInputFormat(GUID_NULL)
+	, m_objIceCallback(NULL)
 	, m_nInputWidth(0)
 	, m_nInputHeight(0)
+	, m_nInputBitrateKbps(tmedia_defaults_get_bandwidth_video_upload_max())
+	, m_nFps(tmedia_defaults_get_video_fps())
+	, m_bSSLMutualAuth(false)
 	, m_bStartDeferred(false)
 	, m_bStarted(false)
 {
@@ -71,6 +78,7 @@ GmSessionCall::~GmSessionCall()
 {
 	Cleanup();
 	m_objMutex = NULL;
+	m_objIceCallback = NULL;
 	m_listIceServers.clear();
 	GmSafeRelease(&m_pProducer);
 
@@ -202,15 +210,46 @@ HRESULT GmSessionCall::Cleanup()
 HRESULT GmSessionCall::SetInputSize(UINT32 nWidth, UINT32 nHeight)
 {
 	HRESULT hr = S_OK;
+	tmedia_pref_video_size_t pref_vs = tmedia_defaults_get_pref_video_size();
 	GmAutoLock<GmSessionCall> autoLock(this);
 
 	if (m_pProducer)
 	{
 		GM_CHECK_HR(hr = m_pProducer->SetInputSize(nWidth, nHeight));
 	}
+	if (tmedia_video_get_closest_pref_size(nWidth, nHeight, &pref_vs) == 0)
+	{
+		GM_ASSERT(tmedia_defaults_set_pref_video_size(pref_vs) == 0);
+	}
 	m_nInputWidth = nWidth;
 	m_nInputHeight = nHeight;
 
+bail:
+	return hr;
+}
+
+HRESULT  GmSessionCall::SetInputBitrate(UINT32 nBitrateKbps)
+{
+	HRESULT hr = S_OK;
+	GmAutoLock<GmSessionCall> autoLock(this);
+
+	m_nInputBitrateKbps = nBitrateKbps;
+
+	GM_ASSERT(tmedia_defaults_set_bandwidth_video_upload_max(nBitrateKbps) == 0);
+	GM_CHECK_HR(hr);
+bail:
+	return hr;
+}
+
+HRESULT GmSessionCall::SetInputFPS(UINT32 nFps)
+{
+	HRESULT hr = S_OK;
+	GmAutoLock<GmSessionCall> autoLock(this);
+
+	m_nFps = nFps;
+
+	GM_ASSERT(tmedia_defaults_set_video_fps(nFps) == 0);
+	GM_CHECK_HR(hr);
 bail:
 	return hr;
 }
@@ -227,6 +266,64 @@ HRESULT GmSessionCall::SetInputFormat(const GUID& subType)
 	m_guidInputFormat = subType;
 
 bail:
+	return hr;
+}
+
+HRESULT  GmSessionCall::SetIceCallback(IGmIceCallback* pCallback)
+{
+	GmAutoLock<GmSessionCall> autoLock(this);
+	m_objIceCallback = pCallback;
+	return S_OK;
+}
+
+HRESULT GmSessionCall::AddIceServer(LPCWSTR wszServer)
+{
+	HRESULT hr = S_OK;
+	std::string strServer; 
+	GmIceServer* ptrServer = NULL;
+	tsk_params_L_t* pParams = tsk_null;
+	const char *protocol = NULL, *enable_turn = NULL, *enable_stun = NULL, *host = NULL, *port = NULL, *login = NULL, *password = NULL;
+
+	GmAutoLock<GmSessionCall> autoLock(this);
+
+	if (!wszServer || _tcslen(wszServer) == 0)
+	{
+		GM_CHECK_HR(hr = E_INVALIDARG);
+	}
+	
+	GM_CHECK_HR(hr = GmSinkUtils::ConvertWStringString(wszServer, strServer));
+
+	pParams = tsk_params_fromstring(strServer.c_str(), ";", tsk_true);
+	if (!pParams)
+	{
+		GM_CHECK_HR(hr = E_INVALIDARG);
+	}
+
+	if (!(protocol = tsk_params_get_param_value(pParams, "protocol")) || tsk_strnullORempty(protocol)
+		|| !(host = tsk_params_get_param_value(pParams, "host")) || tsk_strnullORempty(host)
+		|| !(port = tsk_params_get_param_value(pParams, "port")) || tsk_strnullORempty(port))
+	{
+		GM_CHECK_HR(hr = E_INVALIDARG);
+	}
+	enable_stun = tsk_params_get_param_value(pParams, "enable_stun");
+	enable_turn = tsk_params_get_param_value(pParams, "enable_turn");
+	login = tsk_params_get_param_value(pParams, "login");
+	password = tsk_params_get_param_value(pParams, "password");
+
+	ptrServer = new GmIceServer(
+		std::string(protocol),
+		std::string(host),
+		atoi(port),
+		tsk_striequals(enable_turn, "true"),
+		tsk_striequals(enable_stun, "true"),
+		tsk_strnullORempty(login) ? "" : std::string(login),
+		tsk_strnullORempty(password) ? "" : std::string(password));
+	GM_ASSERT(ptrServer != NULL);
+	m_listIceServers.push_back(ptrServer);
+
+bail:
+	GmSafeRelease(&ptrServer);
+	TSK_OBJECT_SAFE_FREE(pParams);
 	return hr;
 }
 
@@ -278,8 +375,9 @@ HRESULT GmSessionCall::GetLocalSDP(std::string &strSDP)
 
 	if (m_bNattIceEnabled && !IceGotLocalCandidatesAll())
 	{
-		GM_DEBUG_ERROR("ICE gathering not done");
-		GM_CHECK_HR(hr = E_ILLEGAL_METHOD_CALL);
+		GM_DEBUG_INFO("ICE gathering not done yet");
+		hr = E_PENDING;
+		goto bail;
 	}
 
 	// Get local now that ICE gathering is done
@@ -303,11 +401,36 @@ bail:
 	return hr;
 }
 
-HRESULT GmSessionCall::SetRemoteSDP(const std::string &strSDP)
+#define _COLLECT_DEFAULT_SSL_CERTS const char *_pub = NULL, *_priv = NULL,* _ca = NULL; tsk_bool_t _verif; GM_ASSERT(tmedia_defaults_get_ssl_certs(&_priv, &_pub, &_ca, &_verif) == 0);
+
+HRESULT GmSessionCall::SetSSLPublic(const std::string & strPath)
+{
+	_COLLECT_DEFAULT_SSL_CERTS;
+	GM_ASSERT(tmedia_defaults_set_ssl_certs(_priv, strPath.c_str(), _ca, _verif) == 0);
+	m_strSSLPublic = strPath;
+	return S_OK;
+}
+
+HRESULT GmSessionCall::SetSSLPrivate(const std::string & strPath)
+{
+	_COLLECT_DEFAULT_SSL_CERTS;
+	GM_ASSERT(tmedia_defaults_set_ssl_certs(strPath.c_str(), _pub, _ca, _verif) == 0);
+	m_strSSLPrivate = strPath;
+	return S_OK;
+}
+
+HRESULT GmSessionCall::SetSSLCA(const std::string & strPath)
+{
+	_COLLECT_DEFAULT_SSL_CERTS;
+	GM_ASSERT(tmedia_defaults_set_ssl_certs(_priv, _pub, strPath.c_str(), _verif) == 0);
+	m_strSSLCA = strPath;
+	return S_OK;
+}
+
+HRESULT GmSessionCall::SetRemoteSDP(const std::string &strSDP, GmRoType_t eType /*= GmRoType_Unknown*/)
 {
 	HRESULT hr = S_OK;
 	tsdp_message_t* pSdp_ro = tsk_null;
-	bool bRemoteIsOffer;
 	int iRet = 0;
 	tmedia_ro_type_t ro_type;
 	GmMediaType_t newMediaType;
@@ -319,7 +442,20 @@ HRESULT GmSessionCall::SetRemoteSDP(const std::string &strSDP)
 		GM_CHECK_HR(hr = E_INVALIDARG);
 	}
 
-	bRemoteIsOffer = (m_strLocalSdpType != "offer");
+	if (eType == GmRoType_Unknown)
+	{
+		ro_type = (m_strLocalSdpType != "offer") ? tmedia_ro_type_offer : tmedia_ro_type_answer;
+	}
+	else
+	{
+		switch (eType)
+		{
+		case GmRoType_Offer: ro_type = tmedia_ro_type_offer; break;
+		case GmRoType_Answer: ro_type = tmedia_ro_type_answer; break;
+		case GmRoType_PrAnswer: ro_type = tmedia_ro_type_provisional; break;
+		default: GM_CHECK_HR(hr = E_INVALIDARG); break;
+		}
+	}
 
 	// Parse SDP
 	if (!(pSdp_ro = tsdp_message_parse(strSDP.c_str(), strSDP.length())))
@@ -328,9 +464,7 @@ HRESULT GmSessionCall::SetRemoteSDP(const std::string &strSDP)
 		GM_CHECK_HR(hr = E_INVALIDARG);
 	}
 
-	m_bNattIceEnabled &= !IceIsEnabled(pSdp_ro);
-	
-	ro_type = bRemoteIsOffer ? tmedia_ro_type_answer : tmedia_ro_type_offer;
+	m_bNattIceEnabled &= IceIsEnabled(pSdp_ro);
 
 	newMediaType = _mediaTypeFromNative(tmedia_type_from_sdp(pSdp_ro));
 
@@ -379,18 +513,41 @@ HRESULT GmSessionCall::SetRemoteSDP(const std::string &strSDP)
 
 	GM_CHECK_HR(hr = CreateLocalOffer(pSdp_ro, ro_type));
 
-	// Start session manager if ICE done and not already started
-	if (m_bNattIceEnabled && IceIsDone())
-	{
-		GM_CHECK_HR(hr = IceProcessRo(pSdp_ro, (ro_type == tmedia_ro_type_offer)));
-	}
-
 bail:
 	TSK_OBJECT_SAFE_FREE(pSdp_ro);
 
 	return hr;
 }
 
+
+HRESULT GmSessionCall::SetSRTPMode(GmMode_t eMode)
+{
+	if (eMode != tmedia_srtp_mode_none && eMode != tmedia_srtp_mode_optional && eMode != tmedia_srtp_mode_mandatory)
+	{
+		return E_INVALIDARG;
+	}
+	m_eSRTPMode = eMode;
+	GM_ASSERT(tmedia_defaults_set_srtp_mode((tmedia_srtp_mode_t)eMode) == 0);
+	return S_OK;
+}
+
+HRESULT GmSessionCall::SetSRTPType(UINT32 uType)
+{
+	if (uType != tmedia_srtp_type_none && uType != tmedia_srtp_type_sdes && uType != tmedia_srtp_type_dtls && uType != tmedia_srtp_type_sdes_dtls)
+	{
+		return E_INVALIDARG;
+	}
+	m_SRTPType = uType;
+	GM_ASSERT(tmedia_defaults_set_srtp_type((tmedia_srtp_type_t)uType) == 0);
+	return S_OK;
+}
+
+HRESULT GmSessionCall::SetRTCWebProfileEnabled(bool bEnabled)
+{
+	m_bRTCWebProfileEnabled = bEnabled;
+	GM_ASSERT(tmedia_defaults_set_profile(m_bRTCWebProfileEnabled ? tmedia_profile_rtcweb : tmedia_profile_default) == 0);
+	return S_OK;
+}
 
 /**@ingroup _Group_CPP_SessionCall
 * Defines whether to enable ICE and gather host candidates.
@@ -610,11 +767,15 @@ HRESULT GmSessionCall::CreateSessionMgr()
 	tnet_ip_t bestsource;
 	tmedia_type_t nativeMediaType;
 	tsk_bool_t nativeRTCPEnabled, nativeRTCPMuxEnabled;
+	const char* nativeSSLPub, *nativeSSLPriv, *nativeSSLCA;
 
 	GmAutoLock<GmSessionCall> autoLock(this);
 
 	nativeMediaType = _mediaTypeToNative(m_eMediaType);
-
+	nativeSSLPub = m_strSSLPublic.c_str();
+	nativeSSLPriv = m_strSSLPrivate.c_str();
+	nativeSSLCA = m_strSSLCA.c_str();
+	
 	TSK_OBJECT_SAFE_FREE(m_pSessionMgr);
 
 	TSK_OBJECT_SAFE_FREE(m_pIceCtxScreenCast);
@@ -657,9 +818,13 @@ HRESULT GmSessionCall::CreateSessionMgr()
 	nativeRTCPEnabled = m_bRTCPEnabled ? tsk_true : tsk_false;
 	nativeRTCPMuxEnabled = m_bRTCPMuxEnabled ? tsk_true : tsk_false;
 	tmedia_session_mgr_set(m_pSessionMgr,
-		TMEDIA_SESSION_SET_INT32(nativeMediaType, "avpf-mode", m_eAVPFMode),
+		TMEDIA_SESSION_SET_INT32(nativeMediaType, "srtp-mode", m_eAVPFMode),
+		TMEDIA_SESSION_SET_INT32(nativeMediaType, "avpf-mode", m_eSRTPMode),
 		TMEDIA_SESSION_SET_INT32(nativeMediaType, "rtcp-enabled", nativeRTCPEnabled),
 		TMEDIA_SESSION_SET_INT32(nativeMediaType, "rtcpmux-enabled", nativeRTCPMuxEnabled),
+		TMEDIA_SESSION_SET_STR(nativeMediaType, "dtls-file-ca", nativeSSLCA),
+		TMEDIA_SESSION_SET_STR(nativeMediaType, "dtls-file-pbk", nativeSSLPub),
+		TMEDIA_SESSION_SET_STR(nativeMediaType, "dtls-file-pvk", nativeSSLPriv),
 
 		TMEDIA_SESSION_SET_NULL()
 		);
@@ -759,11 +924,6 @@ struct tnet_ice_ctx_s* GmSessionCall::IceCreateCtx(bool bVideo)
 	static tsk_bool_t __use_ice_rtcp = tsk_true;
 
 	struct tnet_ice_ctx_s* p_ctx = tsk_null;
-	const char* ssl_priv_path = tsk_null;
-	const char* ssl_pub_path = tsk_null;
-	const char* ssl_ca_path = tsk_null;
-	tsk_bool_t ssl_verify = tsk_false;
-	GM_ASSERT(tmedia_defaults_get_ssl_certs(&ssl_priv_path, &ssl_pub_path, &ssl_ca_path, &ssl_verify) == 0);
 
 	if ((p_ctx = tnet_ice_ctx_create(__use_ice_jingle, __use_ipv6, __use_ice_rtcp, bVideo ? tsk_true : tsk_false, &GmSessionCall::IceCallback, this)))
 	{
@@ -781,7 +941,7 @@ struct tnet_ice_ctx_s* GmSessionCall::IceCreateCtx(bool bVideo)
 				(*it)->getPassword());
 		}
 		// Set SSL certificates
-		tnet_ice_ctx_set_ssl_certs(p_ctx, ssl_priv_path, ssl_pub_path, ssl_ca_path, ssl_verify);
+		tnet_ice_ctx_set_ssl_certs(p_ctx, m_strSSLPrivate.c_str(), m_strSSLPublic.c_str(), m_strSSLCA.c_str(), m_bSSLMutualAuth ? tsk_true : tsk_false);
 		// Enable/Disable TURN/STUN
 		tnet_ice_ctx_set_stun_enabled(p_ctx, m_bNattIceStunEnabled ? tsk_true : tsk_false);
 		tnet_ice_ctx_set_turn_enabled(p_ctx, m_bNattIceTurnEnabled ? tsk_true : tsk_false);
@@ -1094,13 +1254,20 @@ int GmSessionCall::IceCallback(const struct tnet_ice_event_s *e)
 			if (This->IceGotLocalCandidatesAll())
 			{
 				GM_DEBUG_INFO("!!! ICE gathering done !!!");
-				// This->sendSdp();
+				if (This->m_objIceCallback)
+				{
+					This->m_objIceCallback->OnEvent(GM_ICE_EVENT_TYPE_GATHERING_DONE);
+				}
 			}
 		}
 		else if (e->type == tnet_ice_event_type_conncheck_succeed)
 		{
 			if (This->IceIsDone())
 			{
+				if (This->m_objIceCallback)
+				{
+					This->m_objIceCallback->OnEvent(GM_ICE_EVENT_TYPE_CONNECTED);
+				}
 				if (This->m_bStartDeferred)
 				{
 					This->Start();
@@ -1110,6 +1277,10 @@ int GmSessionCall::IceCallback(const struct tnet_ice_event_s *e)
 		}
 		else if (e->type == tnet_ice_event_type_conncheck_failed || e->type == tnet_ice_event_type_cancelled)
 		{
+			if (This->m_objIceCallback)
+			{
+				This->m_objIceCallback->OnEvent(GM_ICE_EVENT_TYPE_DISCONNECTED);
+			}
 		}
 		break;
 	}
@@ -1117,6 +1288,10 @@ int GmSessionCall::IceCallback(const struct tnet_ice_event_s *e)
 										// fatal errors which discard ICE process
 	case tnet_ice_event_type_gathering_host_candidates_failed:
 	case tnet_ice_event_type_gathering_reflexive_candidates_failed: {
+		if (This->m_objIceCallback)
+		{
+			This->m_objIceCallback->OnEvent(GM_ICE_EVENT_TYPE_ERROR);
+		}
 		break;
 	}
 	}
