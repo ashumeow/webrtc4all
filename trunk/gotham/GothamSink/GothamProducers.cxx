@@ -1,5 +1,6 @@
 #include "GothamProducers.h"
 #include "GothamSinkUtils.h"
+#include "GothamTypes.h"
 
 #include "tinymedia/tmedia_producer.h"
 
@@ -215,7 +216,7 @@ HRESULT GmProducer::WriteSamples(const BYTE* pBytesPtr, UINT32 nBytesCount)
 
 	if (TMEDIA_PRODUCER(m_pcWrappedProd)->enc_cb.callback)
 	{
-		if (m_pcWrappedProd->bStarted)
+		if (m_pcWrappedProd->bStarted && TMEDIA_PRODUCER(m_pcWrappedProd)->is_started)
 		{
 			int ret = TMEDIA_PRODUCER(m_pcWrappedProd)->enc_cb.callback(TMEDIA_PRODUCER(m_pcWrappedProd)->enc_cb.callback_data, pBytesPtr, nBytesCount);
 			if (ret != 0)
@@ -226,7 +227,7 @@ HRESULT GmProducer::WriteSamples(const BYTE* pBytesPtr, UINT32 nBytesCount)
 		}
 		else
 		{
-			GM_CHECK_HR(hr = E_ILLEGAL_METHOD_CALL);
+			GM_CHECK_HR(hr = GM_ERR_PRODUCER_NOT_STARTED);
 		}
 	}
 	else
