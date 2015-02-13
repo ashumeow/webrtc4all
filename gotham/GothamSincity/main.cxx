@@ -307,6 +307,7 @@ public:
 		{
 			Json::Value message;
 
+			message["messageType"] = "webrtc";
 			message["type"] = "hangup";
 			message["cid"] = e->getCallId();
 			message["tid"] = randomString();
@@ -340,6 +341,7 @@ public:
 
 		Json::Value message;
 
+		message["messageType"] = "webrtc";
 		message["type"] = "hangup";
 		message["cid"] = m_strCallId;
 		message["tid"] = randomString();
@@ -532,6 +534,7 @@ private:
 		// Compute when transaction identifier for the offer
 		m_strTidOffer = randomString();
 
+		message["messageType"] = "webrtc";
 		message["type"] = m_strLocalSdpType.empty() ? "offer" : m_strLocalSdpType;
 		message["cid"] = m_strCallId;
 		message["tid"] = m_strTidOffer.empty() ? randomString() : m_strTidOffer;
@@ -793,7 +796,7 @@ public:
 			bool ret = callSession->acceptEvent(e);
 			if (e->getType() == "hangup")
 			{
-				callSession = NULL;
+				callSession = nullptr;
 				GMT_DEBUG_INFO("+++Call ended +++");
 			}
 			return ret;
@@ -813,7 +816,7 @@ public:
 			{
 				if (pendingOffer && pendingOffer->getCallId() == e->getCallId())
 				{
-					pendingOffer = NULL;
+					pendingOffer = nullptr;
 					GMT_DEBUG_INFO("+++ pending call cancelled +++");
 				}
 			}
@@ -871,7 +874,7 @@ int _tmain(int argc, _TCHAR* argv[], _TCHAR* envp[])
 	GMT_CHECK_HR(hr = MFStartup(MF_VERSION));
 
 	signalSession = GmtSignaling::newObj(GMT_WS_URL, GMT_LOCAL_IP, LOCAL_PORT);
-	GMT_ASSERT(signalSession != NULL);
+	GMT_ASSERT(signalSession != nullptr);
 	signalSession->setCallback(std::make_shared<GmtSignalingCallbackDummy>());
 
 	if (signalSession->connect() != true)
@@ -908,7 +911,7 @@ int _tmain(int argc, _TCHAR* argv[], _TCHAR* envp[])
 				strRemoteId = std::string(remoteId);
 			}
 			GMT_DEBUG_INFO("+++ call('%s') +++", strRemoteId.c_str());
-			GMT_ASSERT((callSession = GmtSessionCall::newObj(signalSession)) != NULL);
+			GMT_ASSERT((callSession = GmtSessionCall::newObj(signalSession)) != nullptr);
 			GMT_ASSERT(callSession->call(strRemoteId) == true);
 		}
 		else if (strnicmp(command, "hangup", 6) == 0 || strnicmp(command, "reject", 6) == 0)
